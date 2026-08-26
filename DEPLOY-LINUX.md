@@ -90,6 +90,7 @@ SUBDOMAIN_SCAN_LIMIT=80
 ```
 
 O servico systemd carrega `/opt/scan-dominio/.env` automaticamente. No cadastro do dominio, informe os destinatarios separados por virgula, ponto e virgula ou quebra de linha. O envio acontece apos o scan semanal automatico do dominio raiz.
+Para validar a configuracao, abra a aba "Scan manual", preencha os destinatarios e clique em "Testar SMTP". Depois de um scan manual concluido, o botao "Enviar relatorio por e-mail" envia o relatorio sob demanda para os mesmos destinatarios.
 
 ## Proxy reverso
 

@@ -44,6 +44,8 @@ SMTP_FROM=scan-dominio@empresa.com.br
 
 Ao terminar cada scan semanal automatico de um dominio raiz com destinatarios cadastrados, a ferramenta envia um resumo HTML com os achados agrupados por URL. O status do ultimo envio aparece no card do dominio.
 
+Na aba "Scan manual", use "Testar SMTP" para validar as credenciais de envio. Depois que o scan manual finalizar, informe os destinatarios e clique em "Enviar relatorio por e-mail" para mandar o relatorio sob demanda.
+
 ## Scan manual e aplicacoes novas
 
 - O scan manual roda em segundo plano e pode ser interrompido pelo botao "Parar scan".

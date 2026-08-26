@@ -535,6 +535,29 @@ h3 {
   line-height: 1.35;
 }
 
+.email-panel {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) auto;
+  gap: 12px;
+  align-items: end;
+  margin: 14px 0;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #17181b;
+}
+
+.email-panel p {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.email-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .domain-list {
   display: grid;
   gap: 10px;
@@ -855,6 +878,7 @@ h3 {
   .metric-grid,
   .dashboard-grid,
   .gauge-wrap,
+  .email-panel,
   .subdomain-row {
     grid-template-columns: 1fr;
   }

@@ -4,6 +4,10 @@ const scanButton = document.querySelector("#scanButton");
 const cancelScanButton = document.querySelector("#cancelScanButton");
 const addDomainButton = document.querySelector("#addDomainButton");
 const clearButton = document.querySelector("#clearButton");
+const testEmailButton = document.querySelector("#testEmailButton");
+const sendManualEmailButton = document.querySelector("#sendManualEmailButton");
+const manualEmailRecipients = document.querySelector("#manualEmailRecipients");
+const manualEmailStatus = document.querySelector("#manualEmailStatus");
 const scanState = document.querySelector("#scanState");
 const progress = document.querySelector("#progress");
 const summary = document.querySelector("#summary");
@@ -74,6 +78,7 @@ let currentReport = null;
 let currentAppReport = null;
 let currentStore = null;
 let currentManualJobId = null;
+let currentManualCompletedJobId = null;
 let currentAppJobId = null;
 
 navItems.forEach((item) => {
@@ -183,12 +188,16 @@ form.addEventListener("submit", async (event) => {
       onStatus: (job) => { targetLabel.textContent = `Scan em andamento - ${job.status}`; }
     });
     currentReport = data.report;
+    currentManualCompletedJobId = data.id;
     renderReport(data.report);
     enableExports(true);
+    updateManualEmailButton();
   } catch (error) {
     summary.classList.remove("empty");
     summary.textContent = error.message || "Falha inesperada.";
     enableExports(false);
+    currentManualCompletedJobId = null;
+    updateManualEmailButton();
   } finally {
     currentManualJobId = null;
     setLoading(false);
@@ -240,6 +249,7 @@ cancelAppScanButton.addEventListener("click", async () => {
 
 clearButton.addEventListener("click", () => {
   currentReport = null;
+  currentManualCompletedJobId = null;
   form.reset();
   metrics.pages.textContent = "0";
   metrics.high.textContent = "0";
@@ -253,6 +263,29 @@ clearButton.addEventListener("click", () => {
   panels.pages.innerHTML = "";
   panels.waf.innerHTML = "";
   enableExports(false);
+  updateManualEmailButton();
+  manualEmailStatus.textContent = "Use o teste para validar SMTP; o envio do relatorio fica disponivel apos o scan finalizar.";
+});
+
+manualEmailRecipients.addEventListener("input", () => updateManualEmailButton());
+
+testEmailButton.addEventListener("click", async () => {
+  await sendEmailAction({
+    button: testEmailButton,
+    path: "/api/email/test",
+    loadingText: "Testando...",
+    successText: "E-mail de teste enviado."
+  });
+});
+
+sendManualEmailButton.addEventListener("click", async () => {
+  if (!currentManualCompletedJobId) return;
+  await sendEmailAction({
+    button: sendManualEmailButton,
+    path: `/api/manual-scans/${currentManualCompletedJobId}/email`,
+    loadingText: "Enviando...",
+    successText: "Relatorio manual enviado por e-mail."
+  });
 });
 
 loadDomains();
@@ -312,6 +345,7 @@ function enableExports(enabled) {
   Object.values(exportButtons).forEach((button) => {
     button.disabled = !enabled;
   });
+  updateManualEmailButton();
 }
 
 function enableAppExports(enabled) {
@@ -340,6 +374,35 @@ async function runCancelableScan(payload, hooks) {
     if (job.status === "cancelled") throw new Error("Scan cancelado pelo usuario.");
     if (job.status === "failed") throw new Error(job.error || "Scan falhou.");
   }
+}
+
+async function sendEmailAction({ button, path, loadingText, successText }) {
+  const originalText = button.textContent;
+  const recipients = manualEmailRecipients.value;
+  button.disabled = true;
+  button.textContent = loadingText;
+  manualEmailStatus.textContent = "Enviando mensagem...";
+  try {
+    const response = await fetch(path, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ recipients })
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "Falha ao enviar e-mail.");
+    manualEmailStatus.textContent = `${successText} Destinatarios: ${data.recipients.join(", ")}.`;
+  } catch (error) {
+    manualEmailStatus.textContent = error.message || "Falha ao enviar e-mail.";
+  } finally {
+    button.textContent = originalText;
+    button.disabled = false;
+    updateManualEmailButton();
+  }
+}
+
+function updateManualEmailButton() {
+  const hasRecipients = Boolean(manualEmailRecipients?.value.trim());
+  sendManualEmailButton.disabled = !currentReport || !currentManualCompletedJobId || !hasRecipients;
 }
 
 function wait(ms) {

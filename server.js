@@ -181,10 +181,23 @@ const server = http.createServer(async (req, res) => {
       }
     }
 
+    if (url.pathname === "/api/email/test" && req.method === "POST") {
+      const payload = await readJson(req);
+      const result = await sendTestEmail(payload);
+      return sendJson(res, 200, result);
+    }
+
     if (url.pathname === "/api/manual-scans" && req.method === "POST") {
       const payload = await readJson(req);
       const job = createManualScanJob(payload);
       return sendJson(res, 202, serializeManualScanJob(job));
+    }
+
+    const manualScanEmailMatch = url.pathname.match(/^\/api\/manual-scans\/([^/]+)\/email$/);
+    if (manualScanEmailMatch && req.method === "POST") {
+      const payload = await readJson(req);
+      const result = await sendManualScanReportEmail(manualScanEmailMatch[1], payload);
+      return sendJson(res, 200, result);
     }
 
     const manualScanMatch = url.pathname.match(/^\/api\/manual-scans\/([^/]+)$/);
@@ -470,6 +483,71 @@ async function sendWeeklyReportEmail(domain, report) {
     delivery.finishedAt = new Date().toISOString();
     await saveStore();
   }
+}
+
+async function sendTestEmail(payload) {
+  const recipients = parseEmailRecipients(payload.recipients || payload.emailRecipients);
+  if (!recipients.length) throw httpError(400, "Informe pelo menos um e-mail valido para teste.");
+
+  const sentAt = new Date().toISOString();
+  try {
+    await sendSmtpMail({
+      to: recipients,
+      subject: "[SCAN Dominio] Teste de envio de e-mail",
+      text: [
+        "Teste de envio da ferramenta SCAN Dominio.",
+        `Enviado em: ${formatDateTime(sentAt)}`,
+        "",
+        "Se voce recebeu esta mensagem, a configuracao SMTP esta funcionando."
+      ].join("\n"),
+      html: `<!doctype html>
+<html lang="pt-BR">
+  <body style="margin:0;background:#101112;color:#ececf0;font-family:Arial,sans-serif">
+    <div style="max-width:680px;margin:0 auto;padding:28px">
+      <p style="margin:0 0 6px;color:#a2a7b0;font-size:12px;text-transform:uppercase">Teste SMTP</p>
+      <h1 style="margin:0 0 10px;font-size:26px">SCAN Dominio</h1>
+      <p style="line-height:1.5;color:#d9dbe1">Se voce recebeu esta mensagem, a configuracao SMTP esta funcionando.</p>
+      <p style="color:#a2a7b0">Enviado em ${escapeHtml(formatDateTime(sentAt))}.</p>
+    </div>
+  </body>
+</html>`
+    });
+  } catch (error) {
+    throw httpError(502, `Falha no envio SMTP: ${error.message || error}`);
+  }
+
+  return { ok: true, recipients, sentAt };
+}
+
+async function sendManualScanReportEmail(jobId, payload) {
+  const job = manualScanJobs.get(jobId);
+  if (!job) throw httpError(404, "Scan manual nao encontrado.");
+  if (job.status !== "completed" || !job.report) {
+    throw httpError(409, "O relatorio so pode ser enviado apos o scan manual finalizar.");
+  }
+
+  const recipients = parseEmailRecipients(payload.recipients || payload.emailRecipients);
+  if (!recipients.length) throw httpError(400, "Informe pelo menos um e-mail valido para enviar o relatorio.");
+
+  const domain = {
+    label: payload.label || job.report.target,
+    target: job.report.target
+  };
+  const sentAt = new Date().toISOString();
+  try {
+    await sendSmtpMail({
+      to: recipients,
+      subject: `[SCAN Dominio] Relatorio manual - ${job.report.target}`,
+      text: reportToEmailText(domain, job.report),
+      html: reportToEmailHtml(domain, job.report)
+    });
+  } catch (error) {
+    throw httpError(502, `Falha no envio SMTP: ${error.message || error}`);
+  }
+
+  job.lastEmailDelivery = { recipients, sentAt, status: "sent" };
+  job.updatedAt = sentAt;
+  return { ok: true, recipients, sentAt };
 }
 
 function reportToEmailText(domain, report) {

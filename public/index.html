@@ -268,6 +268,18 @@
               Execute um scan manual para visualizar os achados.
             </div>
 
+            <div class="email-panel">
+              <label class="field">
+                <span>Destinatarios para e-mail manual</span>
+                <input id="manualEmailRecipients" type="text" placeholder="seguranca@empresa.com.br, ti@empresa.com.br" autocomplete="email">
+              </label>
+              <div class="email-actions">
+                <button type="button" id="testEmailButton">Testar SMTP</button>
+                <button class="primary" type="button" id="sendManualEmailButton" disabled>Enviar relatorio por e-mail</button>
+              </div>
+              <p id="manualEmailStatus" class="muted-line">Use o teste para validar SMTP; o envio do relatorio fica disponivel apos o scan finalizar.</p>
+            </div>
+
             <div class="tabs" role="tablist" aria-label="Secoes do relatorio manual">
               <button class="tab active" data-tab="findings" type="button">Achados</button>
               <button class="tab" data-tab="pages" type="button">URLs</button>
