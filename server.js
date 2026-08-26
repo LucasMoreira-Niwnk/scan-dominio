@@ -421,38 +421,54 @@ async function authenticateUser(payload) {
     throw httpError(500, "Dependencia LDAP ausente. Execute npm install no servidor.");
   }
 
-  const client = new Client({
-    url: ldapUrl,
-    timeout: Number(process.env.LDAP_TIMEOUT_MS || 10000),
-    connectTimeout: Number(process.env.LDAP_CONNECT_TIMEOUT_MS || 10000),
-    tlsOptions: {
-      rejectUnauthorized: process.env.LDAP_TLS_REJECT_UNAUTHORIZED !== "false"
-    }
-  });
+  let client = createLdapClient(Client, ldapUrl);
 
   try {
-    const serviceBound = await bindLdapServiceAccount(client);
-    let user = serviceBound ? await findLdapUser(client, account) : null;
+    const strategy = process.env.LDAP_AUTH_STRATEGY || "service-first";
+    let user = null;
     let authenticated = false;
+    let usingUserBind = false;
 
-    if (user?.dn) {
-      authenticated = await tryLdapBind(client, user.dn, password);
-      if (!authenticated) logAuthDebug("bind do usuario por DN falhou", { username, userDn: user.dn });
+    if (strategy === "direct-first") {
+      const directBind = await bindLdapUserDirect(client, account, password);
+      authenticated = directBind.authenticated;
+      usingUserBind = authenticated;
+      if (authenticated) user = await findLdapUser(client, account);
+    }
+
+    if (!authenticated) {
+      try {
+        const serviceBound = await bindLdapServiceAccount(client);
+        user = serviceBound ? await findLdapUser(client, account) : null;
+
+        if (user?.dn) {
+          authenticated = await tryLdapBind(client, user.dn, password);
+          if (!authenticated) logAuthDebug("bind do usuario por DN falhou", { username, userDn: user.dn });
+        }
+
+        if (authenticated && process.env.LDAP_BIND_DN) {
+          await bindLdapServiceAccount(client);
+        }
+      } catch (error) {
+        const canFallback = error.statusCode === 502 && process.env.LDAP_ALLOW_DIRECT_BIND_FALLBACK !== "false";
+        if (!canFallback) throw error;
+        logAuthDebug("fallback para bind direto apos falha na conta de servico", {
+          username,
+          error: error.publicMessage || error.message || String(error)
+        });
+        await client.unbind().catch(() => {});
+        client = createLdapClient(Client, ldapUrl);
+      }
     }
 
     if (!authenticated) {
       const directBind = await bindLdapUserDirect(client, account, password);
       authenticated = directBind.authenticated;
+      usingUserBind = authenticated;
       if (authenticated) {
-        if (process.env.LDAP_BIND_DN) await bindLdapServiceAccount(client);
         user = await findLdapUser(client, account);
-        if (!user?.dn) {
-          user = {
-            dn: directBind.bindName,
-            cn: [username],
-            displayName: [username],
-            memberOf: []
-          };
+        if (!user?.dn && process.env.LDAP_REQUIRED_GROUP_DN) {
+          logAuthDebug("usuario autenticado por bind direto, mas busca LDAP nao retornou DN", { username });
         }
       }
     }
@@ -462,7 +478,7 @@ async function authenticateUser(payload) {
       throw httpError(401, "Usuario ou senha invalidos.");
     }
 
-    if (process.env.LDAP_BIND_DN) await bindLdapServiceAccount(client);
+    if (process.env.LDAP_BIND_DN && !usingUserBind) await bindLdapServiceAccount(client);
 
     const groups = normalizeLdapValues(user.memberOf);
     const allowed = await isUserInRequiredGroup(client, user, groups);
@@ -489,6 +505,17 @@ async function authenticateUser(payload) {
   } finally {
     await client.unbind().catch(() => {});
   }
+}
+
+function createLdapClient(Client, ldapUrl) {
+  return new Client({
+    url: ldapUrl,
+    timeout: Number(process.env.LDAP_TIMEOUT_MS || 10000),
+    connectTimeout: Number(process.env.LDAP_CONNECT_TIMEOUT_MS || 10000),
+    tlsOptions: {
+      rejectUnauthorized: process.env.LDAP_TLS_REJECT_UNAUTHORIZED !== "false"
+    }
+  });
 }
 
 async function bindLdapServiceAccount(client) {
