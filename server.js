@@ -494,12 +494,20 @@ async function authenticateUser(payload) {
 async function bindLdapServiceAccount(client) {
   if (!process.env.LDAP_BIND_DN) return false;
   try {
-    await client.bind(process.env.LDAP_BIND_DN, process.env.LDAP_BIND_PASSWORD || "");
+    await client.bind(process.env.LDAP_BIND_DN, await getLdapBindPassword());
     return true;
   } catch (error) {
     console.error("[auth] Falha no bind da conta de servico LDAP:", error?.message || error);
-    throw httpError(502, "Falha ao conectar no LDAP com a conta de servico.");
+    const detail = process.env.AUTH_DEBUG === "true" ? ` Detalhe: ${error?.message || error}` : "";
+    throw httpError(502, `Falha ao conectar no LDAP com a conta de servico.${detail}`);
   }
+}
+
+async function getLdapBindPassword() {
+  if (process.env.LDAP_BIND_PASSWORD_FILE) {
+    return (await fs.readFile(process.env.LDAP_BIND_PASSWORD_FILE, "utf8")).trim();
+  }
+  return process.env.LDAP_BIND_PASSWORD || "";
 }
 
 async function tryLdapBind(client, bindName, password) {
@@ -2314,7 +2322,7 @@ async function loadEnvFile(envPath) {
       if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
         value = value.slice(1, -1);
       }
-      if (key && process.env[key] === undefined) process.env[key] = value;
+    if (key) process.env[key] = value;
     }
   } catch {
     // .env is optional; production can provide environment variables directly.

@@ -110,6 +110,7 @@ LDAP_UPN_SUFFIX=empresa.com.br
 LDAP_NETBIOS_DOMAIN=EMPRESA
 LDAP_BIND_DN=CN=svc-scan,OU=Servicos,DC=empresa,DC=com,DC=br
 LDAP_BIND_PASSWORD=senha-da-conta-de-servico
+# LDAP_BIND_PASSWORD_FILE=/opt/scan-dominio/secrets/ldap-bind-password
 LDAP_USER_BASE_DN=DC=empresa,DC=com,DC=br
 LDAP_USER_FILTER=(|(sAMAccountName={{username}})(userPrincipalName={{upn}})(userPrincipalName={{login}}))
 LDAP_REQUIRED_GROUP=SCAN
@@ -122,8 +123,26 @@ Use `ldaps://` sempre que possivel. Se o certificado do AD ainda nao estiver con
 Depois de alterar o `.env`, reinicie:
 
 ```sh
+sudo cp /opt/scan-dominio/scan-dominio.service /etc/systemd/system/scan-dominio.service
+sudo systemctl daemon-reload
 sudo systemctl restart scan-dominio
 sudo journalctl -u scan-dominio -f
+```
+
+Se a senha da conta LDAP tiver caracteres especiais, prefira arquivo separado:
+
+```sh
+sudo mkdir -p /opt/scan-dominio/secrets
+sudo nano /opt/scan-dominio/secrets/ldap-bind-password
+sudo chown -R scan-dominio:scan-dominio /opt/scan-dominio/secrets
+sudo chmod 700 /opt/scan-dominio/secrets
+sudo chmod 600 /opt/scan-dominio/secrets/ldap-bind-password
+```
+
+E no `.env`:
+
+```env
+LDAP_BIND_PASSWORD_FILE=/opt/scan-dominio/secrets/ldap-bind-password
 ```
 
 Se o login responder `401 Unauthorized`, ative diagnostico temporario:
