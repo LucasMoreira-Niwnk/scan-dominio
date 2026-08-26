@@ -20,6 +20,7 @@ http://localhost:4173
 
 - Cadastre dominios na area "Cadastrar dominio para monitorar".
 - Ao cadastrar, a ferramenta roda o primeiro scan, descobre subdominios publicos resolvidos e cadastra esses subdominios como alvos monitorados.
+- Depois do scan do dominio raiz, os subdominios descobertos entram em uma fila propria de scan, sem redescobrir subdominios em cascata.
 - A ferramenta faz check leve de disponibilidade a cada 1 hora.
 - O scan de seguranca completo roda semanalmente e sincroniza novos subdominios descobertos.
 - O cadastro permite informar destinatarios para envio automatico do relatorio semanal por e-mail.

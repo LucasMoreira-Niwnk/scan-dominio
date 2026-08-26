@@ -483,13 +483,20 @@ function renderDomainCard(domain, children = []) {
 
 function renderSubdomainRow(domain) {
   const last = domain.lastStatus;
+  const scan = domain.lastScanSummary;
   const statusClass = !last ? "pending" : last.ok ? "ok" : "down";
   const statusText = !last ? "Aguardando" : last.ok ? `HTTP ${last.status}` : `Falha${last.status ? ` ${last.status}` : ""}`;
+  const scanText = domain.runningScan
+    ? "Scan em execucao"
+    : scan
+      ? `Ultimo scan: ${scan.summary.findings} achados em ${scan.summary.pagesScanned} URLs`
+      : "Aguardando scan";
   return `
     <div class="subdomain-row">
       <div>
         <strong>${escapeHtml(domain.label || domain.target)}</strong>
         <span>${escapeHtml(domain.target)}</span>
+        <span>${escapeHtml(scanText)}</span>
       </div>
       <span class="status-dot ${statusClass}">${escapeHtml(statusText)}</span>
       <button type="button" data-action="check" data-id="${escapeHtml(domain.id)}" ${domain.runningStatus ? "disabled" : ""}>Checar</button>

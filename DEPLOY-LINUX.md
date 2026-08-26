@@ -43,6 +43,7 @@ SMTP_STARTTLS=true
 SMTP_USER=usuario-smtp
 SMTP_PASS=senha-smtp
 SMTP_FROM=scan-dominio@empresa.com.br
+SUBDOMAIN_SCAN_LIMIT=80
 ```
 
 O servico systemd carrega `/opt/scan-dominio/.env` automaticamente. No cadastro do dominio, informe os destinatarios separados por virgula, ponto e virgula ou quebra de linha. O envio acontece apos o scan semanal automatico do dominio raiz.

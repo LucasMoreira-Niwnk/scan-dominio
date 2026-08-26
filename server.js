@@ -25,6 +25,7 @@ const WEEKLY_SCAN_INTERVAL_MS = 7 * 24 * 60 * 60 * 1000;
 const SCHEDULER_TICK_MS = 60 * 1000;
 const HISTORY_LIMIT = 168;
 const REPORT_LIMIT = 8;
+const SUBDOMAIN_SCAN_LIMIT = Number(process.env.SUBDOMAIN_SCAN_LIMIT || 80);
 const execFileAsync = promisify(execFile);
 const DNS_PUBLIC_RESOLVERS = [
   "system",
@@ -639,6 +640,27 @@ function queueDomainSecurityScan(domain, options) {
   }, 0).unref();
 }
 
+function queueDiscoveredSubdomainScans(parentDomain, { reason }) {
+  const children = store.domains
+    .filter((domain) => domain.enabled && domain.parentId === parentDomain.id && domain.kind === "subdomain")
+    .filter((domain) => !domain.runningScan)
+    .slice(0, SUBDOMAIN_SCAN_LIMIT);
+  if (!children.length) return;
+
+  setTimeout(async () => {
+    for (const child of children) {
+      if (!store.domains.some((domain) => domain.id === child.id)) continue;
+      if (child.runningScan) continue;
+      child.lastQueuedScanReason = reason;
+      try {
+        await runDomainSecurityScan(child, { manual: false, sendEmail: false });
+      } catch (error) {
+        await recordDomainError(child, "scan", error);
+      }
+    }
+  }, 0).unref();
+}
+
 async function runDomainStatusCheck(domain, { manual }) {
   if (domain.runningStatus) return domain.lastStatus;
   domain.runningStatus = true;
@@ -660,6 +682,7 @@ async function runDomainSecurityScan(domain, { manual, sendEmail = !manual }) {
   if (domain.runningScan) return domain.lastScanSummary;
   domain.runningScan = true;
   try {
+    let shouldQueueSubdomainScans = false;
     const report = await runScan({
       target: domain.target,
       maxPages: domain.maxPages,
@@ -677,10 +700,14 @@ async function runDomainSecurityScan(domain, { manual, sendEmail = !manual }) {
         maxPages: domain.maxPages,
         timeoutMs: domain.timeoutMs
       });
+      shouldQueueSubdomainScans = true;
     }
     domain.nextScanAt = new Date(Date.now() + WEEKLY_SCAN_INTERVAL_MS).toISOString();
     if (manual) domain.lastManualScanAt = report.finishedAt;
     await saveStore();
+    if (shouldQueueSubdomainScans) {
+      queueDiscoveredSubdomainScans(domain, { reason: manual ? "manual-root-scan" : "root-scan" });
+    }
     if (sendEmail && domain.weeklyEmailEnabled && domain.emailRecipients?.length) {
       await sendWeeklyReportEmail(domain, report);
     }
