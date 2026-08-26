@@ -139,7 +139,7 @@ domainForm.addEventListener("submit", async (event) => {
 
   addDomainButton.disabled = true;
   addDomainButton.textContent = "Cadastrando...";
-  monitorLabel.textContent = "Cadastrando dominio e iniciando o primeiro scan em segundo plano...";
+  monitorLabel.textContent = "Cadastrando domínio e iniciando o primeiro scan em segundo plano...";
   try {
     const response = await apiFetch("/api/domains", {
       method: "POST",
@@ -153,9 +153,9 @@ domainForm.addEventListener("submit", async (event) => {
     document.querySelector("#domainWeeklyEmailEnabled").checked = true;
     renderStore(data.store);
     setDomainPanel(false);
-    monitorLabel.textContent = "Dominio cadastrado. O primeiro scan esta rodando em segundo plano.";
+    monitorLabel.textContent = "Domínio cadastrado. O primeiro scan está rodando em segundo plano.";
   } catch (error) {
-    monitorLabel.textContent = error.message || "Falha ao cadastrar dominio.";
+    monitorLabel.textContent = error.message || "Falha ao cadastrar domínio.";
   } finally {
     addDomainButton.disabled = false;
     addDomainButton.textContent = "Cadastrar monitoramento";
@@ -288,15 +288,15 @@ clearButton.addEventListener("click", () => {
   metrics.medium.textContent = "0";
   metrics.low.textContent = "0";
   metrics.subdomains.textContent = "0";
-  targetLabel.textContent = "Nenhum dominio escaneado ainda.";
+  targetLabel.textContent = "Nenhum domínio escaneado ainda.";
   summary.className = "summary empty";
-  summary.textContent = "Informe o dominio e inicie o scan para ver os achados.";
+  summary.textContent = "Informe o domínio e inicie o scan para ver os achados.";
   panels.findings.innerHTML = "";
   panels.pages.innerHTML = "";
   panels.waf.innerHTML = "";
   enableExports(false);
   updateManualEmailButton();
-  manualEmailStatus.textContent = "Use o teste para validar SMTP; o envio do relatorio fica disponivel apos o scan finalizar.";
+  manualEmailStatus.textContent = "Use o teste para validar SMTP; o envio do relatório fica disponível após o scan finalizar.";
 });
 
 manualEmailRecipients.addEventListener("input", () => updateManualEmailButton());
@@ -316,7 +316,7 @@ sendManualEmailButton.addEventListener("click", async () => {
     button: sendManualEmailButton,
     path: `/api/manual-scans/${currentManualCompletedJobId}/email`,
     loadingText: "Enviando...",
-    successText: "Relatorio manual enviado por e-mail."
+    successText: "Relatório manual enviado por e-mail."
   });
 });
 
@@ -333,15 +333,15 @@ tabs.forEach((tab) => {
 });
 
 exportButtons.json.addEventListener("click", () => {
-  download("relatorio-scan-dominio.json", "application/json", JSON.stringify(currentReport, null, 2));
+  download("relatorio-sec-hub.json", "application/json", JSON.stringify(currentReport, null, 2));
 });
 
 exportButtons.csv.addEventListener("click", () => {
-  download("achados-scan-dominio.csv", "text/csv", findingsToCsv(currentReport));
+  download("achados-sec-hub.csv", "text/csv", findingsToCsv(currentReport));
 });
 
 exportButtons.html.addEventListener("click", () => {
-  download("relatorio-scan-dominio.html", "text/html", reportToHtml(currentReport));
+  download("relatorio-sec-hub.html", "text/html", reportToHtml(currentReport));
 });
 
 appExportButtons.json.addEventListener("click", () => {
@@ -361,13 +361,13 @@ function setLoading(isLoading) {
   scanButton.textContent = isLoading ? "Escaneando..." : "Iniciar scan";
   cancelScanButton.classList.toggle("hidden", !isLoading);
   cancelScanButton.disabled = !isLoading;
-  scanState.textContent = isLoading ? "Em execucao" : "Pronto";
+  scanState.textContent = isLoading ? "Em execução" : "Pronto";
   progress.classList.toggle("hidden", !isLoading);
 }
 
 function setAppLoading(isLoading) {
   appScanButton.disabled = isLoading;
-  appScanButton.textContent = isLoading ? "Testando..." : "Testar aplicacao";
+  appScanButton.textContent = isLoading ? "Testando..." : "Testar aplicação";
   cancelAppScanButton.classList.toggle("hidden", !isLoading);
   cancelAppScanButton.disabled = !isLoading;
   appProgress.classList.toggle("hidden", !isLoading);
@@ -403,7 +403,7 @@ async function runCancelableScan(payload, hooks) {
     if (!response.ok) throw new Error(job.error || "Falha ao consultar scan.");
     hooks.onStatus?.(job);
     if (job.status === "completed") return job;
-    if (job.status === "cancelled") throw new Error("Scan cancelado pelo usuario.");
+    if (job.status === "cancelled") throw new Error("Scan cancelado pelo usuário.");
     if (job.status === "failed") throw new Error(job.error || "Scan falhou.");
   }
 }
@@ -497,10 +497,10 @@ function renderStore(store) {
   metrics.nextScan.textContent = nextScanAt ? formatDate(nextScanAt) : "-";
   metrics.runningScans.textContent = runningScans;
   monitorLabel.textContent = domains.length
-    ? `${domains.length} alvo${domains.length === 1 ? "" : "s"} monitorado${domains.length === 1 ? "" : "s"}, incluindo subdominios`
-    : "Nenhum dominio cadastrado para monitoramento.";
+    ? `${domains.length} alvo${domains.length === 1 ? "" : "s"} monitorado${domains.length === 1 ? "" : "s"}, incluindo subdomínios`
+    : "Nenhum domínio cadastrado para monitoramento.";
   if (!domains.length) {
-    domainList.innerHTML = `<div class="summary empty">Cadastre um dominio para iniciar checks horarios e scans semanais.</div>`;
+    domainList.innerHTML = `<div class="summary empty">Cadastre um domínio para iniciar checks horários e scans semanais.</div>`;
     return;
   }
   domainList.innerHTML = rootDomains.map((domain) => {
@@ -533,7 +533,7 @@ function getNextDate(domains, field) {
 
 function renderSparkline(values) {
   if (!values.length) {
-    return `<div class="spark-empty">Sem historico suficiente</div>`;
+    return `<div class="spark-empty">Sem histórico suficiente</div>`;
   }
   const max = Math.max(...values, 1);
   return values.map((value) => {
@@ -549,26 +549,26 @@ function renderDomainCard(domain, children = []) {
   const emailDelivery = domain.emailDeliveries?.[domain.emailDeliveries.length - 1];
   const recipients = domain.emailRecipients || [];
   const statusClass = !last ? "pending" : last.ok ? "ok" : "down";
-  const statusText = !last ? "Aguardando check" : last.ok ? `Online HTTP ${last.status}` : `Indisponivel${last.status ? ` HTTP ${last.status}` : ""}`;
+  const statusText = !last ? "Aguardando check" : last.ok ? `Online HTTP ${last.status}` : `Indisponível${last.status ? ` HTTP ${last.status}` : ""}`;
   return `
     <article class="domain-card">
       <header>
         <div>
           <h3>${escapeHtml(domain.label || domain.target)}</h3>
-          <p>${escapeHtml(domain.target)}${children.length ? ` - ${children.length} subdominio${children.length === 1 ? "" : "s"} monitorado${children.length === 1 ? "" : "s"}` : ""}</p>
+          <p>${escapeHtml(domain.target)}${children.length ? ` - ${children.length} subdomínio${children.length === 1 ? "" : "s"} monitorado${children.length === 1 ? "" : "s"}` : ""}</p>
         </div>
         <span class="status-dot ${statusClass}">${escapeHtml(statusText)}</span>
       </header>
       <dl class="kv">
-        <dt>Ultimo check</dt><dd>${last ? `${formatDate(last.checkedAt)} - ${last.responseTimeMs} ms${last.error ? ` - ${last.error}` : ""}` : "-"}</dd>
-        <dt>Proximo check</dt><dd>${formatDate(domain.nextStatusAt)}</dd>
-        <dt>Ultimo scan</dt><dd>${scan ? `${formatDate(scan.finishedAt)} - ${scan.summary.findings} achados em ${scan.summary.pagesScanned} URLs` : "-"}</dd>
-        <dt>Proximo scan</dt><dd>${formatDate(domain.nextScanAt)}</dd>
-        <dt>Relatorio semanal</dt><dd>${escapeHtml(formatEmailConfig(domain, recipients, emailDelivery))}</dd>
+        <dt>Último check</dt><dd>${last ? `${formatDate(last.checkedAt)} - ${last.responseTimeMs} ms${last.error ? ` - ${last.error}` : ""}` : "-"}</dd>
+        <dt>Próximo check</dt><dd>${formatDate(domain.nextStatusAt)}</dd>
+        <dt>Último scan</dt><dd>${scan ? `${formatDate(scan.finishedAt)} - ${scan.summary.findings} achados em ${scan.summary.pagesScanned} URLs` : "-"}</dd>
+        <dt>Próximo scan</dt><dd>${formatDate(domain.nextScanAt)}</dd>
+        <dt>Relatório semanal</dt><dd>${escapeHtml(formatEmailConfig(domain, recipients, emailDelivery))}</dd>
       </dl>
       <div class="domain-actions">
         <button type="button" data-action="check" data-id="${escapeHtml(domain.id)}" ${domain.runningStatus ? "disabled" : ""}>Checar agora</button>
-        <button type="button" data-action="scan" data-id="${escapeHtml(domain.id)}" ${domain.runningScan ? "disabled" : ""}>Scan e abrir relatorio</button>
+        <button type="button" data-action="scan" data-id="${escapeHtml(domain.id)}" ${domain.runningScan ? "disabled" : ""}>Scan e abrir relatório</button>
         <button type="button" class="danger" data-action="delete" data-id="${escapeHtml(domain.id)}">Remover</button>
       </div>
       ${children.length ? `<div class="subdomain-list">${children.map(renderSubdomainRow).join("")}</div>` : ""}
@@ -582,9 +582,9 @@ function renderSubdomainRow(domain) {
   const statusClass = !last ? "pending" : last.ok ? "ok" : "down";
   const statusText = !last ? "Aguardando" : last.ok ? `HTTP ${last.status}` : `Falha${last.status ? ` ${last.status}` : ""}`;
   const scanText = domain.runningScan
-    ? "Scan em execucao"
+    ? "Scan em execução"
     : scan
-      ? `Ultimo scan: ${scan.summary.findings} achados em ${scan.summary.pagesScanned} URLs`
+      ? `Último scan: ${scan.summary.findings} achados em ${scan.summary.pagesScanned} URLs`
       : "Aguardando scan";
   return `
     <div class="subdomain-row">
@@ -610,10 +610,10 @@ function renderReport(report) {
   summary.className = "summary";
   summary.innerHTML = `
     <strong>${report.summary.findings} achados em ${report.summary.pagesScanned} URLs.</strong>
-    Subdominios encontrados: ${report.summary.subdomainsFound || 0}.
-    Subdominios testados: ${report.summary.subdomainsTested || 0}.
-    WAF: ${report.summary.wafDetected ? "sinais encontrados" : "nao identificado"}.
-    HTTPS: ${report.summary.httpsAvailable ? "disponivel" : "nao validado"}.
+    Subdomínios encontrados: ${report.summary.subdomainsFound || 0}.
+    Subdomínios testados: ${report.summary.subdomainsTested || 0}.
+    WAF: ${report.summary.wafDetected ? "sinais encontrados" : "não identificado"}.
+    HTTPS: ${report.summary.httpsAvailable ? "disponível" : "não validado"}.
   `;
   renderFindings(report);
   renderPages(report);
@@ -625,9 +625,9 @@ function renderAppReport(report) {
   appSummary.className = "summary";
   appSummary.innerHTML = `
     <strong>${report.summary.findings} achados em ${report.summary.pagesScanned} URLs avaliadas.</strong>
-    Perfil: ${escapeHtml(report.options.appProfile || "generico")}.
-    WAF: ${report.summary.wafDetected ? "sinais encontrados" : "nao identificado"}.
-    HTTPS: ${report.summary.httpsAvailable ? "disponivel" : "nao validado"}.
+    Perfil: ${escapeHtml(report.options.appProfile || "genérico")}.
+    WAF: ${report.summary.wafDetected ? "sinais encontrados" : "não identificado"}.
+    HTTPS: ${report.summary.httpsAvailable ? "disponível" : "não validado"}.
   `;
   if (!report.findings.length) {
     appFindings.innerHTML = `<div class="summary empty">Nenhum achado registrado.</div>`;
@@ -639,7 +639,7 @@ function renderAppReport(report) {
         <header>
           <div>
             <h3>${escapeHtml(group.url)}</h3>
-            <p>${group.items.length} evidencia${group.items.length === 1 ? "" : "s"} agrupada${group.items.length === 1 ? "" : "s"}</p>
+            <p>${group.items.length} evidência${group.items.length === 1 ? "" : "s"} agrupada${group.items.length === 1 ? "" : "s"}</p>
           </div>
           <div class="severity-stack">${renderSeverityBadges(group.items)}</div>
         </header>
@@ -650,8 +650,8 @@ function renderAppReport(report) {
                 <h4>${escapeHtml(item.title)}</h4>
                 <span class="badge ${item.severity}">${labelSeverity(item.severity)}</span>
               </header>
-              <p><strong>Evidencia:</strong> ${escapeHtml(item.evidence)}</p>
-              <p><strong>Recomendacao:</strong> ${escapeHtml(item.recommendation)}</p>
+              <p><strong>Evidência:</strong> ${escapeHtml(item.evidence)}</p>
+              <p><strong>Recomendação:</strong> ${escapeHtml(item.recommendation)}</p>
             </section>
           `).join("")}
         </div>
@@ -671,7 +671,7 @@ function renderFindings(report) {
         <header>
           <div>
             <h3>${escapeHtml(group.url)}</h3>
-            <p>${group.items.length} evidencia${group.items.length === 1 ? "" : "s"} agrupada${group.items.length === 1 ? "" : "s"}</p>
+            <p>${group.items.length} evidência${group.items.length === 1 ? "" : "s"} agrupada${group.items.length === 1 ? "" : "s"}</p>
           </div>
           <div class="severity-stack">${renderSeverityBadges(group.items)}</div>
         </header>
@@ -682,8 +682,8 @@ function renderFindings(report) {
                 <h4>${escapeHtml(item.title)}</h4>
                 <span class="badge ${item.severity}">${labelSeverity(item.severity)}</span>
               </header>
-              <p><strong>Evidencia:</strong> ${escapeHtml(item.evidence)}</p>
-              <p><strong>Recomendacao:</strong> ${escapeHtml(item.recommendation)}</p>
+              <p><strong>Evidência:</strong> ${escapeHtml(item.evidence)}</p>
+              <p><strong>Recomendação:</strong> ${escapeHtml(item.recommendation)}</p>
             </section>
           `).join("")}
         </div>
@@ -708,7 +708,7 @@ function renderPages(report) {
         <dl class="kv">
           <dt>URL final</dt><dd>${escapeHtml(page.finalUrl || "-")}</dd>
           <dt>Tempo</dt><dd>${page.responseTimeMs || "-"} ms</dd>
-          <dt>Tecnologias</dt><dd>${escapeHtml(page.technologies.join(", ") || "Nao identificadas")}</dd>
+          <dt>Tecnologias</dt><dd>${escapeHtml(page.technologies.join(", ") || "Não identificadas")}</dd>
           <dt>Cookies</dt><dd>${page.cookies.length}</dd>
           <dt>Links encontrados</dt><dd>${page.links.length}</dd>
           ${page.error ? `<dt>Erro</dt><dd>${escapeHtml(page.error)}</dd>` : ""}
@@ -724,28 +724,28 @@ function renderWaf(report) {
   const dns = report.dnsRecords || {};
   panels.waf.innerHTML = `
     <article class="detail-box">
-      <h3>WAF/CDN de seguranca</h3>
+      <h3>WAF/CDN de segurança</h3>
       <dl class="kv">
-        <dt>Status</dt><dd>${report.waf.detected ? "Detectado" : "Nao identificado"}</dd>
+        <dt>Status</dt><dd>${report.waf.detected ? "Detectado" : "Não identificado"}</dd>
         <dt>Fornecedores</dt><dd>${escapeHtml(report.waf.vendors.join(", ") || "-")}</dd>
-        <dt>Evidencias</dt><dd>${escapeHtml(report.waf.evidence.join(" | ") || "-")}</dd>
+        <dt>Evidências</dt><dd>${escapeHtml(report.waf.evidence.join(" | ") || "-")}</dd>
       </dl>
     </article>
     <article class="detail-box">
       <h3>TLS e HTTPS</h3>
       <dl class="kv">
         <dt>TLS</dt><dd>${tls.ok ? "Conectado" : "Falhou"}</dd>
-        <dt>Certificado confiavel</dt><dd>${tls.authorized ? "Sim" : "Nao"}</dd>
+        <dt>Certificado confiável</dt><dd>${tls.authorized ? "Sim" : "Não"}</dd>
         <dt>Protocolo</dt><dd>${escapeHtml(tls.protocol || "-")}</dd>
         <dt>Cifra</dt><dd>${escapeHtml(tls.cipher || "-")}</dd>
-        <dt>Validade</dt><dd>${escapeHtml([tls.validFrom, tls.validTo].filter(Boolean).join(" ate ") || "-")}</dd>
-        <dt>Redirect HTTP</dt><dd>${redirect.ok ? "Redireciona para HTTPS" : "Nao confirmado"}</dd>
+        <dt>Validade</dt><dd>${escapeHtml([tls.validFrom, tls.validTo].filter(Boolean).join(" até ") || "-")}</dd>
+        <dt>Redirect HTTP</dt><dd>${redirect.ok ? "Redireciona para HTTPS" : "Não confirmado"}</dd>
       </dl>
     </article>
     <article class="detail-box">
-      <h3>DNS publico do dominio</h3>
+      <h3>DNS público do domínio</h3>
       <dl class="kv">
-        <dt>Dominio raiz</dt><dd>${escapeHtml(dns.domain || "-")}</dd>
+        <dt>Domínio raiz</dt><dd>${escapeHtml(dns.domain || "-")}</dd>
         <dt>NS</dt><dd>${escapeHtml((dns.ns || []).join(", ") || "-")}</dd>
         <dt>MX</dt><dd>${escapeHtml((dns.mx || []).map((item) => `${item.exchange} (${item.priority})`).join(", ") || "-")}</dd>
         <dt>TXT</dt><dd>${escapeHtml((dns.txt || []).join(" | ") || "-")}</dd>
@@ -754,15 +754,15 @@ function renderWaf(report) {
       </dl>
     </article>
     <article class="detail-box">
-      <h3>Subdominios descobertos</h3>
+      <h3>Subdomínios descobertos</h3>
       ${
         report.subdomains && report.subdomains.length
           ? report.subdomains.map((item) => `<p><strong>${escapeHtml(item.host)}:</strong> ${escapeHtml(item.addresses.length ? item.addresses.join(", ") : item.dnsStatus || "sem A/AAAA confirmado")}<br><span class="muted-line">Fontes: ${escapeHtml((item.sources || []).join(", ") || "-")} | Resolvedores: ${escapeHtml((item.resolvers || []).join(", ") || "-")}</span></p>`).join("")
-          : "<p>Nenhum subdominio publico foi confirmado por DNS neste scan.</p>"
+          : "<p>Nenhum subdomínio público foi confirmado por DNS neste scan.</p>"
       }
       <dl class="kv">
         <dt>Fontes</dt><dd>${escapeHtml((report.discovery?.sources || []).map((source) => `${source.name}: ${source.count}`).join(" | ") || "-")}</dd>
-        <dt>Observacao</dt><dd>${escapeHtml(report.discovery?.note || "-")}</dd>
+        <dt>Observação</dt><dd>${escapeHtml(report.discovery?.note || "-")}</dd>
       </dl>
     </article>
     <article class="detail-box">
@@ -770,14 +770,14 @@ function renderWaf(report) {
       ${
         report.waf.probes.length
           ? report.waf.probes.map((probe) => `<p><strong>${escapeHtml(probe.name)}:</strong> ${escapeHtml(probe.evidence)}</p>`).join("")
-          : "<p>Nao executados neste scan.</p>"
+          : "<p>Não executados neste scan.</p>"
       }
     </article>
   `;
 }
 
 function findingsToCsv(report) {
-  const rows = [["Severidade", "Titulo", "URL", "Evidencia", "Recomendacao"]];
+  const rows = [["Severidade", "Título", "URL", "Evidência", "Recomendação"]];
   for (const group of groupFindingsByUrl(report.findings)) {
     for (const item of group.items) {
     rows.push([labelSeverity(item.severity), item.title, item.url, item.evidence, item.recommendation]);
@@ -790,7 +790,7 @@ function reportToHtml(report) {
   const findings = groupFindingsByUrl(report.findings).map((group) => `
     <h2>${escapeHtml(group.url)}</h2>
     <table>
-      <thead><tr><th>Severidade</th><th>Titulo</th><th>Evidencia</th><th>Recomendacao</th></tr></thead>
+      <thead><tr><th>Severidade</th><th>Título</th><th>Evidência</th><th>Recomendação</th></tr></thead>
       <tbody>
         ${group.items.map((item) => `
           <tr>
@@ -806,13 +806,13 @@ function reportToHtml(report) {
   return `<!doctype html>
 <html lang="pt-BR">
 <meta charset="utf-8">
-<title>Relatorio SCAN Dominio</title>
+<title>Relatório SEC Hub</title>
 <style>
 body{font-family:Arial,sans-serif;margin:32px;color:#18202f}h1{margin-bottom:4px}h2{margin-top:28px;font-size:18px;overflow-wrap:anywhere}table{border-collapse:collapse;width:100%;margin-top:10px}th,td{border:1px solid #dce2ea;padding:8px;text-align:left;vertical-align:top}th{background:#f5f7fa}.meta{color:#677084}
 </style>
-<h1>Relatorio SCAN Dominio</h1>
+<h1>Relatório SEC Hub</h1>
 <p class="meta">${escapeHtml(report.target)} - ${escapeHtml(formatDate(report.finishedAt))}</p>
-<p>${report.summary.findings} achados em ${report.summary.pagesScanned} URLs. Subdominios encontrados: ${report.summary.subdomainsFound || 0}. Subdominios testados: ${report.summary.subdomainsTested || 0}. WAF: ${report.summary.wafDetected ? "detectado" : "nao identificado"}.</p>
+<p>${report.summary.findings} achados em ${report.summary.pagesScanned} URLs. Subdomínios encontrados: ${report.summary.subdomainsFound || 0}. Subdomínios testados: ${report.summary.subdomainsTested || 0}. WAF: ${report.summary.wafDetected ? "detectado" : "não identificado"}.</p>
 ${findings}
 </html>`;
 }
@@ -872,7 +872,7 @@ function formatDnsObject(value) {
 function labelSeverity(value) {
   return {
     high: "Alto",
-    medium: "Medio",
+    medium: "Médio",
     low: "Baixo",
     info: "Info"
   }[value] || value;
@@ -903,3 +903,6 @@ function escapeHtml(value) {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 }
+
+
+

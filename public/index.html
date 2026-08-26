@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SCAN Dominio</title>
+    <title>SEC Hub</title>
     <link rel="stylesheet" href="/styles.css">
   </head>
   <body>
@@ -12,12 +12,12 @@
         <div class="brand">
           <div class="brand-mark">S</div>
           <div>
-            <strong>SCAN Dominio</strong>
-            <span>Security monitor</span>
+            <strong>SEC Hub</strong>
+            <span>Centro de segurança</span>
           </div>
         </div>
 
-        <nav class="side-nav" aria-label="Navegacao principal">
+        <nav class="side-nav" aria-label="Navegação principal">
           <button class="nav-item active" type="button" data-view="monitor">
             <span class="nav-icon">M</span>
             Monitoramento
@@ -28,17 +28,17 @@
           </button>
           <button class="nav-item" type="button" data-view="apps">
             <span class="nav-icon">A</span>
-            Aplicacoes
+            Aplicações
           </button>
         </nav>
 
         <div class="side-footer">
           <div id="authUser" class="auth-user hidden">
-            <span id="authUserName">Usuario</span>
+            <span id="authUserName">Usuário</span>
             <button type="button" id="logoutButton">Sair</button>
           </div>
           <span id="scanState">Pronto</span>
-          <small>Checks horarios e scan semanal local</small>
+          <small>Checks horários e scan semanal local</small>
         </div>
       </aside>
 
@@ -46,19 +46,19 @@
         <section id="view-monitor" class="view active-view" aria-labelledby="monitor-title">
           <header class="page-header">
             <div>
-              <p class="eyebrow">Monitoramento continuo</p>
-              <h1 id="monitor-title">Dominios monitorados</h1>
+              <p class="eyebrow">Monitoramento contínuo</p>
+              <h1 id="monitor-title">Domínios monitorados</h1>
               <p id="monitorLabel">Carregando monitoramento...</p>
             </div>
             <div class="header-actions">
               <button type="button" id="refreshDomains">Atualizar</button>
-              <button class="primary" type="button" id="openDomainPanel">Novo dominio</button>
+              <button class="primary" type="button" id="openDomainPanel">Novo domínio</button>
             </div>
           </header>
 
           <div class="monitor-summary">
             <article class="metric">
-              <span>Dominios</span>
+              <span>Domínios</span>
               <strong id="metricDomains">0</strong>
             </article>
             <article class="metric">
@@ -66,7 +66,7 @@
               <strong id="metricOnline">0</strong>
             </article>
             <article class="metric severity-high">
-              <span>Indisponiveis</span>
+              <span>Indisponíveis</span>
               <strong id="metricDown">0</strong>
             </article>
             <article class="metric">
@@ -75,12 +75,12 @@
             </article>
           </div>
 
-          <section class="dashboard-grid" aria-label="Metricas do monitoramento">
+          <section class="dashboard-grid" aria-label="Métricas do monitoramento">
             <article class="dash-panel risk-panel">
               <header>
                 <div>
                   <span class="panel-kicker">Risco agregado</span>
-                  <h2>Achados dos ultimos scans</h2>
+                  <h2>Achados dos últimos scans</h2>
                 </div>
                 <strong id="riskScore">0</strong>
               </header>
@@ -91,7 +91,7 @@
                   <strong id="dashHigh">0</strong>
                 </div>
                 <div class="severity-row">
-                  <span>Medio</span>
+                  <span>Médio</span>
                   <div class="track"><div id="barMedium" class="fill medium-fill"></div></div>
                   <strong id="dashMedium">0</strong>
                 </div>
@@ -112,7 +112,7 @@
               <header>
                 <div>
                   <span class="panel-kicker">Disponibilidade</span>
-                  <h2>Saude dos alvos</h2>
+                  <h2>Saúde dos alvos</h2>
                 </div>
               </header>
               <div class="gauge-wrap">
@@ -120,7 +120,7 @@
                   <span id="uptimeValue">0%</span>
                 </div>
                 <div>
-                  <p><strong id="healthyTargets">0</strong> alvos saudaveis</p>
+                  <p><strong id="healthyTargets">0</strong> alvos saudáveis</p>
                   <p><strong id="unknownTargets">0</strong> aguardando primeira leitura</p>
                 </div>
               </div>
@@ -130,7 +130,7 @@
               <header>
                 <div>
                   <span class="panel-kicker">Performance</span>
-                  <h2>Latencia dos checks</h2>
+                  <h2>Latência dos checks</h2>
                 </div>
                 <strong id="avgLatency">0 ms</strong>
               </header>
@@ -141,20 +141,20 @@
               <header>
                 <div>
                   <span class="panel-kicker">Agenda</span>
-                  <h2>Proximas execucoes</h2>
+                  <h2>Próximas execuções</h2>
                 </div>
               </header>
               <div class="schedule-list">
                 <div>
-                  <span>Proximo check</span>
+                  <span>Próximo check</span>
                   <strong id="nextCheck">-</strong>
                 </div>
                 <div>
-                  <span>Proximo scan semanal</span>
+                  <span>Próximo scan semanal</span>
                   <strong id="nextScan">-</strong>
                 </div>
                 <div>
-                  <span>Scans em execucao</span>
+                  <span>Scans em execução</span>
                   <strong id="runningScans">0</strong>
                 </div>
               </div>
@@ -164,8 +164,8 @@
           <section class="table-panel">
             <div class="panel-heading">
               <div>
-                <span class="panel-kicker">Inventario</span>
-                <h2>Alvos e subdominios</h2>
+                <span class="panel-kicker">Inventário</span>
+                <h2>Alvos e subdomínios</h2>
               </div>
             </div>
             <div id="domainList" class="domain-list"></div>
@@ -176,9 +176,9 @@
         <section id="view-manual" class="view" aria-labelledby="manual-title">
           <header class="page-header">
             <div>
-              <p class="eyebrow">Execucao sob demanda</p>
+              <p class="eyebrow">Execução sob demanda</p>
               <h1 id="manual-title">Scan manual</h1>
-              <p>Rode um scan avulso e exporte o relatorio a partir desta pagina.</p>
+              <p>Rode um scan avulso e exporte o relatório a partir desta página.</p>
             </div>
           </header>
 
@@ -206,7 +206,7 @@
 
               <label class="check">
                 <input id="includeSubdomains" type="checkbox">
-                <span>Descobrir e testar subdominios publicos</span>
+                <span>Descobrir e testar subdomínios públicos</span>
               </label>
 
               <label class="check">
@@ -216,7 +216,7 @@
 
               <label class="check span-2">
                 <input id="followPaths" type="checkbox">
-                <span>Seguir paths encontrados na pagina inicial</span>
+                <span>Seguir paths encontrados na página inicial</span>
               </label>
 
               <div class="actions span-2">
@@ -238,7 +238,7 @@
                 <strong id="metricHigh">0</strong>
               </article>
               <article class="metric severity-medium">
-                <span>Medios</span>
+                <span>Médios</span>
                 <strong id="metricMedium">0</strong>
               </article>
               <article class="metric severity-low">
@@ -246,7 +246,7 @@
                 <strong id="metricLow">0</strong>
               </article>
               <article class="metric">
-                <span>Subdominios</span>
+                <span>Subdomínios</span>
                 <strong id="metricSubdomains">0</strong>
               </article>
             </div>
@@ -265,7 +265,7 @@
 
             <div id="progress" class="progress hidden">
               <div class="bar"></div>
-              <span>Descobrindo subdominios e testando headers, TLS e sinais de WAF...</span>
+              <span>Descobrindo subdomínios e testando headers, TLS e sinais de WAF...</span>
             </div>
 
             <div id="summary" class="summary empty">
@@ -274,17 +274,17 @@
 
             <div class="email-panel">
               <label class="field">
-                <span>Destinatarios para e-mail manual</span>
+                <span>Destinatários para e-mail manual</span>
                 <input id="manualEmailRecipients" type="text" placeholder="seguranca@empresa.com.br, ti@empresa.com.br" autocomplete="email">
               </label>
               <div class="email-actions">
                 <button type="button" id="testEmailButton">Testar SMTP</button>
-                <button class="primary" type="button" id="sendManualEmailButton" disabled>Enviar relatorio por e-mail</button>
+                <button class="primary" type="button" id="sendManualEmailButton" disabled>Enviar relatório por e-mail</button>
               </div>
-              <p id="manualEmailStatus" class="muted-line">Use o teste para validar SMTP; o envio do relatorio fica disponivel apos o scan finalizar.</p>
+              <p id="manualEmailStatus" class="muted-line">Use o teste para validar SMTP; o envio do relatório fica disponível após o scan finalizar.</p>
             </div>
 
-            <div class="tabs" role="tablist" aria-label="Secoes do relatorio manual">
+            <div class="tabs" role="tablist" aria-label="Seções do relatório manual">
               <button class="tab active" data-tab="findings" type="button">Achados</button>
               <button class="tab" data-tab="pages" type="button">URLs</button>
               <button class="tab" data-tab="waf" type="button">WAF/TLS/DNS</button>
@@ -299,23 +299,23 @@
         <section id="view-apps" class="view" aria-labelledby="apps-title">
           <header class="page-header">
             <div>
-              <p class="eyebrow">Aplicacoes em desenvolvimento</p>
+              <p class="eyebrow">Aplicações em desenvolvimento</p>
               <h1 id="apps-title">Teste por URL</h1>
-              <p>Valide uma URL nova com checagens de headers, cookies, TLS, CSP, CORS e praticas comuns de frameworks.</p>
+              <p>Valide uma URL nova com checagens de headers, cookies, TLS, CSP, CORS e práticas comuns de frameworks.</p>
             </div>
           </header>
 
           <section class="tool-panel">
             <form id="appScanForm" class="scan-form">
               <label class="field span-2">
-                <span>URL da aplicacao</span>
+                <span>URL da aplicação</span>
                 <input id="appTarget" type="text" placeholder="https://app-hml.empresa.com.br" autocomplete="url" required>
               </label>
 
               <label class="field">
                 <span>Perfil de framework</span>
                 <select id="appProfile">
-                  <option value="generic" selected>Generico / detectar externamente</option>
+                  <option value="generic" selected>Genérico / detectar externamente</option>
                   <option value="react">React SPA</option>
                   <option value="next">Next.js</option>
                   <option value="angular">Angular</option>
@@ -339,7 +339,7 @@
 
               <label class="check">
                 <input id="appFollowPaths" type="checkbox" checked>
-                <span>Seguir links internos da aplicacao</span>
+                <span>Seguir links internos da aplicação</span>
               </label>
 
               <label class="check">
@@ -348,7 +348,7 @@
               </label>
 
               <div class="actions span-2">
-                <button class="primary" type="submit" id="appScanButton">Testar aplicacao</button>
+                <button class="primary" type="submit" id="appScanButton">Testar aplicação</button>
                 <button class="danger hidden" type="button" id="cancelAppScanButton">Parar teste</button>
               </div>
             </form>
@@ -357,8 +357,8 @@
           <section class="result-panel">
             <div class="report-toolbar">
               <div>
-                <h2>Resultado da aplicacao</h2>
-                <p id="appTargetLabel">Nenhuma aplicacao testada ainda.</p>
+                <h2>Resultado da aplicação</h2>
+                <p id="appTargetLabel">Nenhuma aplicação testada ainda.</p>
               </div>
               <div class="export-actions">
                 <button type="button" id="appExportJson" disabled>JSON</button>
@@ -368,7 +368,7 @@
             </div>
             <div id="appProgress" class="progress hidden">
               <div class="bar"></div>
-              <span>Executando avaliacao de aplicacao e boas praticas de framework...</span>
+              <span>Executando avaliação de aplicação e boas práticas de framework...</span>
             </div>
             <div id="appSummary" class="summary empty">Execute um teste para visualizar os achados.</div>
             <div id="appFindings" class="tab-panel"></div>
@@ -382,14 +382,14 @@
       <div class="drawer-header">
         <div>
           <p class="eyebrow">Novo monitor</p>
-          <h2 id="drawer-title">Cadastrar dominio</h2>
+          <h2 id="drawer-title">Cadastrar domínio</h2>
         </div>
         <button class="icon-button" type="button" id="closeDomainPanel" aria-label="Fechar cadastro">x</button>
       </div>
 
       <form id="domainForm" class="scan-form drawer-form">
         <label class="field span-2">
-          <span>Dominio ou URL</span>
+          <span>Domínio ou URL</span>
           <input id="domainTarget" type="text" placeholder="https://empresa.com.br" autocomplete="url" required>
         </label>
 
@@ -409,18 +409,18 @@
         </label>
 
         <label class="field span-2">
-          <span>Destinatarios do relatorio semanal</span>
+          <span>Destinatários do relatório semanal</span>
           <input id="domainEmailRecipients" type="text" placeholder="seguranca@empresa.com.br, ti@empresa.com.br" autocomplete="email">
         </label>
 
         <label class="check span-2">
           <input id="domainIncludeSubdomains" type="checkbox" checked>
-          <span>Descobrir e testar subdominios</span>
+          <span>Descobrir e testar subdomínios</span>
         </label>
 
         <label class="check span-2">
           <input id="domainWeeklyEmailEnabled" type="checkbox" checked>
-          <span>Enviar relatorio semanal por e-mail apos o scan automatico</span>
+          <span>Enviar relatório semanal por e-mail após o scan automático</span>
         </label>
 
         <label class="check span-2">
@@ -437,3 +437,6 @@
     <script src="/app.js" type="module"></script>
   </body>
 </html>
+
+
+
