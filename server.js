@@ -302,14 +302,6 @@ async function addDomain(payload) {
     maxPages: clamp(Number(payload.maxPages || 100), 1, 500),
     timeoutMs: clamp(Number(payload.timeoutMs || 9000), 2500, 20000)
   };
-  const report = await runScan({
-    target: targetUrl.origin,
-    maxPages: baseOptions.maxPages,
-    timeoutMs: baseOptions.timeoutMs,
-    includeSubdomains: payload.includeSubdomains !== false,
-    followPaths: baseOptions.followPaths,
-    activeWafProbe: baseOptions.activeWafProbe
-  });
   const familyId = crypto.randomUUID();
   const domain = upsertMonitoredDomain({
     id: crypto.randomUUID(),
@@ -329,16 +321,9 @@ async function addDomain(payload) {
     reports: []
   });
 
-  const rootPage = findPageForOrigin(report, targetUrl.origin);
-  if (rootPage) {
-    domain.lastStatus = statusFromPage(rootPage);
-    domain.history = [domain.lastStatus];
-  }
-  attachReport(domain, report);
-
-  syncDiscoveredSubdomains(domain, report, baseOptions);
-
   await saveStore();
+  runDomainSecurityScan(domain, { manual: false, sendEmail: false })
+    .catch((error) => recordDomainError(domain, "scan", error));
   return domain;
 }
 
@@ -647,7 +632,7 @@ async function runDomainStatusCheck(domain, { manual }) {
   }
 }
 
-async function runDomainSecurityScan(domain, { manual }) {
+async function runDomainSecurityScan(domain, { manual, sendEmail = !manual }) {
   if (domain.runningScan) return domain.lastScanSummary;
   domain.runningScan = true;
   try {
@@ -672,7 +657,7 @@ async function runDomainSecurityScan(domain, { manual }) {
     domain.nextScanAt = new Date(Date.now() + WEEKLY_SCAN_INTERVAL_MS).toISOString();
     if (manual) domain.lastManualScanAt = report.finishedAt;
     await saveStore();
-    if (!manual && domain.weeklyEmailEnabled && domain.emailRecipients?.length) {
+    if (sendEmail && domain.weeklyEmailEnabled && domain.emailRecipients?.length) {
       await sendWeeklyReportEmail(domain, report);
     }
     return domain.lastScanSummary;

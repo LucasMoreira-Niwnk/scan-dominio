@@ -1996,7 +1996,7 @@
         "104.26.1.250",
         "104.26.0.250"
       ],
-      "runningStatus": true,
+      "runningStatus": false,
       "runningScan": false
     },
     {
@@ -2154,7 +2154,7 @@
         "104.26.0.250",
         "172.67.71.75"
       ],
-      "runningStatus": true,
+      "runningStatus": false,
       "runningScan": false
     },
     {
@@ -2312,7 +2312,7 @@
         "104.26.1.250",
         "172.67.71.75"
       ],
-      "runningStatus": true,
+      "runningStatus": false,
       "runningScan": false
     },
     {
@@ -2470,7 +2470,7 @@
         "172.67.71.75",
         "104.26.1.250"
       ],
-      "runningStatus": true,
+      "runningStatus": false,
       "runningScan": false
     },
     {
@@ -2628,7 +2628,7 @@
         "172.67.71.75",
         "104.26.0.250"
       ],
-      "runningStatus": true,
+      "runningStatus": false,
       "runningScan": false
     },
     {
@@ -2786,7 +2786,7 @@
         "104.26.1.250",
         "172.67.71.75"
       ],
-      "runningStatus": true,
+      "runningStatus": false,
       "runningScan": false
     },
     {
@@ -2944,7 +2944,7 @@
         "104.26.0.250",
         "172.67.71.75"
       ],
-      "runningStatus": true,
+      "runningStatus": false,
       "runningScan": false
     },
     {
@@ -3100,7 +3100,7 @@
       "dnsAddresses": [
         "177.155.209.182"
       ],
-      "runningStatus": true,
+      "runningStatus": false,
       "runningScan": false
     },
     {
@@ -3258,7 +3258,7 @@
         "172.67.71.75",
         "104.26.0.250"
       ],
-      "runningStatus": true,
+      "runningStatus": false,
       "runningScan": false
     }
   ]

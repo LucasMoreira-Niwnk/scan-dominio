@@ -101,8 +101,8 @@ domainForm.addEventListener("submit", async (event) => {
   };
 
   addDomainButton.disabled = true;
-  addDomainButton.textContent = "Descobrindo e escaneando...";
-  monitorLabel.textContent = "Cadastrando dominio, descobrindo subdominios e executando o primeiro scan...";
+  addDomainButton.textContent = "Cadastrando...";
+  monitorLabel.textContent = "Cadastrando dominio e iniciando o primeiro scan em segundo plano...";
   try {
     const response = await fetch("/api/domains", {
       method: "POST",
@@ -116,6 +116,7 @@ domainForm.addEventListener("submit", async (event) => {
     document.querySelector("#domainWeeklyEmailEnabled").checked = true;
     renderStore(data.store);
     setDomainPanel(false);
+    monitorLabel.textContent = "Dominio cadastrado. O primeiro scan esta rodando em segundo plano.";
   } catch (error) {
     monitorLabel.textContent = error.message || "Falha ao cadastrar dominio.";
   } finally {
