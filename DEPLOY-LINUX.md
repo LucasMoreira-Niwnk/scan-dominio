@@ -31,6 +31,17 @@ sudo systemctl status scan-dominio
 
 Os dados ficam em `data/domains.json`. Faca backup desse arquivo para preservar cadastros, historico e relatorios.
 
+Se os logs mostrarem `EACCES` em `/opt/scan-dominio/data/domains.json`, corrija a posse dos dados:
+
+```sh
+sudo mkdir -p /opt/scan-dominio/data
+sudo touch /opt/scan-dominio/data/domains.json
+sudo chown -R scan-dominio:scan-dominio /opt/scan-dominio/data
+sudo chmod 750 /opt/scan-dominio/data
+sudo chmod 640 /opt/scan-dominio/data/domains.json
+sudo systemctl restart scan-dominio
+```
+
 ## E-mail semanal
 
 Preencha o `.env` com os dados do SMTP da empresa:

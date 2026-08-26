@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import tls from "node:tls";
 import net from "node:net";
 import dns from "node:dns/promises";
+import { setMaxListeners } from "node:events";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 
@@ -822,6 +823,7 @@ function throwIfAborted(signal) {
 
 async function runScan(payload, context = {}) {
   const { signal } = context;
+  if (signal) setMaxListeners(0, signal);
   throwIfAborted(signal);
   const targetUrl = normalizeTarget(payload.target);
   const maxPages = clamp(Number(payload.maxPages || 100), 1, 500);
