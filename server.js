@@ -1,6 +1,7 @@
 import http from "node:http";
 import fs from "node:fs/promises";
 import path from "node:path";
+import os from "node:os";
 import { fileURLToPath } from "node:url";
 import tls from "node:tls";
 import net from "node:net";
@@ -408,6 +409,10 @@ async function authenticateUser(payload) {
   if (!login || !password) throw httpError(400, "Informe usuario e senha.");
   if (!AUTH_ENABLED) return { username, displayName: username, dn: "", groups: [] };
 
+  if (process.env.LDAP_BACKEND === "ldap-utils") {
+    return authenticateUserWithLdapUtils(account, password);
+  }
+
   const ldapUrl = process.env.LDAP_URL;
   const userBaseDn = process.env.LDAP_USER_BASE_DN;
   if (!ldapUrl || !userBaseDn) {
@@ -511,6 +516,221 @@ async function authenticateUser(payload) {
   } finally {
     await client.unbind().catch(() => {});
   }
+}
+
+async function authenticateUserWithLdapUtils(account, password) {
+  const ldapUrl = process.env.LDAP_URL;
+  const userBaseDn = process.env.LDAP_USER_BASE_DN;
+  if (!ldapUrl || !userBaseDn) {
+    throw httpError(500, "LDAP_URL e LDAP_USER_BASE_DN precisam estar configurados.");
+  }
+
+  const candidates = buildUserBindCandidates(account);
+  logAuthDebug("ldap-utils tentando bind direto", {
+    username: account.username,
+    candidates: candidates.map(maskBindCandidate)
+  });
+
+  for (const bindName of candidates) {
+    const ok = await runLdapWhoami(bindName, password);
+    if (!ok) continue;
+
+    logAuthDebug("ldap-utils bind aceito", {
+      username: account.username,
+      bindName: maskBindCandidate(bindName)
+    });
+
+    const user = await findLdapUserWithLdapSearch(bindName, password, account);
+    if (!user?.dn) {
+      logAuthDebug("ldap-utils autenticou, mas nao encontrou usuario na busca", { username: account.username });
+      throw httpError(401, "Usuario autenticado, mas nao encontrado na busca LDAP.");
+    }
+
+    const groups = normalizeLdapValues(user.memberOf);
+    const allowed = await isUserInRequiredGroupWithLdapSearch(bindName, password, user, groups);
+    if (!allowed) {
+      logAuthDebug("ldap-utils usuario fora do grupo", {
+        username: account.username,
+        userDn: user.dn,
+        requiredGroup: process.env.LDAP_REQUIRED_GROUP || "SCAN",
+        requiredGroupDn: process.env.LDAP_REQUIRED_GROUP_DN || ""
+      });
+      throw httpError(403, "Usuario autenticado, mas fora do grupo autorizado.");
+    }
+
+    return {
+      username: account.username,
+      displayName: firstLdapValue(user.displayName) || firstLdapValue(user.cn) || account.username,
+      dn: user.dn,
+      groups
+    };
+  }
+
+  throw httpError(401, "Usuario ou senha invalidos.");
+}
+
+async function runLdapWhoami(bindName, password) {
+  return withTempPasswordFile(password, async (passwordFile) => {
+    try {
+      await execFileAsync(process.env.LDAP_WHOAMI_BIN || "ldapwhoami", [
+        "-x",
+        "-H",
+        process.env.LDAP_URL,
+        "-D",
+        bindName,
+        "-y",
+        passwordFile
+      ], ldapCommandOptions());
+      return true;
+    } catch (error) {
+      logAuthDebug("ldapwhoami recusado", {
+        bindName: maskBindCandidate(bindName),
+        error: summarizeCommandError(error)
+      });
+      return false;
+    }
+  });
+}
+
+async function findLdapUserWithLdapSearch(bindName, password, account) {
+  const filterTemplate = process.env.LDAP_USER_FILTER || "(|(sAMAccountName={{username}})(uid={{username}})(userPrincipalName={{username}}))";
+  const filter = filterTemplate
+    .replaceAll("{{username}}", escapeLdapFilterValue(account.username))
+    .replaceAll("{{login}}", escapeLdapFilterValue(account.raw))
+    .replaceAll("{{upn}}", escapeLdapFilterValue(account.upn || account.raw));
+  const output = await runLdapSearch(bindName, password, [
+    "-b",
+    process.env.LDAP_USER_BASE_DN,
+    "-s",
+    process.env.LDAP_USER_SEARCH_SCOPE || "sub",
+    filter,
+    "dn",
+    "cn",
+    "displayName",
+    "mail",
+    "memberOf",
+    "uid",
+    "sAMAccountName",
+    "userPrincipalName"
+  ]);
+  const entries = parseLdifEntries(output);
+  if (entries.length !== 1) {
+    logAuthDebug("ldapsearch usuario nao retornou exatamente 1 resultado", {
+      username: account.username,
+      results: entries.length,
+      filter
+    });
+    return null;
+  }
+  return entries[0];
+}
+
+async function isUserInRequiredGroupWithLdapSearch(bindName, password, user, groups) {
+  const requiredDn = process.env.LDAP_REQUIRED_GROUP_DN || "";
+  const requiredName = process.env.LDAP_REQUIRED_GROUP || "SCAN";
+  if (!requiredDn && !requiredName) return true;
+
+  const normalizedRequiredDn = requiredDn.toLowerCase();
+  const normalizedRequiredName = requiredName.toLowerCase();
+  const hasMemberOf = groups.some((group) => {
+    const normalized = group.toLowerCase();
+    return normalized === normalizedRequiredDn || getCnFromDn(normalized) === normalizedRequiredName;
+  });
+  if (hasMemberOf) return true;
+  if (!requiredDn) return false;
+
+  const memberAttribute = process.env.LDAP_GROUP_MEMBER_ATTRIBUTE || "member";
+  for (const filter of [
+    `(${memberAttribute}=${escapeLdapFilterValue(user.dn)})`,
+    `(${memberAttribute}:1.2.840.113556.1.4.1941:=${escapeLdapFilterValue(user.dn)})`
+  ]) {
+    try {
+      const output = await runLdapSearch(bindName, password, [
+        "-b",
+        requiredDn,
+        "-s",
+        "base",
+        filter,
+        "dn"
+      ]);
+      if (parseLdifEntries(output).length > 0) return true;
+    } catch (error) {
+      logAuthDebug("ldapsearch grupo falhou", {
+        requiredDn,
+        filter,
+        error: summarizeCommandError(error)
+      });
+    }
+  }
+  return false;
+}
+
+async function runLdapSearch(bindName, password, args) {
+  return withTempPasswordFile(password, async (passwordFile) => {
+    try {
+      const { stdout } = await execFileAsync(process.env.LDAP_SEARCH_BIN || "ldapsearch", [
+        "-LLL",
+        "-x",
+        "-H",
+        process.env.LDAP_URL,
+        "-D",
+        bindName,
+        "-y",
+        passwordFile,
+        ...args
+      ], ldapCommandOptions());
+      return stdout;
+    } catch (error) {
+      throw new Error(summarizeCommandError(error));
+    }
+  });
+}
+
+async function withTempPasswordFile(password, callback) {
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "scan-ldap-"));
+  const passwordFile = path.join(tempDir, "password");
+  try {
+    await fs.writeFile(passwordFile, password, { mode: 0o600 });
+    return await callback(passwordFile);
+  } finally {
+    await fs.rm(tempDir, { recursive: true, force: true }).catch(() => {});
+  }
+}
+
+function ldapCommandOptions() {
+  return {
+    timeout: Number(process.env.LDAP_COMMAND_TIMEOUT_MS || process.env.LDAP_TIMEOUT_MS || 10000),
+    maxBuffer: 1_000_000,
+    env: {
+      ...process.env,
+      LDAPTLS_REQCERT: process.env.LDAP_TLS_REJECT_UNAUTHORIZED === "false" ? "never" : "demand"
+    }
+  };
+}
+
+function parseLdifEntries(output) {
+  const unfolded = String(output || "").replace(/\r?\n /g, "");
+  return unfolded
+    .split(/\r?\n\r?\n/)
+    .map((block) => block.trim())
+    .filter(Boolean)
+    .map((block) => {
+      const entry = {};
+      for (const line of block.split(/\r?\n/)) {
+        const index = line.indexOf(":");
+        if (index === -1) continue;
+        const key = line.slice(0, index);
+        const value = line.slice(index + 1).replace(/^:\s*/, "").trim();
+        if (!entry[key]) entry[key] = [];
+        entry[key].push(value);
+      }
+      if (entry.dn?.length) entry.dn = entry.dn[0];
+      return entry;
+    });
+}
+
+function summarizeCommandError(error) {
+  return String(error?.stderr || error?.stdout || error?.message || error).trim().split(/\r?\n/).slice(0, 3).join(" | ");
 }
 
 function createLdapClient(Client, ldapUrl) {

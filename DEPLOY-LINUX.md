@@ -3,6 +3,7 @@
 ## Requisitos
 
 - Linux com Node.js 20 ou superior.
+- Pacote `ldap-utils` quando `LDAP_BACKEND=ldap-utils` estiver ativo.
 - Porta liberada para acesso interno, por padrao `4173`.
 - Acesso de rede de saida para DNS, HTTPS e fontes publicas de subdominios.
 - Acesso de rede ao servidor LDAP/Active Directory da empresa.
@@ -12,6 +13,7 @@
 ```sh
 cd /opt/scan-dominio
 npm install --omit=dev
+sudo apt install ldap-utils -y
 cp .env.example .env
 nano .env
 chmod +x start-linux.sh
@@ -104,6 +106,8 @@ Crie o grupo `SCAN` no LDAP/Active Directory e adicione os usuarios autorizados.
 ```env
 AUTH_ENABLED=true
 AUTH_DEBUG=false
+LDAP_BACKEND=ldap-utils
+LDAP_AUTH_STRATEGY=direct-first
 SESSION_SECURE=true
 LDAP_URL=ldaps://ad.empresa.com.br:636
 LDAP_UPN_SUFFIX=empresa.com.br
