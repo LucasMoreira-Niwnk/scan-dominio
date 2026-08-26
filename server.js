@@ -430,10 +430,14 @@ async function authenticateUser(payload) {
     let usingUserBind = false;
 
     if (strategy === "direct-first") {
-      const directBind = await bindLdapUserDirect(client, account, password);
+      const directBind = await bindLdapUserDirect(Client, ldapUrl, account, password);
       authenticated = directBind.authenticated;
       usingUserBind = authenticated;
-      if (authenticated) user = await findLdapUser(client, account);
+      if (authenticated) {
+        await client.unbind().catch(() => {});
+        client = directBind.client;
+        user = await findLdapUser(client, account);
+      }
     }
 
     if (!authenticated) {
@@ -462,10 +466,12 @@ async function authenticateUser(payload) {
     }
 
     if (!authenticated) {
-      const directBind = await bindLdapUserDirect(client, account, password);
+      const directBind = await bindLdapUserDirect(Client, ldapUrl, account, password);
       authenticated = directBind.authenticated;
       usingUserBind = authenticated;
       if (authenticated) {
+        await client.unbind().catch(() => {});
+        client = directBind.client;
         user = await findLdapUser(client, account);
         if (!user?.dn && process.env.LDAP_REQUIRED_GROUP_DN) {
           logAuthDebug("usuario autenticado por bind direto, mas busca LDAP nao retornou DN", { username });
@@ -537,32 +543,72 @@ async function getLdapBindPassword() {
   return process.env.LDAP_BIND_PASSWORD || "";
 }
 
-async function tryLdapBind(client, bindName, password) {
+async function tryLdapBind(client, bindName, password, debug = false) {
   try {
     await client.bind(bindName, password);
     return true;
-  } catch {
+  } catch (error) {
+    if (debug) {
+      logAuthDebug("bind LDAP recusado", {
+        bindName: maskBindCandidate(bindName),
+        error: error?.message || String(error)
+      });
+    }
     return false;
   }
 }
 
-async function bindLdapUserDirect(client, account, password) {
-  for (const bindName of buildUserBindCandidates(account)) {
-    if (await tryLdapBind(client, bindName, password)) {
-      return { authenticated: true, bindName };
+async function bindLdapUserDirect(Client, ldapUrl, account, password) {
+  const candidates = buildUserBindCandidates(account);
+  logAuthDebug("tentando bind direto do usuario", {
+    username: account.username,
+    candidates: candidates.map(maskBindCandidate)
+  });
+
+  for (const bindName of candidates) {
+    const client = createLdapClient(Client, ldapUrl);
+    let keepClient = false;
+    try {
+      if (await tryLdapBind(client, bindName, password, true)) {
+        logAuthDebug("bind direto do usuario aceito", {
+          username: account.username,
+          bindName: maskBindCandidate(bindName)
+        });
+        keepClient = true;
+        return { authenticated: true, bindName, client };
+      }
+    } finally {
+      if (!keepClient) await client.unbind().catch(() => {});
     }
   }
-  return { authenticated: false, bindName: "" };
+  return { authenticated: false, bindName: "", client: null };
 }
 
 function buildUserBindCandidates(account) {
+  const template = process.env.LDAP_USER_DN_TEMPLATE || "";
   const candidates = [
+    template ? template.replaceAll("{{username}}", account.username).replaceAll("{{login}}", account.raw).replaceAll("{{upn}}", account.upn || account.raw) : "",
     account.raw,
     account.upn,
     process.env.LDAP_UPN_SUFFIX ? `${account.username}@${process.env.LDAP_UPN_SUFFIX.replace(/^@/, "")}` : "",
     process.env.LDAP_NETBIOS_DOMAIN ? `${process.env.LDAP_NETBIOS_DOMAIN}\\${account.username}` : ""
   ];
   return [...new Set(candidates.filter(Boolean))];
+}
+
+function maskBindCandidate(value) {
+  const text = String(value || "");
+  if (!text) return "";
+  if (text.includes("@")) {
+    const [name, domain] = text.split("@");
+    return `${name.slice(0, 2)}***@${domain}`;
+  }
+  if (text.includes("\\")) {
+    const [domain, name] = text.split("\\");
+    return `${domain}\\${name.slice(0, 2)}***`;
+  }
+  if (/cn=/i.test(text)) return text.replace(/cn=([^,]+)/i, "CN=$1***");
+  return `${text.slice(0, 2)}***`;
 }
 
 async function findLdapUser(client, account) {
