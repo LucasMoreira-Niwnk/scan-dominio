@@ -611,18 +611,22 @@ async function findLdapUserWithLdapSearch(bindName, password, account) {
     "memberOf",
     "uid",
     "sAMAccountName",
-    "userPrincipalName"
+    "userPrincipalName",
+    "objectClass",
+    "userAccountControl"
   ]);
   const entries = parseLdifEntries(output);
-  if (entries.length !== 1) {
-    logAuthDebug("ldapsearch usuario nao retornou exatamente 1 resultado", {
+  const selected = selectBestLdapUser(entries, account);
+  if (!selected) {
+    logAuthDebug("ldapsearch usuario sem resultado unico confiavel", {
       username: account.username,
       results: entries.length,
-      filter
+      filter,
+      dns: entries.map((entry) => entry.dn).filter(Boolean).slice(0, 8)
     });
     return null;
   }
-  return entries[0];
+  return selected;
 }
 
 async function isUserInRequiredGroupWithLdapSearch(bindName, password, user, groups) {
@@ -841,18 +845,42 @@ async function findLdapUser(client, account) {
     scope: process.env.LDAP_USER_SEARCH_SCOPE || "sub",
     filter,
     sizeLimit: 2,
-    attributes: ["dn", "cn", "displayName", "mail", "memberOf", "uid", "sAMAccountName", "userPrincipalName"]
+    attributes: ["dn", "cn", "displayName", "mail", "memberOf", "uid", "sAMAccountName", "userPrincipalName", "objectClass", "userAccountControl"]
   });
 
-  if (searchEntries.length !== 1) {
-    logAuthDebug("busca de usuario LDAP nao retornou exatamente 1 resultado", {
+  const selected = selectBestLdapUser(searchEntries, account);
+  if (!selected) {
+    logAuthDebug("busca de usuario LDAP sem resultado unico confiavel", {
       username: account.username,
       results: searchEntries.length,
-      filter
+      filter,
+      dns: searchEntries.map((entry) => entry.dn).filter(Boolean).slice(0, 8)
     });
     return null;
   }
-  return searchEntries[0];
+  return selected;
+}
+
+function selectBestLdapUser(entries, account) {
+  if (!entries.length) return null;
+  if (entries.length === 1) return entries[0];
+
+  const username = account.username.toLowerCase();
+  const upn = (account.upn || account.raw || "").toLowerCase();
+  const exactSam = entries.filter((entry) => firstLdapValue(entry.sAMAccountName).toLowerCase() === username);
+  if (exactSam.length === 1) return exactSam[0];
+
+  const exactUpn = entries.filter((entry) => firstLdapValue(entry.userPrincipalName).toLowerCase() === upn);
+  if (exactUpn.length === 1) return exactUpn[0];
+
+  const enabledUsers = entries.filter((entry) => {
+    const objectClasses = normalizeLdapValues(entry.objectClass).map((value) => value.toLowerCase());
+    const control = Number(firstLdapValue(entry.userAccountControl) || 0);
+    return objectClasses.includes("user") && !(control & 2);
+  });
+  if (enabledUsers.length === 1) return enabledUsers[0];
+
+  return null;
 }
 
 async function isUserInRequiredGroup(client, user, groups) {

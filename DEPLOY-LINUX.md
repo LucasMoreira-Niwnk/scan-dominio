@@ -116,7 +116,7 @@ LDAP_BIND_DN=CN=svc-scan,OU=Servicos,DC=empresa,DC=com,DC=br
 LDAP_BIND_PASSWORD=senha-da-conta-de-servico
 # LDAP_BIND_PASSWORD_FILE=/opt/scan-dominio/secrets/ldap-bind-password
 LDAP_USER_BASE_DN=DC=empresa,DC=com,DC=br
-LDAP_USER_FILTER=(|(sAMAccountName={{username}})(userPrincipalName={{upn}})(userPrincipalName={{login}}))
+LDAP_USER_FILTER=(&(objectCategory=person)(objectClass=user)(|(sAMAccountName={{username}})(userPrincipalName={{upn}})(userPrincipalName={{login}})))
 LDAP_REQUIRED_GROUP=SCAN
 LDAP_REQUIRED_GROUP_DN=CN=SCAN,OU=Grupos,DC=empresa,DC=com,DC=br
 LDAP_TLS_REJECT_UNAUTHORIZED=true
