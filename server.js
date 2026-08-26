@@ -579,6 +579,7 @@ function syncDiscoveredSubdomains(parentDomain, report, baseOptions) {
   for (const subdomain of report.subdomains.filter((item) => item.dnsStatus === "resolvido")) {
     const childUrl = new URL(`https://${subdomain.host}`);
     const page = findPageForOrigin(report, childUrl.origin);
+    const existing = store.domains.find((domain) => domain.target.toLowerCase() === childUrl.origin.toLowerCase());
     const child = upsertMonitoredDomain({
       id: crypto.randomUUID(),
       label: subdomain.host,
@@ -598,7 +599,7 @@ function syncDiscoveredSubdomains(parentDomain, report, baseOptions) {
       maxPages: baseOptions.maxPages,
       timeoutMs: baseOptions.timeoutMs,
       nextStatusAt: new Date(Date.now() + MONITOR_INTERVAL_MS).toISOString(),
-      nextScanAt: new Date(Date.now() + WEEKLY_SCAN_INTERVAL_MS).toISOString(),
+      nextScanAt: existing?.lastScanSummary ? new Date(Date.now() + WEEKLY_SCAN_INTERVAL_MS).toISOString() : now.toISOString(),
       history: [],
       reports: []
     });
@@ -2103,7 +2104,11 @@ async function withTimeout(promise, timeoutMs, message) {
 
 async function fetchWithTimeout(url, timeoutMs, options = {}) {
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  let timedOut = false;
+  const timeout = setTimeout(() => {
+    timedOut = true;
+    controller.abort();
+  }, timeoutMs);
   const abortFromParent = () => controller.abort();
   if (options.signal?.aborted) controller.abort();
   options.signal?.addEventListener("abort", abortFromParent, { once: true });
@@ -2118,6 +2123,11 @@ async function fetchWithTimeout(url, timeoutMs, options = {}) {
         ...(fetchOptions.headers || {})
       }
     });
+  } catch (error) {
+    if (timedOut && !options.signal?.aborted) {
+      throw new Error(`Timeout apos ${timeoutMs} ms`);
+    }
+    throw error;
   } finally {
     clearTimeout(timeout);
     options.signal?.removeEventListener("abort", abortFromParent);
