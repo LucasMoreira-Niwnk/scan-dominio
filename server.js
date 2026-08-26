@@ -147,6 +147,7 @@ const mimeTypes = {
 
 let store = await loadStore();
 const manualScanJobs = new Map();
+let saveChain = Promise.resolve();
 
 const server = http.createServer(async (req, res) => {
   try {
@@ -275,8 +276,14 @@ async function loadStore() {
 }
 
 async function saveStore() {
-  await fs.mkdir(dataDir, { recursive: true });
-  await fs.writeFile(storePath, JSON.stringify(persistableStore(), null, 2));
+  const write = saveChain.catch(() => {}).then(async () => {
+    await fs.mkdir(dataDir, { recursive: true });
+    const tempPath = `${storePath}.${process.pid}.${Date.now()}.tmp`;
+    await fs.writeFile(tempPath, JSON.stringify(persistableStore(), null, 2));
+    await fs.rename(tempPath, storePath);
+  });
+  saveChain = write;
+  return write;
 }
 
 function publicStore() {
@@ -631,13 +638,13 @@ async function runDueJobs() {
 
 function queueDomainStatusCheck(domain, options) {
   setTimeout(() => {
-    runDomainStatusCheck(domain, options).catch((error) => recordDomainError(domain, "status", error));
+    runDomainStatusCheck(domain, options).catch((error) => safelyRecordDomainError(domain, "status", error));
   }, 0).unref();
 }
 
 function queueDomainSecurityScan(domain, options) {
   setTimeout(() => {
-    runDomainSecurityScan(domain, options).catch((error) => recordDomainError(domain, "scan", error));
+    runDomainSecurityScan(domain, options).catch((error) => safelyRecordDomainError(domain, "scan", error));
   }, 0).unref();
 }
 
@@ -656,7 +663,7 @@ function queueDiscoveredSubdomainScans(parentDomain, { reason }) {
       try {
         await runDomainSecurityScan(child, { manual: false, sendEmail: false });
       } catch (error) {
-        await recordDomainError(child, "scan", error);
+        await safelyRecordDomainError(child, "scan", error);
       }
     }
   }, 0).unref();
@@ -729,6 +736,14 @@ async function recordDomainError(domain, type, error) {
   domain.runningStatus = false;
   domain.runningScan = false;
   await saveStore();
+}
+
+async function safelyRecordDomainError(domain, type, error) {
+  try {
+    await recordDomainError(domain, type, error);
+  } catch (recordError) {
+    console.error(`[${new Date().toISOString()}] Falha ao registrar erro de ${type} para ${domain?.target}:`, recordError);
+  }
 }
 
 async function checkUrlStatus(target, timeoutMs) {
@@ -873,7 +888,7 @@ async function runScan(payload, context = {}) {
   throwIfAborted(signal);
   report.httpsRedirect = await inspectHttpsRedirect(baseHost, timeoutMs, signal);
   throwIfAborted(signal);
-  report.dnsRecords = await inspectPublicDns(rootDomain);
+  report.dnsRecords = await inspectPublicDns(rootDomain, timeoutMs);
 
   const discovery = includeSubdomains ? await discoverSubdomains(rootDomain, baseHost, timeoutMs, signal) : { subdomains: [], sources: [] };
   const discoveredSubdomains = discovery.subdomains;
@@ -905,10 +920,19 @@ async function runScan(payload, context = {}) {
     if (!isAllowedHost(currentUrl.hostname, baseHost, rootDomain, includeSubdomains)) continue;
 
     const page = await inspectPage(currentUrl, timeoutMs, signal, appProfile);
-    report.pages.push(page);
-    report.findings.push(...page.findings);
-    mergeWaf(report.waf, page.waf);
-    scannedOrigins.add(new URL(page.finalUrl || page.url).origin);
+    addPageToReport(report, page, scannedOrigins);
+
+    if (page.error && currentUrl.protocol === "https:" && report.pages.length < maxPages) {
+      const fallbackUrl = new URL(currentUrl.href);
+      fallbackUrl.protocol = "http:";
+      fallbackUrl.port = "";
+      const fallbackHref = fallbackUrl.href;
+      if (!seen.has(fallbackHref)) {
+        seen.add(fallbackHref);
+        const fallbackPage = await inspectPage(fallbackUrl, timeoutMs, signal, appProfile);
+        addPageToReport(report, fallbackPage, scannedOrigins);
+      }
+    }
 
     if (followPaths && page.links.length) {
       for (const link of page.links) {
@@ -947,6 +971,17 @@ async function runScan(payload, context = {}) {
   report.summary.subdomainsTested = countTestedSubdomains(report.pages, rootDomain, baseHost);
   report.finishedAt = new Date().toISOString();
   return report;
+}
+
+function addPageToReport(report, page, scannedOrigins) {
+  report.pages.push(page);
+  report.findings.push(...page.findings);
+  mergeWaf(report.waf, page.waf);
+  try {
+    scannedOrigins.add(new URL(page.finalUrl || page.url).origin);
+  } catch {
+    // Partial page records can still be useful as findings.
+  }
 }
 
 function countTestedSubdomains(pages, rootDomain, baseHost) {
@@ -1540,7 +1575,7 @@ async function inspectHttpsRedirect(hostname, timeoutMs, signal) {
   }
 }
 
-async function inspectPublicDns(rootDomain) {
+async function inspectPublicDns(rootDomain, timeoutMs = 9000) {
   const records = {
     domain: rootDomain,
     ns: [],
@@ -1552,11 +1587,11 @@ async function inspectPublicDns(rootDomain) {
   };
 
   await Promise.all([
-    collectDns(records, "ns", () => dns.resolveNs(rootDomain)),
-    collectDns(records, "mx", () => dns.resolveMx(rootDomain)),
-    collectDns(records, "txt", async () => (await dns.resolveTxt(rootDomain)).map((entry) => entry.join(""))),
-    collectDns(records, "soa", () => dns.resolveSoa(rootDomain)),
-    collectDns(records, "caa", () => dns.resolveCaa(rootDomain))
+    collectDns(records, "ns", () => withTimeout(dns.resolveNs(rootDomain), timeoutMs, "Timeout em NS")),
+    collectDns(records, "mx", () => withTimeout(dns.resolveMx(rootDomain), timeoutMs, "Timeout em MX")),
+    collectDns(records, "txt", async () => (await withTimeout(dns.resolveTxt(rootDomain), timeoutMs, "Timeout em TXT")).map((entry) => entry.join(""))),
+    collectDns(records, "soa", () => withTimeout(dns.resolveSoa(rootDomain), timeoutMs, "Timeout em SOA")),
+    collectDns(records, "caa", () => withTimeout(dns.resolveCaa(rootDomain), timeoutMs, "Timeout em CAA"))
   ]);
 
   return records;
@@ -2050,6 +2085,20 @@ function groupFindingsByUrl(findings) {
 function clamp(value, min, max) {
   if (!Number.isFinite(value)) return min;
   return Math.max(min, Math.min(max, Math.round(value)));
+}
+
+async function withTimeout(promise, timeoutMs, message) {
+  let timeout;
+  try {
+    return await Promise.race([
+      promise,
+      new Promise((_, reject) => {
+        timeout = setTimeout(() => reject(new Error(message)), timeoutMs);
+      })
+    ]);
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 async function fetchWithTimeout(url, timeoutMs, options = {}) {
