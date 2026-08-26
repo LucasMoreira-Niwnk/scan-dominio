@@ -210,6 +210,7 @@ const server = http.createServer(async (req, res) => {
     await serveStatic(url.pathname, res);
   } catch (error) {
     const status = error.statusCode || 500;
+    console.error(`[${new Date().toISOString()}] ${req.method} ${req.url} falhou:`, error);
     sendJson(res, status, {
       error: error.publicMessage || "Falha ao executar a operacao.",
       detail: process.env.NODE_ENV === "development" ? String(error.stack || error) : undefined
@@ -273,7 +274,7 @@ async function loadStore() {
 
 async function saveStore() {
   await fs.mkdir(dataDir, { recursive: true });
-  await fs.writeFile(storePath, JSON.stringify(store, null, 2));
+  await fs.writeFile(storePath, JSON.stringify(persistableStore(), null, 2));
 }
 
 function publicStore() {
@@ -285,6 +286,18 @@ function publicStore() {
       ...domain,
       runningStatus: Boolean(domain.runningStatus),
       runningScan: Boolean(domain.runningScan)
+    }))
+  };
+}
+
+function persistableStore() {
+  return {
+    domains: store.domains.map(({ runningStatus, runningScan, ...domain }) => ({
+      ...domain,
+      history: Array.isArray(domain.history) ? domain.history.slice(-HISTORY_LIMIT) : [],
+      reports: Array.isArray(domain.reports) ? domain.reports.slice(-REPORT_LIMIT) : [],
+      errors: Array.isArray(domain.errors) ? domain.errors.slice(-20) : [],
+      emailDeliveries: Array.isArray(domain.emailDeliveries) ? domain.emailDeliveries.slice(-20) : []
     }))
   };
 }
@@ -322,8 +335,7 @@ async function addDomain(payload) {
   });
 
   await saveStore();
-  runDomainSecurityScan(domain, { manual: false, sendEmail: false })
-    .catch((error) => recordDomainError(domain, "scan", error));
+  queueDomainSecurityScan(domain, { manual: false, sendEmail: false });
   return domain;
 }
 
@@ -607,12 +619,24 @@ async function runDueJobs() {
   for (const domain of store.domains) {
     if (!domain.enabled) continue;
     if (!domain.runningStatus && Date.parse(domain.nextStatusAt) <= now) {
-      runDomainStatusCheck(domain, { manual: false }).catch((error) => recordDomainError(domain, "status", error));
+      queueDomainStatusCheck(domain, { manual: false });
     }
     if (!domain.runningScan && Date.parse(domain.nextScanAt) <= now) {
-      runDomainSecurityScan(domain, { manual: false }).catch((error) => recordDomainError(domain, "scan", error));
+      queueDomainSecurityScan(domain, { manual: false });
     }
   }
+}
+
+function queueDomainStatusCheck(domain, options) {
+  setTimeout(() => {
+    runDomainStatusCheck(domain, options).catch((error) => recordDomainError(domain, "status", error));
+  }, 0).unref();
+}
+
+function queueDomainSecurityScan(domain, options) {
+  setTimeout(() => {
+    runDomainSecurityScan(domain, options).catch((error) => recordDomainError(domain, "scan", error));
+  }, 0).unref();
 }
 
 async function runDomainStatusCheck(domain, { manual }) {

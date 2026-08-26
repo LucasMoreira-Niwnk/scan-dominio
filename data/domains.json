@@ -439,9 +439,7 @@
       "weeklyEmailEnabled": true,
       "emailDeliveries": [],
       "discoverySources": [],
-      "dnsAddresses": [],
-      "runningStatus": false,
-      "runningScan": false
+      "dnsAddresses": []
     },
     {
       "id": "81f0ea8f-e6a3-4f05-8f1c-928972aaa541",
@@ -609,9 +607,7 @@
         "52.97.47.168",
         "52.97.116.120",
         "52.97.4.200"
-      ],
-      "runningStatus": false,
-      "runningScan": false
+      ]
     },
     {
       "id": "06e6f854-94b7-4bfa-8f96-7ef11ffbfd6e",
@@ -1678,9 +1674,7 @@
       "weeklyEmailEnabled": true,
       "emailDeliveries": [],
       "discoverySources": [],
-      "dnsAddresses": [],
-      "runningStatus": false,
-      "runningScan": false
+      "dnsAddresses": []
     },
     {
       "id": "11001dc3-587e-4f1b-86be-b0cd52bd3f7d",
@@ -1837,9 +1831,7 @@
         "52.97.47.200",
         "52.97.116.72",
         "52.97.4.200"
-      ],
-      "runningStatus": false,
-      "runningScan": false
+      ]
     },
     {
       "id": "abfa9cad-3988-426e-aae2-49f58d7dbd80",
@@ -1995,9 +1987,7 @@
         "172.67.71.75",
         "104.26.1.250",
         "104.26.0.250"
-      ],
-      "runningStatus": false,
-      "runningScan": false
+      ]
     },
     {
       "id": "0e319059-10dd-4f16-b7d2-793b901702f2",
@@ -2153,9 +2143,7 @@
         "104.26.1.250",
         "104.26.0.250",
         "172.67.71.75"
-      ],
-      "runningStatus": false,
-      "runningScan": false
+      ]
     },
     {
       "id": "8e886320-eaff-442c-9dd4-8cec814bc8c2",
@@ -2311,9 +2299,7 @@
         "104.26.0.250",
         "104.26.1.250",
         "172.67.71.75"
-      ],
-      "runningStatus": false,
-      "runningScan": false
+      ]
     },
     {
       "id": "d0d710fc-53cc-411e-a323-c5cfe8eae500",
@@ -2469,9 +2455,7 @@
         "104.26.0.250",
         "172.67.71.75",
         "104.26.1.250"
-      ],
-      "runningStatus": false,
-      "runningScan": false
+      ]
     },
     {
       "id": "0c592787-0391-4459-b54d-780ccd93f5b4",
@@ -2627,9 +2611,7 @@
         "104.26.1.250",
         "172.67.71.75",
         "104.26.0.250"
-      ],
-      "runningStatus": false,
-      "runningScan": false
+      ]
     },
     {
       "id": "c815d5cf-83d1-4a8a-a74e-0b6992b8007a",
@@ -2785,9 +2767,7 @@
         "104.26.0.250",
         "104.26.1.250",
         "172.67.71.75"
-      ],
-      "runningStatus": false,
-      "runningScan": false
+      ]
     },
     {
       "id": "e18e1efe-a95e-4dd3-8359-bc7508949458",
@@ -2943,9 +2923,7 @@
         "104.26.1.250",
         "104.26.0.250",
         "172.67.71.75"
-      ],
-      "runningStatus": false,
-      "runningScan": false
+      ]
     },
     {
       "id": "556f157c-b423-4a22-aa2a-5da54eb2eb78",
@@ -3099,9 +3077,7 @@
       ],
       "dnsAddresses": [
         "177.155.209.182"
-      ],
-      "runningStatus": false,
-      "runningScan": false
+      ]
     },
     {
       "id": "a6cd68ee-93bc-428f-bc52-913890d491b8",
@@ -3257,9 +3233,7 @@
         "104.26.1.250",
         "172.67.71.75",
         "104.26.0.250"
-      ],
-      "runningStatus": false,
-      "runningScan": false
+      ]
     }
   ]
 }
