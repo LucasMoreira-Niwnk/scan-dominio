@@ -26,6 +26,7 @@ http://localhost:4173
 - O cadastro permite informar destinatarios para envio automatico do relatorio semanal por e-mail.
 - Tambem e possivel executar "Checar agora" e "Scan agora" manualmente.
 - Os dados ficam salvos em `data/domains.json`.
+- O arquivo `data/domains.json` e local de cada ambiente e nao deve ser versionado. O repositorio mantem apenas `data/domains.example.json`.
 
 ## Envio semanal por e-mail
 
