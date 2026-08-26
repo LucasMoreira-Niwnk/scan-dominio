@@ -16,6 +16,28 @@ Depois abra:
 http://localhost:4173
 ```
 
+Por padrao, o login fica desativado para facilitar desenvolvimento local. Em producao, ative `AUTH_ENABLED=true` no `.env` e configure o LDAP.
+
+## Login LDAP
+
+A aplicacao possui tela de login em `/login`. Quando `AUTH_ENABLED=true`, dashboard, arquivos estaticos e APIs ficam protegidos por sessao `HttpOnly`.
+
+Variaveis principais:
+
+```env
+AUTH_ENABLED=true
+SESSION_SECURE=true
+LDAP_URL=ldaps://ad.empresa.com.br:636
+LDAP_BIND_DN=CN=svc-scan,OU=Servicos,DC=empresa,DC=com,DC=br
+LDAP_BIND_PASSWORD=senha-da-conta-de-servico
+LDAP_USER_BASE_DN=DC=empresa,DC=com,DC=br
+LDAP_USER_FILTER=(|(sAMAccountName={{username}})(userPrincipalName={{username}}))
+LDAP_REQUIRED_GROUP=SCAN
+LDAP_REQUIRED_GROUP_DN=CN=SCAN,OU=Grupos,DC=empresa,DC=com,DC=br
+```
+
+O usuario precisa autenticar no LDAP e pertencer ao grupo `SCAN`. A validacao tenta `memberOf` e, quando `LDAP_REQUIRED_GROUP_DN` estiver definido, tambem consulta o grupo pelo atributo `member`.
+
 ## Monitoramento
 
 - Cadastre dominios na area "Cadastrar dominio para monitorar".

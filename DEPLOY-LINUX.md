@@ -5,11 +5,13 @@
 - Linux com Node.js 20 ou superior.
 - Porta liberada para acesso interno, por padrao `4173`.
 - Acesso de rede de saida para DNS, HTTPS e fontes publicas de subdominios.
+- Acesso de rede ao servidor LDAP/Active Directory da empresa.
 
 ## Subir manualmente
 
 ```sh
 cd /opt/scan-dominio
+npm install --omit=dev
 cp .env.example .env
 nano .env
 chmod +x start-linux.sh
@@ -43,6 +45,7 @@ cd /opt/scan-dominio
 sudo systemctl stop scan-dominio
 BRANCH=$(git branch --show-current)
 sudo git pull origin "$BRANCH"
+sudo npm install --omit=dev
 sudo chown -R scan-dominio:scan-dominio /opt/scan-dominio/data
 sudo systemctl start scan-dominio
 ```
@@ -53,6 +56,8 @@ sudo systemctl start scan-dominio
 sudo useradd --system --home /opt/scan-dominio --shell /usr/sbin/nologin scan-dominio
 sudo mkdir -p /opt/scan-dominio
 sudo cp -r . /opt/scan-dominio/
+cd /opt/scan-dominio
+sudo npm install --omit=dev
 sudo chown -R scan-dominio:scan-dominio /opt/scan-dominio
 sudo cp /opt/scan-dominio/scan-dominio.service /etc/systemd/system/scan-dominio.service
 sudo systemctl daemon-reload
@@ -91,6 +96,32 @@ SUBDOMAIN_SCAN_LIMIT=80
 
 O servico systemd carrega `/opt/scan-dominio/.env` automaticamente. No cadastro do dominio, informe os destinatarios separados por virgula, ponto e virgula ou quebra de linha. O envio acontece apos o scan semanal automatico do dominio raiz.
 Para validar a configuracao, abra a aba "Scan manual", preencha os destinatarios e clique em "Testar SMTP". Depois de um scan manual concluido, o botao "Enviar relatorio por e-mail" envia o relatorio sob demanda para os mesmos destinatarios.
+
+## Login LDAP
+
+Crie o grupo `SCAN` no LDAP/Active Directory e adicione os usuarios autorizados. Depois configure o `.env`:
+
+```env
+AUTH_ENABLED=true
+SESSION_SECURE=true
+LDAP_URL=ldaps://ad.empresa.com.br:636
+LDAP_BIND_DN=CN=svc-scan,OU=Servicos,DC=empresa,DC=com,DC=br
+LDAP_BIND_PASSWORD=senha-da-conta-de-servico
+LDAP_USER_BASE_DN=DC=empresa,DC=com,DC=br
+LDAP_USER_FILTER=(|(sAMAccountName={{username}})(userPrincipalName={{username}}))
+LDAP_REQUIRED_GROUP=SCAN
+LDAP_REQUIRED_GROUP_DN=CN=SCAN,OU=Grupos,DC=empresa,DC=com,DC=br
+LDAP_TLS_REJECT_UNAUTHORIZED=true
+```
+
+Use `ldaps://` sempre que possivel. Se o certificado do AD ainda nao estiver confiavel no servidor, instale a CA corporativa no Linux em vez de desligar a validacao TLS. Para ambiente de teste, `LDAP_TLS_REJECT_UNAUTHORIZED=false` ajuda a confirmar conectividade, mas nao e recomendado em producao.
+
+Depois de alterar o `.env`, reinicie:
+
+```sh
+sudo systemctl restart scan-dominio
+sudo journalctl -u scan-dominio -f
+```
 
 ## Proxy reverso
 

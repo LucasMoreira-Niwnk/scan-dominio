@@ -27,6 +27,9 @@ const SCHEDULER_TICK_MS = 60 * 1000;
 const HISTORY_LIMIT = 168;
 const REPORT_LIMIT = 8;
 const SUBDOMAIN_SCAN_LIMIT = Number(process.env.SUBDOMAIN_SCAN_LIMIT || 80);
+const AUTH_ENABLED = process.env.AUTH_ENABLED === "true";
+const SESSION_COOKIE = process.env.SESSION_COOKIE_NAME || "scan_dominio_session";
+const SESSION_TTL_MS = Number(process.env.SESSION_TTL_HOURS || 8) * 60 * 60 * 1000;
 const execFileAsync = promisify(execFile);
 const DNS_PUBLIC_RESOLVERS = [
   "system",
@@ -147,11 +150,54 @@ const mimeTypes = {
 
 let store = await loadStore();
 const manualScanJobs = new Map();
+const sessions = new Map();
 let saveChain = Promise.resolve();
 
 const server = http.createServer(async (req, res) => {
   try {
     const url = new URL(req.url || "/", `http://${req.headers.host}`);
+    const session = getSessionFromRequest(req);
+
+    if (url.pathname === "/api/auth/session" && req.method === "GET") {
+      return sendJson(res, 200, {
+        authenticated: Boolean(session),
+        user: session ? publicSessionUser(session) : null,
+        authEnabled: AUTH_ENABLED
+      });
+    }
+
+    if (url.pathname === "/api/auth/login" && req.method === "POST") {
+      const payload = await readJson(req);
+      const user = await authenticateUser(payload);
+      const nextSession = createSession(user);
+      setSessionCookie(res, nextSession.id);
+      return sendJson(res, 200, {
+        authenticated: true,
+        user: publicSessionUser(nextSession)
+      });
+    }
+
+    if (url.pathname === "/api/auth/logout" && req.method === "POST") {
+      if (session) sessions.delete(session.id);
+      clearSessionCookie(res);
+      return sendJson(res, 200, { authenticated: false });
+    }
+
+    if (AUTH_ENABLED && !session) {
+      if (url.pathname.startsWith("/api/")) {
+        return sendJson(res, 401, { error: "Sessao expirada. Faca login novamente." });
+      }
+      if (url.pathname !== "/login" && url.pathname !== "/login.html" && url.pathname !== "/styles.css") {
+        redirect(res, "/login");
+        return;
+      }
+    }
+
+    if (session && (url.pathname === "/login" || url.pathname === "/login.html")) {
+      redirect(res, "/");
+      return;
+    }
+
     if (url.pathname === "/api/domains" && req.method === "GET") {
       return sendJson(res, 200, publicStore());
     }
@@ -241,7 +287,7 @@ server.listen(PORT, () => {
 startScheduler();
 
 async function serveStatic(pathname, res) {
-  const safePath = pathname === "/" ? "/index.html" : decodeURIComponent(pathname);
+  const safePath = pathname === "/" ? "/index.html" : pathname === "/login" ? "/login.html" : decodeURIComponent(pathname);
   const requested = path.normalize(path.join(publicDir, safePath));
   if (!requested.startsWith(publicDir)) {
     return sendJson(res, 403, { error: "Caminho invalido." });
@@ -258,6 +304,226 @@ async function serveStatic(pathname, res) {
   } catch {
     sendJson(res, 404, { error: "Arquivo nao encontrado." });
   }
+}
+
+function getSessionFromRequest(req) {
+  if (!AUTH_ENABLED) {
+    return {
+      id: "local-dev",
+      username: "local",
+      displayName: "Acesso local",
+      dn: "",
+      groups: [],
+      expiresAt: new Date(Date.now() + SESSION_TTL_MS).toISOString()
+    };
+  }
+
+  pruneExpiredSessions();
+  const cookies = parseRequestCookies(req.headers.cookie || "");
+  const sessionId = cookies[SESSION_COOKIE];
+  if (!sessionId) return null;
+
+  const session = sessions.get(sessionId);
+  if (!session) return null;
+  if (Date.parse(session.expiresAt) <= Date.now()) {
+    sessions.delete(sessionId);
+    return null;
+  }
+
+  session.expiresAt = new Date(Date.now() + SESSION_TTL_MS).toISOString();
+  return session;
+}
+
+function publicSessionUser(session) {
+  return {
+    username: session.username,
+    displayName: session.displayName || session.username,
+    groups: session.groups || [],
+    expiresAt: session.expiresAt
+  };
+}
+
+function createSession(user) {
+  const session = {
+    id: crypto.randomUUID(),
+    username: user.username,
+    displayName: user.displayName || user.username,
+    dn: user.dn,
+    groups: user.groups || [],
+    createdAt: new Date().toISOString(),
+    expiresAt: new Date(Date.now() + SESSION_TTL_MS).toISOString()
+  };
+  sessions.set(session.id, session);
+  return session;
+}
+
+function pruneExpiredSessions() {
+  const now = Date.now();
+  for (const [sessionId, session] of sessions.entries()) {
+    if (Date.parse(session.expiresAt) <= now) sessions.delete(sessionId);
+  }
+}
+
+function parseRequestCookies(cookieHeader) {
+  const cookies = {};
+  for (const part of cookieHeader.split(";")) {
+    const index = part.indexOf("=");
+    if (index === -1) continue;
+    const name = part.slice(0, index).trim();
+    const value = part.slice(index + 1).trim();
+    if (name) cookies[name] = decodeURIComponent(value);
+  }
+  return cookies;
+}
+
+function setSessionCookie(res, sessionId) {
+  const parts = [
+    `${SESSION_COOKIE}=${encodeURIComponent(sessionId)}`,
+    "Path=/",
+    "HttpOnly",
+    "SameSite=Lax",
+    `Max-Age=${Math.max(60, Math.round(SESSION_TTL_MS / 1000))}`
+  ];
+  if (process.env.SESSION_SECURE === "true") parts.push("Secure");
+  res.setHeader("Set-Cookie", parts.join("; "));
+}
+
+function clearSessionCookie(res) {
+  res.setHeader("Set-Cookie", `${SESSION_COOKIE}=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0`);
+}
+
+function redirect(res, location) {
+  res.writeHead(302, {
+    location,
+    "cache-control": "no-store"
+  });
+  res.end();
+}
+
+async function authenticateUser(payload) {
+  const username = cleanLoginValue(payload.username);
+  const password = String(payload.password || "");
+  if (!username || !password) throw httpError(400, "Informe usuario e senha.");
+  if (!AUTH_ENABLED) return { username, displayName: username, dn: "", groups: [] };
+
+  const ldapUrl = process.env.LDAP_URL;
+  const userBaseDn = process.env.LDAP_USER_BASE_DN;
+  if (!ldapUrl || !userBaseDn) {
+    throw httpError(500, "LDAP_URL e LDAP_USER_BASE_DN precisam estar configurados.");
+  }
+
+  let Client;
+  try {
+    ({ Client } = await import("ldapts"));
+  } catch {
+    throw httpError(500, "Dependencia LDAP ausente. Execute npm install no servidor.");
+  }
+
+  const client = new Client({
+    url: ldapUrl,
+    timeout: Number(process.env.LDAP_TIMEOUT_MS || 10000),
+    connectTimeout: Number(process.env.LDAP_CONNECT_TIMEOUT_MS || 10000),
+    tlsOptions: {
+      rejectUnauthorized: process.env.LDAP_TLS_REJECT_UNAUTHORIZED !== "false"
+    }
+  });
+
+  try {
+    if (process.env.LDAP_BIND_DN) {
+      await client.bind(process.env.LDAP_BIND_DN, process.env.LDAP_BIND_PASSWORD || "");
+    }
+
+    const user = await findLdapUser(client, username);
+    if (!user?.dn) throw httpError(401, "Usuario ou senha invalidos.");
+
+    await client.bind(user.dn, password);
+
+    if (process.env.LDAP_BIND_DN) {
+      await client.bind(process.env.LDAP_BIND_DN, process.env.LDAP_BIND_PASSWORD || "");
+    }
+
+    const groups = normalizeLdapValues(user.memberOf);
+    const allowed = await isUserInRequiredGroup(client, user, groups);
+    if (!allowed) throw httpError(403, "Usuario autenticado, mas fora do grupo autorizado.");
+
+    return {
+      username,
+      displayName: firstLdapValue(user.displayName) || firstLdapValue(user.cn) || username,
+      dn: user.dn,
+      groups
+    };
+  } catch (error) {
+    if (error.statusCode) throw error;
+    throw httpError(401, "Usuario ou senha invalidos.");
+  } finally {
+    await client.unbind().catch(() => {});
+  }
+}
+
+async function findLdapUser(client, username) {
+  const filterTemplate = process.env.LDAP_USER_FILTER || "(|(sAMAccountName={{username}})(uid={{username}})(userPrincipalName={{username}}))";
+  const filter = filterTemplate.replaceAll("{{username}}", escapeLdapFilterValue(username));
+  const { searchEntries } = await client.search(process.env.LDAP_USER_BASE_DN, {
+    scope: process.env.LDAP_USER_SEARCH_SCOPE || "sub",
+    filter,
+    sizeLimit: 2,
+    attributes: ["dn", "cn", "displayName", "mail", "memberOf", "uid", "sAMAccountName", "userPrincipalName"]
+  });
+
+  if (searchEntries.length !== 1) return null;
+  return searchEntries[0];
+}
+
+async function isUserInRequiredGroup(client, user, groups) {
+  const requiredDn = process.env.LDAP_REQUIRED_GROUP_DN || "";
+  const requiredName = process.env.LDAP_REQUIRED_GROUP || "SCAN";
+  if (!requiredDn && !requiredName) return true;
+
+  const normalizedRequiredDn = requiredDn.toLowerCase();
+  const normalizedRequiredName = requiredName.toLowerCase();
+  const hasMemberOf = groups.some((group) => {
+    const normalized = group.toLowerCase();
+    return normalized === normalizedRequiredDn || getCnFromDn(normalized) === normalizedRequiredName;
+  });
+  if (hasMemberOf) return true;
+
+  if (!requiredDn) return false;
+
+  const memberAttribute = process.env.LDAP_GROUP_MEMBER_ATTRIBUTE || "member";
+  const { searchEntries } = await client.search(requiredDn, {
+    scope: "base",
+    filter: `(${memberAttribute}=${escapeLdapFilterValue(user.dn)})`,
+    sizeLimit: 1,
+    attributes: ["dn"]
+  });
+  return searchEntries.length > 0;
+}
+
+function cleanLoginValue(value) {
+  return String(value || "").trim().slice(0, 180);
+}
+
+function normalizeLdapValues(value) {
+  if (!value) return [];
+  return (Array.isArray(value) ? value : [value]).map((item) => String(item)).filter(Boolean);
+}
+
+function firstLdapValue(value) {
+  return normalizeLdapValues(value)[0] || "";
+}
+
+function getCnFromDn(value) {
+  const match = String(value).match(/(?:^|,)cn=([^,]+)/i);
+  return match ? match[1].replaceAll("\\,", ",").toLowerCase() : "";
+}
+
+function escapeLdapFilterValue(value) {
+  return String(value)
+    .replaceAll("\\", "\\5c")
+    .replaceAll("*", "\\2a")
+    .replaceAll("(", "\\28")
+    .replaceAll(")", "\\29")
+    .replaceAll("\0", "\\00");
 }
 
 async function readJson(req) {

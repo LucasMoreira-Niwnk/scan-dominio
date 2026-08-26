@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login | SCAN Dominio</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body class="login-body">
+    <main class="login-shell">
+      <section class="login-panel" aria-labelledby="login-title">
+        <div class="login-brand">
+          <div class="brand-mark">S</div>
+          <div>
+            <strong>SCAN Dominio</strong>
+            <span>Security monitor</span>
+          </div>
+        </div>
+
+        <div class="login-copy">
+          <p class="eyebrow">Acesso restrito</p>
+          <h1 id="login-title">Entrar com LDAP</h1>
+          <p>Use seu usuario corporativo. O acesso e liberado apenas para membros do grupo SCAN.</p>
+        </div>
+
+        <form id="loginForm" class="login-form">
+          <label class="field">
+            <span>Usuario</span>
+            <input id="username" name="username" type="text" autocomplete="username" required autofocus>
+          </label>
+
+          <label class="field">
+            <span>Senha</span>
+            <input id="password" name="password" type="password" autocomplete="current-password" required>
+          </label>
+
+          <button class="primary" type="submit" id="loginButton">Entrar</button>
+          <p id="loginStatus" class="muted-line" role="status">Aguardando credenciais.</p>
+        </form>
+      </section>
+    </main>
+
+    <script>
+      const form = document.querySelector("#loginForm");
+      const button = document.querySelector("#loginButton");
+      const status = document.querySelector("#loginStatus");
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        button.disabled = true;
+        button.textContent = "Validando...";
+        status.textContent = "Conectando ao LDAP...";
+
+        try {
+          const response = await fetch("/api/auth/login", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({
+              username: document.querySelector("#username").value,
+              password: document.querySelector("#password").value
+            })
+          });
+          const data = await response.json();
+          if (!response.ok) throw new Error(data.error || "Falha ao autenticar.");
+          window.location.href = "/";
+        } catch (error) {
+          status.textContent = error.message || "Falha ao autenticar.";
+        } finally {
+          button.disabled = false;
+          button.textContent = "Entrar";
+        }
+      });
+    </script>
+  </body>
+</html>

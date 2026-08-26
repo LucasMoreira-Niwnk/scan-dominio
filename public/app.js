@@ -9,6 +9,9 @@ const sendManualEmailButton = document.querySelector("#sendManualEmailButton");
 const manualEmailRecipients = document.querySelector("#manualEmailRecipients");
 const manualEmailStatus = document.querySelector("#manualEmailStatus");
 const scanState = document.querySelector("#scanState");
+const authUser = document.querySelector("#authUser");
+const authUserName = document.querySelector("#authUserName");
+const logoutButton = document.querySelector("#logoutButton");
 const progress = document.querySelector("#progress");
 const summary = document.querySelector("#summary");
 const targetLabel = document.querySelector("#targetLabel");
@@ -81,8 +84,37 @@ let currentManualJobId = null;
 let currentManualCompletedJobId = null;
 let currentAppJobId = null;
 
+initSession();
+
+async function initSession() {
+  try {
+    const response = await apiFetch("/api/auth/session");
+    const data = await response.json();
+    if (data.authenticated && data.user) {
+      authUser?.classList.remove("hidden");
+      if (authUserName) authUserName.textContent = data.user.displayName || data.user.username;
+    }
+  } catch {
+    // apiFetch already redirects expired sessions.
+  }
+}
+
+async function apiFetch(url, options) {
+  const response = await fetch(url, options);
+  if (response.status === 401) {
+    window.location.href = "/login";
+    throw new Error("Sessao expirada. Faca login novamente.");
+  }
+  return response;
+}
+
 navItems.forEach((item) => {
   item.addEventListener("click", () => showView(item.dataset.view));
+});
+
+logoutButton?.addEventListener("click", async () => {
+  await apiFetch("/api/auth/logout", { method: "POST" }).catch(() => {});
+  window.location.href = "/login";
 });
 
 openDomainPanel.addEventListener("click", () => setDomainPanel(true));
@@ -109,7 +141,7 @@ domainForm.addEventListener("submit", async (event) => {
   addDomainButton.textContent = "Cadastrando...";
   monitorLabel.textContent = "Cadastrando dominio e iniciando o primeiro scan em segundo plano...";
   try {
-    const response = await fetch("/api/domains", {
+    const response = await apiFetch("/api/domains", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(payload)
@@ -140,7 +172,7 @@ domainList.addEventListener("click", async (event) => {
   try {
     const method = action === "delete" ? "DELETE" : "POST";
     const path = action === "delete" ? `/api/domains/${id}` : `/api/domains/${id}/${action}`;
-    const response = await fetch(path, { method });
+    const response = await apiFetch(path, { method });
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || "Operacao falhou.");
     renderStore(data.store || { domains: data.domain ? [data.domain] : [] });
@@ -207,7 +239,7 @@ form.addEventListener("submit", async (event) => {
 cancelScanButton.addEventListener("click", async () => {
   if (!currentManualJobId) return;
   cancelScanButton.disabled = true;
-  await fetch(`/api/manual-scans/${currentManualJobId}`, { method: "DELETE" });
+  await apiFetch(`/api/manual-scans/${currentManualJobId}`, { method: "DELETE" });
 });
 
 appScanForm.addEventListener("submit", async (event) => {
@@ -244,7 +276,7 @@ appScanForm.addEventListener("submit", async (event) => {
 cancelAppScanButton.addEventListener("click", async () => {
   if (!currentAppJobId) return;
   cancelAppScanButton.disabled = true;
-  await fetch(`/api/manual-scans/${currentAppJobId}`, { method: "DELETE" });
+  await apiFetch(`/api/manual-scans/${currentAppJobId}`, { method: "DELETE" });
 });
 
 clearButton.addEventListener("click", () => {
@@ -355,7 +387,7 @@ function enableAppExports(enabled) {
 }
 
 async function runCancelableScan(payload, hooks) {
-  const start = await fetch("/api/manual-scans", {
+  const start = await apiFetch("/api/manual-scans", {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify(payload)
@@ -366,7 +398,7 @@ async function runCancelableScan(payload, hooks) {
 
   while (true) {
     await wait(900);
-    const response = await fetch(`/api/manual-scans/${created.id}`);
+    const response = await apiFetch(`/api/manual-scans/${created.id}`);
     const job = await response.json();
     if (!response.ok) throw new Error(job.error || "Falha ao consultar scan.");
     hooks.onStatus?.(job);
@@ -383,7 +415,7 @@ async function sendEmailAction({ button, path, loadingText, successText }) {
   button.textContent = loadingText;
   manualEmailStatus.textContent = "Enviando mensagem...";
   try {
-    const response = await fetch(path, {
+    const response = await apiFetch(path, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ recipients })
@@ -411,7 +443,7 @@ function wait(ms) {
 
 async function loadDomains() {
   try {
-    const response = await fetch("/api/domains");
+    const response = await apiFetch("/api/domains");
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || "Falha ao carregar monitoramento.");
     renderStore(data);
