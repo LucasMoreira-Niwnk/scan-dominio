@@ -1,0 +1,11 @@
+{
+  "name": "ferramenta-scan-dominio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Ferramenta local para scan basico de URLs, headers de seguranca e indicios de WAF.",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "start:linux": "PORT=${PORT:-4173} node server.js"
+  }
+}

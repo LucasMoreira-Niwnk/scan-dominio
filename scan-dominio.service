@@ -1,0 +1,19 @@
+[Unit]
+Description=SCAN Dominio security monitoring
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/scan-dominio
+Environment=PORT=4173
+Environment=NODE_ENV=production
+EnvironmentFile=-/opt/scan-dominio/.env
+ExecStart=/usr/bin/node /opt/scan-dominio/server.js
+Restart=always
+RestartSec=5
+User=scan-dominio
+Group=scan-dominio
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SCAN Dominio</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">S</div>
+          <div>
+            <strong>SCAN Dominio</strong>
+            <span>Security monitor</span>
+          </div>
+        </div>
+
+        <nav class="side-nav" aria-label="Navegacao principal">
+          <button class="nav-item active" type="button" data-view="monitor">
+            <span class="nav-icon">M</span>
+            Monitoramento
+          </button>
+          <button class="nav-item" type="button" data-view="manual">
+            <span class="nav-icon">S</span>
+            Scan manual
+          </button>
+          <button class="nav-item" type="button" data-view="apps">
+            <span class="nav-icon">A</span>
+            Aplicacoes
+          </button>
+        </nav>
+
+        <div class="side-footer">
+          <span id="scanState">Pronto</span>
+          <small>Checks horarios e scan semanal local</small>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <section id="view-monitor" class="view active-view" aria-labelledby="monitor-title">
+          <header class="page-header">
+            <div>
+              <p class="eyebrow">Monitoramento continuo</p>
+              <h1 id="monitor-title">Dominios monitorados</h1>
+              <p id="monitorLabel">Carregando monitoramento...</p>
+            </div>
+            <div class="header-actions">
+              <button type="button" id="refreshDomains">Atualizar</button>
+              <button class="primary" type="button" id="openDomainPanel">Novo dominio</button>
+            </div>
+          </header>
+
+          <div class="monitor-summary">
+            <article class="metric">
+              <span>Dominios</span>
+              <strong id="metricDomains">0</strong>
+            </article>
+            <article class="metric">
+              <span>Online</span>
+              <strong id="metricOnline">0</strong>
+            </article>
+            <article class="metric severity-high">
+              <span>Indisponiveis</span>
+              <strong id="metricDown">0</strong>
+            </article>
+            <article class="metric">
+              <span>Scans semanais</span>
+              <strong id="metricWeekly">0</strong>
+            </article>
+          </div>
+
+          <section class="dashboard-grid" aria-label="Metricas do monitoramento">
+            <article class="dash-panel risk-panel">
+              <header>
+                <div>
+                  <span class="panel-kicker">Risco agregado</span>
+                  <h2>Achados dos ultimos scans</h2>
+                </div>
+                <strong id="riskScore">0</strong>
+              </header>
+              <div class="severity-bars">
+                <div class="severity-row">
+                  <span>Alto</span>
+                  <div class="track"><div id="barHigh" class="fill high-fill"></div></div>
+                  <strong id="dashHigh">0</strong>
+                </div>
+                <div class="severity-row">
+                  <span>Medio</span>
+                  <div class="track"><div id="barMedium" class="fill medium-fill"></div></div>
+                  <strong id="dashMedium">0</strong>
+                </div>
+                <div class="severity-row">
+                  <span>Baixo</span>
+                  <div class="track"><div id="barLow" class="fill low-fill"></div></div>
+                  <strong id="dashLow">0</strong>
+                </div>
+                <div class="severity-row">
+                  <span>Info</span>
+                  <div class="track"><div id="barInfo" class="fill info-fill"></div></div>
+                  <strong id="dashInfo">0</strong>
+                </div>
+              </div>
+            </article>
+
+            <article class="dash-panel gauge-panel">
+              <header>
+                <div>
+                  <span class="panel-kicker">Disponibilidade</span>
+                  <h2>Saude dos alvos</h2>
+                </div>
+              </header>
+              <div class="gauge-wrap">
+                <div id="uptimeGauge" class="gauge" style="--value: 0">
+                  <span id="uptimeValue">0%</span>
+                </div>
+                <div>
+                  <p><strong id="healthyTargets">0</strong> alvos saudaveis</p>
+                  <p><strong id="unknownTargets">0</strong> aguardando primeira leitura</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="dash-panel">
+              <header>
+                <div>
+                  <span class="panel-kicker">Performance</span>
+                  <h2>Latencia dos checks</h2>
+                </div>
+                <strong id="avgLatency">0 ms</strong>
+              </header>
+              <div id="latencySparkline" class="sparkline"></div>
+            </article>
+
+            <article class="dash-panel">
+              <header>
+                <div>
+                  <span class="panel-kicker">Agenda</span>
+                  <h2>Proximas execucoes</h2>
+                </div>
+              </header>
+              <div class="schedule-list">
+                <div>
+                  <span>Proximo check</span>
+                  <strong id="nextCheck">-</strong>
+                </div>
+                <div>
+                  <span>Proximo scan semanal</span>
+                  <strong id="nextScan">-</strong>
+                </div>
+                <div>
+                  <span>Scans em execucao</span>
+                  <strong id="runningScans">0</strong>
+                </div>
+              </div>
+            </article>
+          </section>
+
+          <section class="table-panel">
+            <div class="panel-heading">
+              <div>
+                <span class="panel-kicker">Inventario</span>
+                <h2>Alvos e subdominios</h2>
+              </div>
+            </div>
+            <div id="domainList" class="domain-list"></div>
+          </section>
+
+        </section>
+
+        <section id="view-manual" class="view" aria-labelledby="manual-title">
+          <header class="page-header">
+            <div>
+              <p class="eyebrow">Execucao sob demanda</p>
+              <h1 id="manual-title">Scan manual</h1>
+              <p>Rode um scan avulso e exporte o relatorio a partir desta pagina.</p>
+            </div>
+          </header>
+
+          <section class="tool-panel">
+            <form id="scanForm" class="scan-form">
+              <label class="field span-2">
+                <span>URL para scan manual</span>
+                <input id="target" name="target" type="text" placeholder="https://empresa.com.br" autocomplete="url" required>
+              </label>
+
+              <label class="field">
+                <span>Limite de hosts/URLs testados</span>
+                <input id="maxPages" name="maxPages" type="number" min="1" max="500" value="100">
+              </label>
+
+              <label class="field">
+                <span>Timeout por URL</span>
+                <select id="timeoutMs" name="timeoutMs">
+                  <option value="5000">5 segundos</option>
+                  <option value="9000" selected>9 segundos</option>
+                  <option value="15000">15 segundos</option>
+                  <option value="20000">20 segundos</option>
+                </select>
+              </label>
+
+              <label class="check">
+                <input id="includeSubdomains" type="checkbox">
+                <span>Descobrir e testar subdominios publicos</span>
+              </label>
+
+              <label class="check">
+                <input id="activeWafProbe" type="checkbox">
+                <span>Executar probes ativos de WAF</span>
+              </label>
+
+              <label class="check span-2">
+                <input id="followPaths" type="checkbox">
+                <span>Seguir paths encontrados na pagina inicial</span>
+              </label>
+
+              <div class="actions span-2">
+                <button class="primary" type="submit" id="scanButton">Iniciar scan</button>
+                <button class="danger hidden" type="button" id="cancelScanButton">Parar scan</button>
+                <button type="button" id="clearButton">Limpar resultado</button>
+              </div>
+            </form>
+          </section>
+
+          <section class="result-panel">
+            <div class="metric-grid">
+              <article class="metric">
+                <span>URLs</span>
+                <strong id="metricPages">0</strong>
+              </article>
+              <article class="metric severity-high">
+                <span>Altos</span>
+                <strong id="metricHigh">0</strong>
+              </article>
+              <article class="metric severity-medium">
+                <span>Medios</span>
+                <strong id="metricMedium">0</strong>
+              </article>
+              <article class="metric severity-low">
+                <span>Baixos</span>
+                <strong id="metricLow">0</strong>
+              </article>
+              <article class="metric">
+                <span>Subdominios</span>
+                <strong id="metricSubdomains">0</strong>
+              </article>
+            </div>
+
+            <div class="report-toolbar">
+              <div>
+                <h2>Resultado do scan manual</h2>
+                <p id="targetLabel">Nenhum scan manual executado ainda.</p>
+              </div>
+              <div class="export-actions">
+                <button type="button" id="exportJson" disabled>JSON</button>
+                <button type="button" id="exportCsv" disabled>CSV</button>
+                <button type="button" id="exportHtml" disabled>HTML</button>
+              </div>
+            </div>
+
+            <div id="progress" class="progress hidden">
+              <div class="bar"></div>
+              <span>Descobrindo subdominios e testando headers, TLS e sinais de WAF...</span>
+            </div>
+
+            <div id="summary" class="summary empty">
+              Execute um scan manual para visualizar os achados.
+            </div>
+
+            <div class="tabs" role="tablist" aria-label="Secoes do relatorio manual">
+              <button class="tab active" data-tab="findings" type="button">Achados</button>
+              <button class="tab" data-tab="pages" type="button">URLs</button>
+              <button class="tab" data-tab="waf" type="button">WAF/TLS/DNS</button>
+            </div>
+
+            <div id="tab-findings" class="tab-panel"></div>
+            <div id="tab-pages" class="tab-panel hidden"></div>
+            <div id="tab-waf" class="tab-panel hidden"></div>
+          </section>
+        </section>
+
+        <section id="view-apps" class="view" aria-labelledby="apps-title">
+          <header class="page-header">
+            <div>
+              <p class="eyebrow">Aplicacoes em desenvolvimento</p>
+              <h1 id="apps-title">Teste por URL</h1>
+              <p>Valide uma URL nova com checagens de headers, cookies, TLS, CSP, CORS e praticas comuns de frameworks.</p>
+            </div>
+          </header>
+
+          <section class="tool-panel">
+            <form id="appScanForm" class="scan-form">
+              <label class="field span-2">
+                <span>URL da aplicacao</span>
+                <input id="appTarget" type="text" placeholder="https://app-hml.empresa.com.br" autocomplete="url" required>
+              </label>
+
+              <label class="field">
+                <span>Perfil de framework</span>
+                <select id="appProfile">
+                  <option value="generic" selected>Generico / detectar externamente</option>
+                  <option value="react">React SPA</option>
+                  <option value="next">Next.js</option>
+                  <option value="angular">Angular</option>
+                  <option value="vue">Vue / Nuxt</option>
+                  <option value="django">Django</option>
+                  <option value="rails">Ruby on Rails</option>
+                  <option value="laravel">Laravel</option>
+                  <option value="spring">Spring Boot</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>Timeout</span>
+                <select id="appTimeoutMs">
+                  <option value="5000">5 segundos</option>
+                  <option value="9000" selected>9 segundos</option>
+                  <option value="15000">15 segundos</option>
+                  <option value="20000">20 segundos</option>
+                </select>
+              </label>
+
+              <label class="check">
+                <input id="appFollowPaths" type="checkbox" checked>
+                <span>Seguir links internos da aplicacao</span>
+              </label>
+
+              <label class="check">
+                <input id="appActiveWafProbe" type="checkbox">
+                <span>Executar probes ativos de WAF</span>
+              </label>
+
+              <div class="actions span-2">
+                <button class="primary" type="submit" id="appScanButton">Testar aplicacao</button>
+                <button class="danger hidden" type="button" id="cancelAppScanButton">Parar teste</button>
+              </div>
+            </form>
+          </section>
+
+          <section class="result-panel">
+            <div class="report-toolbar">
+              <div>
+                <h2>Resultado da aplicacao</h2>
+                <p id="appTargetLabel">Nenhuma aplicacao testada ainda.</p>
+              </div>
+              <div class="export-actions">
+                <button type="button" id="appExportJson" disabled>JSON</button>
+                <button type="button" id="appExportCsv" disabled>CSV</button>
+                <button type="button" id="appExportHtml" disabled>HTML</button>
+              </div>
+            </div>
+            <div id="appProgress" class="progress hidden">
+              <div class="bar"></div>
+              <span>Executando avaliacao de aplicacao e boas praticas de framework...</span>
+            </div>
+            <div id="appSummary" class="summary empty">Execute um teste para visualizar os achados.</div>
+            <div id="appFindings" class="tab-panel"></div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <div id="domainOverlay" class="overlay hidden"></div>
+    <aside id="domainPanel" class="drawer hidden" aria-labelledby="drawer-title" aria-hidden="true">
+      <div class="drawer-header">
+        <div>
+          <p class="eyebrow">Novo monitor</p>
+          <h2 id="drawer-title">Cadastrar dominio</h2>
+        </div>
+        <button class="icon-button" type="button" id="closeDomainPanel" aria-label="Fechar cadastro">x</button>
+      </div>
+
+      <form id="domainForm" class="scan-form drawer-form">
+        <label class="field span-2">
+          <span>Dominio ou URL</span>
+          <input id="domainTarget" type="text" placeholder="https://empresa.com.br" autocomplete="url" required>
+        </label>
+
+        <label class="field">
+          <span>Limite semanal</span>
+          <input id="domainMaxPages" type="number" min="1" max="500" value="100">
+        </label>
+
+        <label class="field">
+          <span>Timeout</span>
+          <select id="domainTimeoutMs">
+            <option value="5000">5 segundos</option>
+            <option value="9000" selected>9 segundos</option>
+            <option value="15000">15 segundos</option>
+            <option value="20000">20 segundos</option>
+          </select>
+        </label>
+
+        <label class="field span-2">
+          <span>Destinatarios do relatorio semanal</span>
+          <input id="domainEmailRecipients" type="text" placeholder="seguranca@empresa.com.br, ti@empresa.com.br" autocomplete="email">
+        </label>
+
+        <label class="check span-2">
+          <input id="domainIncludeSubdomains" type="checkbox" checked>
+          <span>Descobrir e testar subdominios</span>
+        </label>
+
+        <label class="check span-2">
+          <input id="domainWeeklyEmailEnabled" type="checkbox" checked>
+          <span>Enviar relatorio semanal por e-mail apos o scan automatico</span>
+        </label>
+
+        <label class="check span-2">
+          <input id="domainActiveWafProbe" type="checkbox">
+          <span>Probes ativos no scan semanal</span>
+        </label>
+
+        <div class="actions span-2">
+          <button class="primary" type="submit" id="addDomainButton">Cadastrar monitoramento</button>
+        </div>
+      </form>
+    </aside>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>

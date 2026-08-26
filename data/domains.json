@@ -1,0 +1,3265 @@
+{
+  "domains": [
+    {
+      "id": "7232fa54-f3ad-4d02-bb16-ec6b84af9c1c",
+      "label": "jmdhamoa.com.br",
+      "target": "https://jmdhamoa.com.br",
+      "rootDomain": "jmdhamoa.com.br",
+      "familyId": "1d301afc-aeea-418b-9028-3bb3dfded403",
+      "parentId": null,
+      "kind": "root",
+      "createdAt": "2026-08-25T14:41:05.159Z",
+      "updatedAt": "2026-08-25T14:41:05.159Z",
+      "enabled": true,
+      "includeSubdomains": true,
+      "followPaths": false,
+      "activeWafProbe": false,
+      "maxPages": 100,
+      "timeoutMs": 9000,
+      "nextStatusAt": "2026-08-26T14:21:47.413Z",
+      "nextScanAt": "2026-09-01T14:42:52.116Z",
+      "lastStatus": {
+        "checkedAt": "2026-08-26T13:21:38.400Z",
+        "url": "https://jmdhamoa.com.br/",
+        "finalUrl": "https://jmdhamoa.com.br/",
+        "status": null,
+        "ok": false,
+        "responseTimeMs": 9013,
+        "contentType": "",
+        "server": "",
+        "error": "This operation was aborted"
+      },
+      "lastScanSummary": {
+        "target": "https://jmdhamoa.com.br",
+        "startedAt": "2026-08-25T14:41:05.160Z",
+        "finishedAt": "2026-08-25T14:42:52.112Z",
+        "summary": {
+          "pagesScanned": 2,
+          "findings": 5,
+          "high": 1,
+          "medium": 3,
+          "low": 0,
+          "info": 1,
+          "wafDetected": false,
+          "httpsAvailable": false,
+          "subdomainsFound": 1,
+          "subdomainsTested": 1
+        }
+      },
+      "history": [
+        {
+          "checkedAt": "2026-08-25T14:42:52.117Z",
+          "url": "https://jmdhamoa.com.br/",
+          "finalUrl": "https://jmdhamoa.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": null,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T15:43:24.396Z",
+          "url": "https://jmdhamoa.com.br/",
+          "finalUrl": "https://jmdhamoa.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 108,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T16:43:24.806Z",
+          "url": "https://jmdhamoa.com.br/",
+          "finalUrl": "https://jmdhamoa.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 141,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T17:43:25.369Z",
+          "url": "https://jmdhamoa.com.br/",
+          "finalUrl": "https://jmdhamoa.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 417,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T18:43:25.864Z",
+          "url": "https://jmdhamoa.com.br/",
+          "finalUrl": "https://jmdhamoa.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 107,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T19:43:26.318Z",
+          "url": "https://jmdhamoa.com.br/",
+          "finalUrl": "https://jmdhamoa.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 71,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T20:43:26.762Z",
+          "url": "https://jmdhamoa.com.br/",
+          "finalUrl": "https://jmdhamoa.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 77,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T21:43:27.198Z",
+          "url": "https://jmdhamoa.com.br/",
+          "finalUrl": "https://jmdhamoa.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 100,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T22:43:27.661Z",
+          "url": "https://jmdhamoa.com.br/",
+          "finalUrl": "https://jmdhamoa.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 190,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-26T13:21:38.400Z",
+          "url": "https://jmdhamoa.com.br/",
+          "finalUrl": "https://jmdhamoa.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 9013,
+          "contentType": "",
+          "server": "",
+          "error": "This operation was aborted"
+        }
+      ],
+      "reports": [
+        {
+          "id": "7b8339d2-872e-48d2-9310-b1d41c591373",
+          "createdAt": "2026-08-25T14:42:52.112Z",
+          "report": {
+            "target": "https://jmdhamoa.com.br",
+            "startedAt": "2026-08-25T14:41:05.160Z",
+            "finishedAt": "2026-08-25T14:42:52.112Z",
+            "options": {
+              "maxPages": 100,
+              "timeoutMs": 9000,
+              "includeSubdomains": true,
+              "followPaths": false,
+              "activeWafProbe": false,
+              "appProfile": null
+            },
+            "summary": {
+              "pagesScanned": 2,
+              "findings": 5,
+              "high": 1,
+              "medium": 3,
+              "low": 0,
+              "info": 1,
+              "wafDetected": false,
+              "httpsAvailable": false,
+              "subdomainsFound": 1,
+              "subdomainsTested": 1
+            },
+            "tls": {
+              "ok": false,
+              "error": "AggregateError"
+            },
+            "httpsRedirect": {
+              "ok": false,
+              "error": "fetch failed"
+            },
+            "dnsRecords": {
+              "domain": "jmdhamoa.com.br",
+              "ns": [],
+              "mx": [],
+              "txt": [],
+              "soa": null,
+              "caa": [],
+              "errors": [
+                "mx: ETIMEOUT",
+                "soa: ETIMEOUT",
+                "txt: ETIMEOUT",
+                "caa: ETIMEOUT",
+                "ns: ETIMEOUT"
+              ]
+            },
+            "discovery": {
+              "mode": "certificate-transparency-and-public-dns",
+              "sources": [
+                {
+                  "name": "certificate-transparency",
+                  "count": 0
+                },
+                {
+                  "name": "alienvault-otx",
+                  "count": 0
+                },
+                {
+                  "name": "hackertarget",
+                  "count": 0
+                },
+                {
+                  "name": "rapiddns",
+                  "count": 0
+                },
+                {
+                  "name": "zone-transfer",
+                  "count": 0
+                },
+                {
+                  "name": "dns-wordlist",
+                  "count": 101
+                }
+              ],
+              "resolvers": [
+                "system",
+                "https://dns.google/resolve",
+                "https://cloudflare-dns.com/dns-query"
+              ],
+              "note": "A descoberta lista nomes expostos em fontes publicas. DNS privado ou nomes nunca publicados podem nao aparecer."
+            },
+            "waf": {
+              "detected": false,
+              "vendors": [],
+              "evidence": [],
+              "probes": []
+            },
+            "subdomains": [
+              {
+                "host": "autodiscover.jmdhamoa.com.br",
+                "addresses": [
+                  "52.97.33.232",
+                  "52.97.47.168",
+                  "52.97.116.120",
+                  "52.97.4.200"
+                ],
+                "recordTypes": [
+                  "A"
+                ],
+                "resolvers": [
+                  "system"
+                ],
+                "sources": [
+                  "dns-wordlist"
+                ],
+                "dnsStatus": "resolvido"
+              }
+            ],
+            "pages": [
+              {
+                "url": "https://jmdhamoa.com.br/",
+                "finalUrl": "https://jmdhamoa.com.br/",
+                "status": null,
+                "responseTimeMs": null,
+                "title": "",
+                "headers": {},
+                "tls": {
+                  "ok": false,
+                  "error": "AggregateError"
+                },
+                "httpsRedirect": {
+                  "ok": false,
+                  "error": "fetch failed"
+                },
+                "technologies": [],
+                "cookies": [],
+                "links": [],
+                "waf": {
+                  "detected": false,
+                  "vendors": [],
+                  "evidence": []
+                },
+                "findings": [
+                  {
+                    "severity": "medium",
+                    "title": "Falha ao acessar URL",
+                    "url": "https://jmdhamoa.com.br/",
+                    "evidence": "fetch failed",
+                    "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+                  }
+                ],
+                "error": "fetch failed"
+              },
+              {
+                "url": "https://autodiscover.jmdhamoa.com.br/",
+                "finalUrl": "https://autodiscover.jmdhamoa.com.br/",
+                "status": null,
+                "responseTimeMs": null,
+                "title": "",
+                "headers": {},
+                "tls": {
+                  "ok": false,
+                  "error": "AggregateError"
+                },
+                "httpsRedirect": {
+                  "ok": false,
+                  "error": "fetch failed"
+                },
+                "technologies": [],
+                "cookies": [],
+                "links": [],
+                "waf": {
+                  "detected": false,
+                  "vendors": [],
+                  "evidence": []
+                },
+                "findings": [
+                  {
+                    "severity": "medium",
+                    "title": "Falha ao acessar URL",
+                    "url": "https://autodiscover.jmdhamoa.com.br/",
+                    "evidence": "fetch failed",
+                    "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+                  }
+                ],
+                "error": "fetch failed"
+              }
+            ],
+            "findings": [
+              {
+                "severity": "medium",
+                "title": "Falha ao acessar URL",
+                "url": "https://jmdhamoa.com.br/",
+                "evidence": "fetch failed",
+                "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+              },
+              {
+                "severity": "medium",
+                "title": "Falha ao acessar URL",
+                "url": "https://autodiscover.jmdhamoa.com.br/",
+                "evidence": "fetch failed",
+                "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+              },
+              {
+                "severity": "high",
+                "title": "HTTPS indisponivel ou inacessivel",
+                "url": "https://jmdhamoa.com.br",
+                "evidence": "AggregateError",
+                "recommendation": "Habilite HTTPS valido para o dominio."
+              },
+              {
+                "severity": "medium",
+                "title": "Redirect HTTP para HTTPS ausente",
+                "url": "https://jmdhamoa.com.br",
+                "evidence": "A raiz HTTP nao redirecionou claramente para HTTPS.",
+                "recommendation": "Configure redirect 301/308 de HTTP para HTTPS."
+              },
+              {
+                "severity": "info",
+                "title": "WAF nao identificado",
+                "url": "https://jmdhamoa.com.br",
+                "evidence": "Nao foram encontrados sinais claros de WAF/CDN de seguranca.",
+                "recommendation": "Confirme se ha WAF ativo no provedor ou valide com testes autorizados mais profundos."
+              }
+            ],
+            "findingsByUrl": [
+              {
+                "url": "https://jmdhamoa.com.br/",
+                "findings": [
+                  {
+                    "severity": "medium",
+                    "title": "Falha ao acessar URL",
+                    "url": "https://jmdhamoa.com.br/",
+                    "evidence": "fetch failed",
+                    "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+                  }
+                ]
+              },
+              {
+                "url": "https://autodiscover.jmdhamoa.com.br/",
+                "findings": [
+                  {
+                    "severity": "medium",
+                    "title": "Falha ao acessar URL",
+                    "url": "https://autodiscover.jmdhamoa.com.br/",
+                    "evidence": "fetch failed",
+                    "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+                  }
+                ]
+              },
+              {
+                "url": "https://jmdhamoa.com.br",
+                "findings": [
+                  {
+                    "severity": "high",
+                    "title": "HTTPS indisponivel ou inacessivel",
+                    "url": "https://jmdhamoa.com.br",
+                    "evidence": "AggregateError",
+                    "recommendation": "Habilite HTTPS valido para o dominio."
+                  },
+                  {
+                    "severity": "medium",
+                    "title": "Redirect HTTP para HTTPS ausente",
+                    "url": "https://jmdhamoa.com.br",
+                    "evidence": "A raiz HTTP nao redirecionou claramente para HTTPS.",
+                    "recommendation": "Configure redirect 301/308 de HTTP para HTTPS."
+                  },
+                  {
+                    "severity": "info",
+                    "title": "WAF nao identificado",
+                    "url": "https://jmdhamoa.com.br",
+                    "evidence": "Nao foram encontrados sinais claros de WAF/CDN de seguranca.",
+                    "recommendation": "Confirme se ha WAF ativo no provedor ou valide com testes autorizados mais profundos."
+                  }
+                ]
+              }
+            ],
+            "errors": []
+          }
+        }
+      ],
+      "errors": [],
+      "emailRecipients": [],
+      "weeklyEmailEnabled": true,
+      "emailDeliveries": [],
+      "discoverySources": [],
+      "dnsAddresses": [],
+      "runningStatus": false,
+      "runningScan": false
+    },
+    {
+      "id": "81f0ea8f-e6a3-4f05-8f1c-928972aaa541",
+      "label": "autodiscover.jmdhamoa.com.br",
+      "target": "https://autodiscover.jmdhamoa.com.br",
+      "rootDomain": "jmdhamoa.com.br",
+      "familyId": "1d301afc-aeea-418b-9028-3bb3dfded403",
+      "parentId": "7232fa54-f3ad-4d02-bb16-ec6b84af9c1c",
+      "kind": "subdomain",
+      "createdAt": "2026-08-25T14:42:52.117Z",
+      "updatedAt": "2026-08-25T14:42:52.117Z",
+      "enabled": true,
+      "includeSubdomains": false,
+      "followPaths": false,
+      "activeWafProbe": false,
+      "maxPages": 100,
+      "timeoutMs": 9000,
+      "nextStatusAt": "2026-08-26T14:21:47.415Z",
+      "nextScanAt": "2026-09-01T14:42:52.117Z",
+      "lastStatus": {
+        "checkedAt": "2026-08-26T13:21:38.415Z",
+        "url": "https://autodiscover.jmdhamoa.com.br/",
+        "finalUrl": "https://autodiscover.jmdhamoa.com.br/",
+        "status": null,
+        "ok": false,
+        "responseTimeMs": 9000,
+        "contentType": "",
+        "server": "",
+        "error": "This operation was aborted"
+      },
+      "lastScanSummary": null,
+      "history": [
+        {
+          "checkedAt": "2026-08-25T14:42:52.117Z",
+          "url": "https://autodiscover.jmdhamoa.com.br/",
+          "finalUrl": "https://autodiscover.jmdhamoa.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": null,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T14:44:21.616Z",
+          "url": "https://autodiscover.jmdhamoa.com.br/",
+          "finalUrl": "https://autodiscover.jmdhamoa.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 52,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T15:44:24.410Z",
+          "url": "https://autodiscover.jmdhamoa.com.br/",
+          "finalUrl": "https://autodiscover.jmdhamoa.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 36,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T16:44:24.818Z",
+          "url": "https://autodiscover.jmdhamoa.com.br/",
+          "finalUrl": "https://autodiscover.jmdhamoa.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 26,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T17:44:25.375Z",
+          "url": "https://autodiscover.jmdhamoa.com.br/",
+          "finalUrl": "https://autodiscover.jmdhamoa.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 148,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T18:44:25.872Z",
+          "url": "https://autodiscover.jmdhamoa.com.br/",
+          "finalUrl": "https://autodiscover.jmdhamoa.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 174,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T19:44:26.332Z",
+          "url": "https://autodiscover.jmdhamoa.com.br/",
+          "finalUrl": "https://autodiscover.jmdhamoa.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 432,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T20:44:26.771Z",
+          "url": "https://autodiscover.jmdhamoa.com.br/",
+          "finalUrl": "https://autodiscover.jmdhamoa.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 293,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T21:44:27.206Z",
+          "url": "https://autodiscover.jmdhamoa.com.br/",
+          "finalUrl": "https://autodiscover.jmdhamoa.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 240,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T22:44:27.663Z",
+          "url": "https://autodiscover.jmdhamoa.com.br/",
+          "finalUrl": "https://autodiscover.jmdhamoa.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 92,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-26T13:21:38.415Z",
+          "url": "https://autodiscover.jmdhamoa.com.br/",
+          "finalUrl": "https://autodiscover.jmdhamoa.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 9000,
+          "contentType": "",
+          "server": "",
+          "error": "This operation was aborted"
+        }
+      ],
+      "reports": [],
+      "errors": [],
+      "emailRecipients": [],
+      "weeklyEmailEnabled": true,
+      "emailDeliveries": [],
+      "discoverySources": [
+        "dns-wordlist"
+      ],
+      "dnsAddresses": [
+        "52.97.33.232",
+        "52.97.47.168",
+        "52.97.116.120",
+        "52.97.4.200"
+      ],
+      "runningStatus": false,
+      "runningScan": false
+    },
+    {
+      "id": "06e6f854-94b7-4bfa-8f96-7ef11ffbfd6e",
+      "label": "jmdurbanismo.com.br",
+      "target": "https://jmdurbanismo.com.br",
+      "rootDomain": "jmdurbanismo.com.br",
+      "familyId": "6b15c44d-008c-49d8-a752-405db8ab1c03",
+      "parentId": null,
+      "kind": "root",
+      "createdAt": "2026-08-25T14:48:08.878Z",
+      "updatedAt": "2026-08-25T14:48:08.878Z",
+      "enabled": true,
+      "includeSubdomains": true,
+      "followPaths": false,
+      "activeWafProbe": false,
+      "maxPages": 100,
+      "timeoutMs": 9000,
+      "nextStatusAt": "2026-08-26T14:21:47.416Z",
+      "nextScanAt": "2026-09-01T14:49:49.031Z",
+      "lastStatus": {
+        "checkedAt": "2026-08-26T13:21:38.416Z",
+        "url": "https://jmdurbanismo.com.br/",
+        "finalUrl": "https://jmdurbanismo.com.br/",
+        "status": null,
+        "ok": false,
+        "responseTimeMs": 9000,
+        "contentType": "",
+        "server": "",
+        "error": "This operation was aborted"
+      },
+      "lastScanSummary": {
+        "target": "https://jmdurbanismo.com.br",
+        "startedAt": "2026-08-25T14:48:08.878Z",
+        "finishedAt": "2026-08-25T14:49:49.031Z",
+        "summary": {
+          "pagesScanned": 11,
+          "findings": 14,
+          "high": 1,
+          "medium": 12,
+          "low": 0,
+          "info": 1,
+          "wafDetected": false,
+          "httpsAvailable": false,
+          "subdomainsFound": 10,
+          "subdomainsTested": 10
+        }
+      },
+      "history": [
+        {
+          "checkedAt": "2026-08-25T14:49:49.031Z",
+          "url": "https://jmdurbanismo.com.br/",
+          "finalUrl": "https://jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": null,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T15:50:24.441Z",
+          "url": "https://jmdurbanismo.com.br/",
+          "finalUrl": "https://jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 58,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T16:50:24.871Z",
+          "url": "https://jmdurbanismo.com.br/",
+          "finalUrl": "https://jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 22,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T17:50:25.442Z",
+          "url": "https://jmdurbanismo.com.br/",
+          "finalUrl": "https://jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 34,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T18:50:25.924Z",
+          "url": "https://jmdurbanismo.com.br/",
+          "finalUrl": "https://jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 49,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T19:50:26.380Z",
+          "url": "https://jmdurbanismo.com.br/",
+          "finalUrl": "https://jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 22,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T20:50:26.813Z",
+          "url": "https://jmdurbanismo.com.br/",
+          "finalUrl": "https://jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 387,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T21:50:27.263Z",
+          "url": "https://jmdurbanismo.com.br/",
+          "finalUrl": "https://jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 163,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-26T13:21:38.416Z",
+          "url": "https://jmdurbanismo.com.br/",
+          "finalUrl": "https://jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 9000,
+          "contentType": "",
+          "server": "",
+          "error": "This operation was aborted"
+        }
+      ],
+      "reports": [
+        {
+          "id": "c134be65-a302-415b-93f6-7619a628e579",
+          "createdAt": "2026-08-25T14:49:49.031Z",
+          "report": {
+            "target": "https://jmdurbanismo.com.br",
+            "startedAt": "2026-08-25T14:48:08.878Z",
+            "finishedAt": "2026-08-25T14:49:49.031Z",
+            "options": {
+              "maxPages": 100,
+              "timeoutMs": 9000,
+              "includeSubdomains": true,
+              "followPaths": false,
+              "activeWafProbe": false,
+              "appProfile": null
+            },
+            "summary": {
+              "pagesScanned": 11,
+              "findings": 14,
+              "high": 1,
+              "medium": 12,
+              "low": 0,
+              "info": 1,
+              "wafDetected": false,
+              "httpsAvailable": false,
+              "subdomainsFound": 10,
+              "subdomainsTested": 10
+            },
+            "tls": {
+              "ok": false,
+              "error": "AggregateError"
+            },
+            "httpsRedirect": {
+              "ok": false,
+              "error": "fetch failed"
+            },
+            "dnsRecords": {
+              "domain": "jmdurbanismo.com.br",
+              "ns": [],
+              "mx": [],
+              "txt": [],
+              "soa": null,
+              "caa": [],
+              "errors": [
+                "soa: ETIMEOUT",
+                "ns: ETIMEOUT",
+                "mx: ETIMEOUT",
+                "txt: ETIMEOUT",
+                "caa: ETIMEOUT"
+              ]
+            },
+            "discovery": {
+              "mode": "certificate-transparency-and-public-dns",
+              "sources": [
+                {
+                  "name": "certificate-transparency",
+                  "count": 0
+                },
+                {
+                  "name": "alienvault-otx",
+                  "count": 0
+                },
+                {
+                  "name": "hackertarget",
+                  "count": 0
+                },
+                {
+                  "name": "rapiddns",
+                  "count": 0
+                },
+                {
+                  "name": "zone-transfer",
+                  "count": 0
+                },
+                {
+                  "name": "dns-wordlist",
+                  "count": 101
+                }
+              ],
+              "resolvers": [
+                "system",
+                "https://dns.google/resolve",
+                "https://cloudflare-dns.com/dns-query"
+              ],
+              "note": "A descoberta lista nomes expostos em fontes publicas. DNS privado ou nomes nunca publicados podem nao aparecer."
+            },
+            "waf": {
+              "detected": false,
+              "vendors": [],
+              "evidence": [],
+              "probes": []
+            },
+            "subdomains": [
+              {
+                "host": "autodiscover.jmdurbanismo.com.br",
+                "addresses": [
+                  "52.97.78.56",
+                  "52.97.47.200",
+                  "52.97.116.72",
+                  "52.97.4.200"
+                ],
+                "recordTypes": [
+                  "A"
+                ],
+                "resolvers": [
+                  "system"
+                ],
+                "sources": [
+                  "dns-wordlist"
+                ],
+                "dnsStatus": "resolvido"
+              },
+              {
+                "host": "blog.jmdurbanismo.com.br",
+                "addresses": [
+                  "172.67.71.75",
+                  "104.26.1.250",
+                  "104.26.0.250"
+                ],
+                "recordTypes": [
+                  "A"
+                ],
+                "resolvers": [
+                  "system"
+                ],
+                "sources": [
+                  "dns-wordlist"
+                ],
+                "dnsStatus": "resolvido"
+              },
+              {
+                "host": "ftp.jmdurbanismo.com.br",
+                "addresses": [
+                  "104.26.1.250",
+                  "104.26.0.250",
+                  "172.67.71.75"
+                ],
+                "recordTypes": [
+                  "A"
+                ],
+                "resolvers": [
+                  "system"
+                ],
+                "sources": [
+                  "dns-wordlist"
+                ],
+                "dnsStatus": "resolvido"
+              },
+              {
+                "host": "grafana.jmdurbanismo.com.br",
+                "addresses": [
+                  "104.26.0.250",
+                  "104.26.1.250",
+                  "172.67.71.75"
+                ],
+                "recordTypes": [
+                  "A"
+                ],
+                "resolvers": [
+                  "system"
+                ],
+                "sources": [
+                  "dns-wordlist"
+                ],
+                "dnsStatus": "resolvido"
+              },
+              {
+                "host": "mail.jmdurbanismo.com.br",
+                "addresses": [
+                  "104.26.0.250",
+                  "172.67.71.75",
+                  "104.26.1.250"
+                ],
+                "recordTypes": [
+                  "A"
+                ],
+                "resolvers": [
+                  "system"
+                ],
+                "sources": [
+                  "dns-wordlist"
+                ],
+                "dnsStatus": "resolvido"
+              },
+              {
+                "host": "mysql.jmdurbanismo.com.br",
+                "addresses": [
+                  "104.26.1.250",
+                  "172.67.71.75",
+                  "104.26.0.250"
+                ],
+                "recordTypes": [
+                  "A"
+                ],
+                "resolvers": [
+                  "system"
+                ],
+                "sources": [
+                  "dns-wordlist"
+                ],
+                "dnsStatus": "resolvido"
+              },
+              {
+                "host": "smtp.jmdurbanismo.com.br",
+                "addresses": [
+                  "104.26.0.250",
+                  "104.26.1.250",
+                  "172.67.71.75"
+                ],
+                "recordTypes": [
+                  "A"
+                ],
+                "resolvers": [
+                  "system"
+                ],
+                "sources": [
+                  "dns-wordlist"
+                ],
+                "dnsStatus": "resolvido"
+              },
+              {
+                "host": "staging.jmdurbanismo.com.br",
+                "addresses": [
+                  "104.26.1.250",
+                  "104.26.0.250",
+                  "172.67.71.75"
+                ],
+                "recordTypes": [
+                  "A"
+                ],
+                "resolvers": [
+                  "system"
+                ],
+                "sources": [
+                  "dns-wordlist"
+                ],
+                "dnsStatus": "resolvido"
+              },
+              {
+                "host": "vpn.jmdurbanismo.com.br",
+                "addresses": [
+                  "177.155.209.182"
+                ],
+                "recordTypes": [
+                  "A"
+                ],
+                "resolvers": [
+                  "system"
+                ],
+                "sources": [
+                  "dns-wordlist"
+                ],
+                "dnsStatus": "resolvido"
+              },
+              {
+                "host": "www.jmdurbanismo.com.br",
+                "addresses": [
+                  "104.26.1.250",
+                  "172.67.71.75",
+                  "104.26.0.250"
+                ],
+                "recordTypes": [
+                  "A"
+                ],
+                "resolvers": [
+                  "system"
+                ],
+                "sources": [
+                  "dns-wordlist"
+                ],
+                "dnsStatus": "resolvido"
+              }
+            ],
+            "pages": [
+              {
+                "url": "https://jmdurbanismo.com.br/",
+                "finalUrl": "https://jmdurbanismo.com.br/",
+                "status": null,
+                "responseTimeMs": null,
+                "title": "",
+                "headers": {},
+                "tls": {
+                  "ok": false,
+                  "error": "AggregateError"
+                },
+                "httpsRedirect": {
+                  "ok": false,
+                  "error": "fetch failed"
+                },
+                "technologies": [],
+                "cookies": [],
+                "links": [],
+                "waf": {
+                  "detected": false,
+                  "vendors": [],
+                  "evidence": []
+                },
+                "findings": [
+                  {
+                    "severity": "medium",
+                    "title": "Falha ao acessar URL",
+                    "url": "https://jmdurbanismo.com.br/",
+                    "evidence": "fetch failed",
+                    "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+                  }
+                ],
+                "error": "fetch failed"
+              },
+              {
+                "url": "https://autodiscover.jmdurbanismo.com.br/",
+                "finalUrl": "https://autodiscover.jmdurbanismo.com.br/",
+                "status": null,
+                "responseTimeMs": null,
+                "title": "",
+                "headers": {},
+                "tls": {
+                  "ok": false,
+                  "error": "AggregateError"
+                },
+                "httpsRedirect": {
+                  "ok": false,
+                  "error": "fetch failed"
+                },
+                "technologies": [],
+                "cookies": [],
+                "links": [],
+                "waf": {
+                  "detected": false,
+                  "vendors": [],
+                  "evidence": []
+                },
+                "findings": [
+                  {
+                    "severity": "medium",
+                    "title": "Falha ao acessar URL",
+                    "url": "https://autodiscover.jmdurbanismo.com.br/",
+                    "evidence": "fetch failed",
+                    "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+                  }
+                ],
+                "error": "fetch failed"
+              },
+              {
+                "url": "https://blog.jmdurbanismo.com.br/",
+                "finalUrl": "https://blog.jmdurbanismo.com.br/",
+                "status": null,
+                "responseTimeMs": null,
+                "title": "",
+                "headers": {},
+                "tls": {
+                  "ok": false,
+                  "error": "AggregateError"
+                },
+                "httpsRedirect": {
+                  "ok": false,
+                  "error": "fetch failed"
+                },
+                "technologies": [],
+                "cookies": [],
+                "links": [],
+                "waf": {
+                  "detected": false,
+                  "vendors": [],
+                  "evidence": []
+                },
+                "findings": [
+                  {
+                    "severity": "medium",
+                    "title": "Falha ao acessar URL",
+                    "url": "https://blog.jmdurbanismo.com.br/",
+                    "evidence": "fetch failed",
+                    "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+                  }
+                ],
+                "error": "fetch failed"
+              },
+              {
+                "url": "https://ftp.jmdurbanismo.com.br/",
+                "finalUrl": "https://ftp.jmdurbanismo.com.br/",
+                "status": null,
+                "responseTimeMs": null,
+                "title": "",
+                "headers": {},
+                "tls": {
+                  "ok": false,
+                  "error": "AggregateError"
+                },
+                "httpsRedirect": {
+                  "ok": false,
+                  "error": "fetch failed"
+                },
+                "technologies": [],
+                "cookies": [],
+                "links": [],
+                "waf": {
+                  "detected": false,
+                  "vendors": [],
+                  "evidence": []
+                },
+                "findings": [
+                  {
+                    "severity": "medium",
+                    "title": "Falha ao acessar URL",
+                    "url": "https://ftp.jmdurbanismo.com.br/",
+                    "evidence": "fetch failed",
+                    "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+                  }
+                ],
+                "error": "fetch failed"
+              },
+              {
+                "url": "https://grafana.jmdurbanismo.com.br/",
+                "finalUrl": "https://grafana.jmdurbanismo.com.br/",
+                "status": null,
+                "responseTimeMs": null,
+                "title": "",
+                "headers": {},
+                "tls": {
+                  "ok": false,
+                  "error": "AggregateError"
+                },
+                "httpsRedirect": {
+                  "ok": false,
+                  "error": "fetch failed"
+                },
+                "technologies": [],
+                "cookies": [],
+                "links": [],
+                "waf": {
+                  "detected": false,
+                  "vendors": [],
+                  "evidence": []
+                },
+                "findings": [
+                  {
+                    "severity": "medium",
+                    "title": "Falha ao acessar URL",
+                    "url": "https://grafana.jmdurbanismo.com.br/",
+                    "evidence": "fetch failed",
+                    "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+                  }
+                ],
+                "error": "fetch failed"
+              },
+              {
+                "url": "https://mail.jmdurbanismo.com.br/",
+                "finalUrl": "https://mail.jmdurbanismo.com.br/",
+                "status": null,
+                "responseTimeMs": null,
+                "title": "",
+                "headers": {},
+                "tls": {
+                  "ok": false,
+                  "error": "AggregateError"
+                },
+                "httpsRedirect": {
+                  "ok": false,
+                  "error": "fetch failed"
+                },
+                "technologies": [],
+                "cookies": [],
+                "links": [],
+                "waf": {
+                  "detected": false,
+                  "vendors": [],
+                  "evidence": []
+                },
+                "findings": [
+                  {
+                    "severity": "medium",
+                    "title": "Falha ao acessar URL",
+                    "url": "https://mail.jmdurbanismo.com.br/",
+                    "evidence": "fetch failed",
+                    "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+                  }
+                ],
+                "error": "fetch failed"
+              },
+              {
+                "url": "https://mysql.jmdurbanismo.com.br/",
+                "finalUrl": "https://mysql.jmdurbanismo.com.br/",
+                "status": null,
+                "responseTimeMs": null,
+                "title": "",
+                "headers": {},
+                "tls": {
+                  "ok": false,
+                  "error": "AggregateError"
+                },
+                "httpsRedirect": {
+                  "ok": false,
+                  "error": "fetch failed"
+                },
+                "technologies": [],
+                "cookies": [],
+                "links": [],
+                "waf": {
+                  "detected": false,
+                  "vendors": [],
+                  "evidence": []
+                },
+                "findings": [
+                  {
+                    "severity": "medium",
+                    "title": "Falha ao acessar URL",
+                    "url": "https://mysql.jmdurbanismo.com.br/",
+                    "evidence": "fetch failed",
+                    "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+                  }
+                ],
+                "error": "fetch failed"
+              },
+              {
+                "url": "https://smtp.jmdurbanismo.com.br/",
+                "finalUrl": "https://smtp.jmdurbanismo.com.br/",
+                "status": null,
+                "responseTimeMs": null,
+                "title": "",
+                "headers": {},
+                "tls": {
+                  "ok": false,
+                  "error": "AggregateError"
+                },
+                "httpsRedirect": {
+                  "ok": false,
+                  "error": "fetch failed"
+                },
+                "technologies": [],
+                "cookies": [],
+                "links": [],
+                "waf": {
+                  "detected": false,
+                  "vendors": [],
+                  "evidence": []
+                },
+                "findings": [
+                  {
+                    "severity": "medium",
+                    "title": "Falha ao acessar URL",
+                    "url": "https://smtp.jmdurbanismo.com.br/",
+                    "evidence": "fetch failed",
+                    "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+                  }
+                ],
+                "error": "fetch failed"
+              },
+              {
+                "url": "https://staging.jmdurbanismo.com.br/",
+                "finalUrl": "https://staging.jmdurbanismo.com.br/",
+                "status": null,
+                "responseTimeMs": null,
+                "title": "",
+                "headers": {},
+                "tls": {
+                  "ok": false,
+                  "error": "AggregateError"
+                },
+                "httpsRedirect": {
+                  "ok": false,
+                  "error": "fetch failed"
+                },
+                "technologies": [],
+                "cookies": [],
+                "links": [],
+                "waf": {
+                  "detected": false,
+                  "vendors": [],
+                  "evidence": []
+                },
+                "findings": [
+                  {
+                    "severity": "medium",
+                    "title": "Falha ao acessar URL",
+                    "url": "https://staging.jmdurbanismo.com.br/",
+                    "evidence": "fetch failed",
+                    "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+                  }
+                ],
+                "error": "fetch failed"
+              },
+              {
+                "url": "https://vpn.jmdurbanismo.com.br/",
+                "finalUrl": "https://vpn.jmdurbanismo.com.br/",
+                "status": null,
+                "responseTimeMs": null,
+                "title": "",
+                "headers": {},
+                "tls": {
+                  "ok": false,
+                  "error": "connect EACCES 177.155.209.182:443"
+                },
+                "httpsRedirect": {
+                  "ok": false,
+                  "error": "fetch failed"
+                },
+                "technologies": [],
+                "cookies": [],
+                "links": [],
+                "waf": {
+                  "detected": false,
+                  "vendors": [],
+                  "evidence": []
+                },
+                "findings": [
+                  {
+                    "severity": "medium",
+                    "title": "Falha ao acessar URL",
+                    "url": "https://vpn.jmdurbanismo.com.br/",
+                    "evidence": "fetch failed",
+                    "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+                  }
+                ],
+                "error": "fetch failed"
+              },
+              {
+                "url": "https://www.jmdurbanismo.com.br/",
+                "finalUrl": "https://www.jmdurbanismo.com.br/",
+                "status": null,
+                "responseTimeMs": null,
+                "title": "",
+                "headers": {},
+                "tls": {
+                  "ok": false,
+                  "error": "AggregateError"
+                },
+                "httpsRedirect": {
+                  "ok": false,
+                  "error": "fetch failed"
+                },
+                "technologies": [],
+                "cookies": [],
+                "links": [],
+                "waf": {
+                  "detected": false,
+                  "vendors": [],
+                  "evidence": []
+                },
+                "findings": [
+                  {
+                    "severity": "medium",
+                    "title": "Falha ao acessar URL",
+                    "url": "https://www.jmdurbanismo.com.br/",
+                    "evidence": "fetch failed",
+                    "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+                  }
+                ],
+                "error": "fetch failed"
+              }
+            ],
+            "findings": [
+              {
+                "severity": "medium",
+                "title": "Falha ao acessar URL",
+                "url": "https://jmdurbanismo.com.br/",
+                "evidence": "fetch failed",
+                "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+              },
+              {
+                "severity": "medium",
+                "title": "Falha ao acessar URL",
+                "url": "https://autodiscover.jmdurbanismo.com.br/",
+                "evidence": "fetch failed",
+                "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+              },
+              {
+                "severity": "medium",
+                "title": "Falha ao acessar URL",
+                "url": "https://blog.jmdurbanismo.com.br/",
+                "evidence": "fetch failed",
+                "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+              },
+              {
+                "severity": "medium",
+                "title": "Falha ao acessar URL",
+                "url": "https://ftp.jmdurbanismo.com.br/",
+                "evidence": "fetch failed",
+                "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+              },
+              {
+                "severity": "medium",
+                "title": "Falha ao acessar URL",
+                "url": "https://grafana.jmdurbanismo.com.br/",
+                "evidence": "fetch failed",
+                "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+              },
+              {
+                "severity": "medium",
+                "title": "Falha ao acessar URL",
+                "url": "https://mail.jmdurbanismo.com.br/",
+                "evidence": "fetch failed",
+                "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+              },
+              {
+                "severity": "medium",
+                "title": "Falha ao acessar URL",
+                "url": "https://mysql.jmdurbanismo.com.br/",
+                "evidence": "fetch failed",
+                "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+              },
+              {
+                "severity": "medium",
+                "title": "Falha ao acessar URL",
+                "url": "https://smtp.jmdurbanismo.com.br/",
+                "evidence": "fetch failed",
+                "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+              },
+              {
+                "severity": "medium",
+                "title": "Falha ao acessar URL",
+                "url": "https://staging.jmdurbanismo.com.br/",
+                "evidence": "fetch failed",
+                "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+              },
+              {
+                "severity": "medium",
+                "title": "Falha ao acessar URL",
+                "url": "https://vpn.jmdurbanismo.com.br/",
+                "evidence": "fetch failed",
+                "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+              },
+              {
+                "severity": "medium",
+                "title": "Falha ao acessar URL",
+                "url": "https://www.jmdurbanismo.com.br/",
+                "evidence": "fetch failed",
+                "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+              },
+              {
+                "severity": "high",
+                "title": "HTTPS indisponivel ou inacessivel",
+                "url": "https://jmdurbanismo.com.br",
+                "evidence": "AggregateError",
+                "recommendation": "Habilite HTTPS valido para o dominio."
+              },
+              {
+                "severity": "medium",
+                "title": "Redirect HTTP para HTTPS ausente",
+                "url": "https://jmdurbanismo.com.br",
+                "evidence": "A raiz HTTP nao redirecionou claramente para HTTPS.",
+                "recommendation": "Configure redirect 301/308 de HTTP para HTTPS."
+              },
+              {
+                "severity": "info",
+                "title": "WAF nao identificado",
+                "url": "https://jmdurbanismo.com.br",
+                "evidence": "Nao foram encontrados sinais claros de WAF/CDN de seguranca.",
+                "recommendation": "Confirme se ha WAF ativo no provedor ou valide com testes autorizados mais profundos."
+              }
+            ],
+            "findingsByUrl": [
+              {
+                "url": "https://jmdurbanismo.com.br/",
+                "findings": [
+                  {
+                    "severity": "medium",
+                    "title": "Falha ao acessar URL",
+                    "url": "https://jmdurbanismo.com.br/",
+                    "evidence": "fetch failed",
+                    "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+                  }
+                ]
+              },
+              {
+                "url": "https://autodiscover.jmdurbanismo.com.br/",
+                "findings": [
+                  {
+                    "severity": "medium",
+                    "title": "Falha ao acessar URL",
+                    "url": "https://autodiscover.jmdurbanismo.com.br/",
+                    "evidence": "fetch failed",
+                    "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+                  }
+                ]
+              },
+              {
+                "url": "https://blog.jmdurbanismo.com.br/",
+                "findings": [
+                  {
+                    "severity": "medium",
+                    "title": "Falha ao acessar URL",
+                    "url": "https://blog.jmdurbanismo.com.br/",
+                    "evidence": "fetch failed",
+                    "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+                  }
+                ]
+              },
+              {
+                "url": "https://ftp.jmdurbanismo.com.br/",
+                "findings": [
+                  {
+                    "severity": "medium",
+                    "title": "Falha ao acessar URL",
+                    "url": "https://ftp.jmdurbanismo.com.br/",
+                    "evidence": "fetch failed",
+                    "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+                  }
+                ]
+              },
+              {
+                "url": "https://grafana.jmdurbanismo.com.br/",
+                "findings": [
+                  {
+                    "severity": "medium",
+                    "title": "Falha ao acessar URL",
+                    "url": "https://grafana.jmdurbanismo.com.br/",
+                    "evidence": "fetch failed",
+                    "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+                  }
+                ]
+              },
+              {
+                "url": "https://mail.jmdurbanismo.com.br/",
+                "findings": [
+                  {
+                    "severity": "medium",
+                    "title": "Falha ao acessar URL",
+                    "url": "https://mail.jmdurbanismo.com.br/",
+                    "evidence": "fetch failed",
+                    "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+                  }
+                ]
+              },
+              {
+                "url": "https://mysql.jmdurbanismo.com.br/",
+                "findings": [
+                  {
+                    "severity": "medium",
+                    "title": "Falha ao acessar URL",
+                    "url": "https://mysql.jmdurbanismo.com.br/",
+                    "evidence": "fetch failed",
+                    "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+                  }
+                ]
+              },
+              {
+                "url": "https://smtp.jmdurbanismo.com.br/",
+                "findings": [
+                  {
+                    "severity": "medium",
+                    "title": "Falha ao acessar URL",
+                    "url": "https://smtp.jmdurbanismo.com.br/",
+                    "evidence": "fetch failed",
+                    "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+                  }
+                ]
+              },
+              {
+                "url": "https://staging.jmdurbanismo.com.br/",
+                "findings": [
+                  {
+                    "severity": "medium",
+                    "title": "Falha ao acessar URL",
+                    "url": "https://staging.jmdurbanismo.com.br/",
+                    "evidence": "fetch failed",
+                    "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+                  }
+                ]
+              },
+              {
+                "url": "https://vpn.jmdurbanismo.com.br/",
+                "findings": [
+                  {
+                    "severity": "medium",
+                    "title": "Falha ao acessar URL",
+                    "url": "https://vpn.jmdurbanismo.com.br/",
+                    "evidence": "fetch failed",
+                    "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+                  }
+                ]
+              },
+              {
+                "url": "https://www.jmdurbanismo.com.br/",
+                "findings": [
+                  {
+                    "severity": "medium",
+                    "title": "Falha ao acessar URL",
+                    "url": "https://www.jmdurbanismo.com.br/",
+                    "evidence": "fetch failed",
+                    "recommendation": "Verifique DNS, conectividade, bloqueio por rede ou certificado."
+                  }
+                ]
+              },
+              {
+                "url": "https://jmdurbanismo.com.br",
+                "findings": [
+                  {
+                    "severity": "high",
+                    "title": "HTTPS indisponivel ou inacessivel",
+                    "url": "https://jmdurbanismo.com.br",
+                    "evidence": "AggregateError",
+                    "recommendation": "Habilite HTTPS valido para o dominio."
+                  },
+                  {
+                    "severity": "medium",
+                    "title": "Redirect HTTP para HTTPS ausente",
+                    "url": "https://jmdurbanismo.com.br",
+                    "evidence": "A raiz HTTP nao redirecionou claramente para HTTPS.",
+                    "recommendation": "Configure redirect 301/308 de HTTP para HTTPS."
+                  },
+                  {
+                    "severity": "info",
+                    "title": "WAF nao identificado",
+                    "url": "https://jmdurbanismo.com.br",
+                    "evidence": "Nao foram encontrados sinais claros de WAF/CDN de seguranca.",
+                    "recommendation": "Confirme se ha WAF ativo no provedor ou valide com testes autorizados mais profundos."
+                  }
+                ]
+              }
+            ],
+            "errors": []
+          }
+        }
+      ],
+      "errors": [],
+      "emailRecipients": [],
+      "weeklyEmailEnabled": true,
+      "emailDeliveries": [],
+      "discoverySources": [],
+      "dnsAddresses": [],
+      "runningStatus": false,
+      "runningScan": false
+    },
+    {
+      "id": "11001dc3-587e-4f1b-86be-b0cd52bd3f7d",
+      "label": "autodiscover.jmdurbanismo.com.br",
+      "target": "https://autodiscover.jmdurbanismo.com.br",
+      "rootDomain": "jmdurbanismo.com.br",
+      "familyId": "6b15c44d-008c-49d8-a752-405db8ab1c03",
+      "parentId": "06e6f854-94b7-4bfa-8f96-7ef11ffbfd6e",
+      "kind": "subdomain",
+      "createdAt": "2026-08-25T14:49:49.031Z",
+      "updatedAt": "2026-08-25T14:49:49.031Z",
+      "enabled": true,
+      "includeSubdomains": false,
+      "followPaths": false,
+      "activeWafProbe": false,
+      "maxPages": 100,
+      "timeoutMs": 9000,
+      "nextStatusAt": "2026-08-26T14:21:47.418Z",
+      "nextScanAt": "2026-09-01T14:49:49.031Z",
+      "lastStatus": {
+        "checkedAt": "2026-08-26T13:21:38.418Z",
+        "url": "https://autodiscover.jmdurbanismo.com.br/",
+        "finalUrl": "https://autodiscover.jmdurbanismo.com.br/",
+        "status": null,
+        "ok": false,
+        "responseTimeMs": 9000,
+        "contentType": "",
+        "server": "",
+        "error": "This operation was aborted"
+      },
+      "lastScanSummary": null,
+      "history": [
+        {
+          "checkedAt": "2026-08-25T14:49:49.031Z",
+          "url": "https://autodiscover.jmdurbanismo.com.br/",
+          "finalUrl": "https://autodiscover.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": null,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T14:54:48.357Z",
+          "url": "https://autodiscover.jmdurbanismo.com.br/",
+          "finalUrl": "https://autodiscover.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 26,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T15:55:24.489Z",
+          "url": "https://autodiscover.jmdurbanismo.com.br/",
+          "finalUrl": "https://autodiscover.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 267,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T16:55:24.910Z",
+          "url": "https://autodiscover.jmdurbanismo.com.br/",
+          "finalUrl": "https://autodiscover.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 54,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T17:55:25.483Z",
+          "url": "https://autodiscover.jmdurbanismo.com.br/",
+          "finalUrl": "https://autodiscover.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 34,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T18:55:25.962Z",
+          "url": "https://autodiscover.jmdurbanismo.com.br/",
+          "finalUrl": "https://autodiscover.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 24,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T19:55:26.423Z",
+          "url": "https://autodiscover.jmdurbanismo.com.br/",
+          "finalUrl": "https://autodiscover.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 47,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T20:55:26.843Z",
+          "url": "https://autodiscover.jmdurbanismo.com.br/",
+          "finalUrl": "https://autodiscover.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 23,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T21:55:27.314Z",
+          "url": "https://autodiscover.jmdurbanismo.com.br/",
+          "finalUrl": "https://autodiscover.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 56,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-26T13:21:38.418Z",
+          "url": "https://autodiscover.jmdurbanismo.com.br/",
+          "finalUrl": "https://autodiscover.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 9000,
+          "contentType": "",
+          "server": "",
+          "error": "This operation was aborted"
+        }
+      ],
+      "reports": [],
+      "errors": [],
+      "emailRecipients": [],
+      "weeklyEmailEnabled": true,
+      "emailDeliveries": [],
+      "discoverySources": [
+        "dns-wordlist"
+      ],
+      "dnsAddresses": [
+        "52.97.78.56",
+        "52.97.47.200",
+        "52.97.116.72",
+        "52.97.4.200"
+      ],
+      "runningStatus": false,
+      "runningScan": false
+    },
+    {
+      "id": "abfa9cad-3988-426e-aae2-49f58d7dbd80",
+      "label": "blog.jmdurbanismo.com.br",
+      "target": "https://blog.jmdurbanismo.com.br",
+      "rootDomain": "jmdurbanismo.com.br",
+      "familyId": "6b15c44d-008c-49d8-a752-405db8ab1c03",
+      "parentId": "06e6f854-94b7-4bfa-8f96-7ef11ffbfd6e",
+      "kind": "subdomain",
+      "createdAt": "2026-08-25T14:49:49.031Z",
+      "updatedAt": "2026-08-25T14:49:49.031Z",
+      "enabled": true,
+      "includeSubdomains": false,
+      "followPaths": false,
+      "activeWafProbe": false,
+      "maxPages": 100,
+      "timeoutMs": 9000,
+      "nextStatusAt": "2026-08-26T14:21:47.420Z",
+      "nextScanAt": "2026-09-01T14:49:49.031Z",
+      "lastStatus": {
+        "checkedAt": "2026-08-26T13:21:38.419Z",
+        "url": "https://blog.jmdurbanismo.com.br/",
+        "finalUrl": "https://blog.jmdurbanismo.com.br/",
+        "status": null,
+        "ok": false,
+        "responseTimeMs": 9001,
+        "contentType": "",
+        "server": "",
+        "error": "This operation was aborted"
+      },
+      "lastScanSummary": null,
+      "history": [
+        {
+          "checkedAt": "2026-08-25T14:49:49.031Z",
+          "url": "https://blog.jmdurbanismo.com.br/",
+          "finalUrl": "https://blog.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": null,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T14:54:48.769Z",
+          "url": "https://blog.jmdurbanismo.com.br/",
+          "finalUrl": "https://blog.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 23,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T15:55:24.490Z",
+          "url": "https://blog.jmdurbanismo.com.br/",
+          "finalUrl": "https://blog.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 26,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T16:55:24.911Z",
+          "url": "https://blog.jmdurbanismo.com.br/",
+          "finalUrl": "https://blog.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 53,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T17:55:25.484Z",
+          "url": "https://blog.jmdurbanismo.com.br/",
+          "finalUrl": "https://blog.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 79,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T18:55:25.963Z",
+          "url": "https://blog.jmdurbanismo.com.br/",
+          "finalUrl": "https://blog.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 26,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T19:55:26.425Z",
+          "url": "https://blog.jmdurbanismo.com.br/",
+          "finalUrl": "https://blog.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 278,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T20:55:26.846Z",
+          "url": "https://blog.jmdurbanismo.com.br/",
+          "finalUrl": "https://blog.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 25,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T21:55:27.316Z",
+          "url": "https://blog.jmdurbanismo.com.br/",
+          "finalUrl": "https://blog.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 55,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-26T13:21:38.419Z",
+          "url": "https://blog.jmdurbanismo.com.br/",
+          "finalUrl": "https://blog.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 9001,
+          "contentType": "",
+          "server": "",
+          "error": "This operation was aborted"
+        }
+      ],
+      "reports": [],
+      "errors": [],
+      "emailRecipients": [],
+      "weeklyEmailEnabled": true,
+      "emailDeliveries": [],
+      "discoverySources": [
+        "dns-wordlist"
+      ],
+      "dnsAddresses": [
+        "172.67.71.75",
+        "104.26.1.250",
+        "104.26.0.250"
+      ],
+      "runningStatus": true,
+      "runningScan": false
+    },
+    {
+      "id": "0e319059-10dd-4f16-b7d2-793b901702f2",
+      "label": "ftp.jmdurbanismo.com.br",
+      "target": "https://ftp.jmdurbanismo.com.br",
+      "rootDomain": "jmdurbanismo.com.br",
+      "familyId": "6b15c44d-008c-49d8-a752-405db8ab1c03",
+      "parentId": "06e6f854-94b7-4bfa-8f96-7ef11ffbfd6e",
+      "kind": "subdomain",
+      "createdAt": "2026-08-25T14:49:49.031Z",
+      "updatedAt": "2026-08-25T14:49:49.031Z",
+      "enabled": true,
+      "includeSubdomains": false,
+      "followPaths": false,
+      "activeWafProbe": false,
+      "maxPages": 100,
+      "timeoutMs": 9000,
+      "nextStatusAt": "2026-08-26T14:21:47.420Z",
+      "nextScanAt": "2026-09-01T14:49:49.031Z",
+      "lastStatus": {
+        "checkedAt": "2026-08-26T13:21:38.420Z",
+        "url": "https://ftp.jmdurbanismo.com.br/",
+        "finalUrl": "https://ftp.jmdurbanismo.com.br/",
+        "status": null,
+        "ok": false,
+        "responseTimeMs": 9000,
+        "contentType": "",
+        "server": "",
+        "error": "This operation was aborted"
+      },
+      "lastScanSummary": null,
+      "history": [
+        {
+          "checkedAt": "2026-08-25T14:49:49.031Z",
+          "url": "https://ftp.jmdurbanismo.com.br/",
+          "finalUrl": "https://ftp.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": null,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T14:54:49.136Z",
+          "url": "https://ftp.jmdurbanismo.com.br/",
+          "finalUrl": "https://ftp.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 21,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T15:55:24.491Z",
+          "url": "https://ftp.jmdurbanismo.com.br/",
+          "finalUrl": "https://ftp.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 47,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T16:55:24.912Z",
+          "url": "https://ftp.jmdurbanismo.com.br/",
+          "finalUrl": "https://ftp.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 234,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T17:55:25.485Z",
+          "url": "https://ftp.jmdurbanismo.com.br/",
+          "finalUrl": "https://ftp.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 80,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T18:55:25.964Z",
+          "url": "https://ftp.jmdurbanismo.com.br/",
+          "finalUrl": "https://ftp.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 47,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T19:55:26.425Z",
+          "url": "https://ftp.jmdurbanismo.com.br/",
+          "finalUrl": "https://ftp.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 63,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T20:55:26.848Z",
+          "url": "https://ftp.jmdurbanismo.com.br/",
+          "finalUrl": "https://ftp.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 37,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T21:55:27.318Z",
+          "url": "https://ftp.jmdurbanismo.com.br/",
+          "finalUrl": "https://ftp.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 71,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-26T13:21:38.420Z",
+          "url": "https://ftp.jmdurbanismo.com.br/",
+          "finalUrl": "https://ftp.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 9000,
+          "contentType": "",
+          "server": "",
+          "error": "This operation was aborted"
+        }
+      ],
+      "reports": [],
+      "errors": [],
+      "emailRecipients": [],
+      "weeklyEmailEnabled": true,
+      "emailDeliveries": [],
+      "discoverySources": [
+        "dns-wordlist"
+      ],
+      "dnsAddresses": [
+        "104.26.1.250",
+        "104.26.0.250",
+        "172.67.71.75"
+      ],
+      "runningStatus": true,
+      "runningScan": false
+    },
+    {
+      "id": "8e886320-eaff-442c-9dd4-8cec814bc8c2",
+      "label": "grafana.jmdurbanismo.com.br",
+      "target": "https://grafana.jmdurbanismo.com.br",
+      "rootDomain": "jmdurbanismo.com.br",
+      "familyId": "6b15c44d-008c-49d8-a752-405db8ab1c03",
+      "parentId": "06e6f854-94b7-4bfa-8f96-7ef11ffbfd6e",
+      "kind": "subdomain",
+      "createdAt": "2026-08-25T14:49:49.031Z",
+      "updatedAt": "2026-08-25T14:49:49.031Z",
+      "enabled": true,
+      "includeSubdomains": false,
+      "followPaths": false,
+      "activeWafProbe": false,
+      "maxPages": 100,
+      "timeoutMs": 9000,
+      "nextStatusAt": "2026-08-26T14:21:47.421Z",
+      "nextScanAt": "2026-09-01T14:49:49.031Z",
+      "lastStatus": {
+        "checkedAt": "2026-08-26T13:21:38.421Z",
+        "url": "https://grafana.jmdurbanismo.com.br/",
+        "finalUrl": "https://grafana.jmdurbanismo.com.br/",
+        "status": null,
+        "ok": false,
+        "responseTimeMs": 9000,
+        "contentType": "",
+        "server": "",
+        "error": "This operation was aborted"
+      },
+      "lastScanSummary": null,
+      "history": [
+        {
+          "checkedAt": "2026-08-25T14:49:49.031Z",
+          "url": "https://grafana.jmdurbanismo.com.br/",
+          "finalUrl": "https://grafana.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": null,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T14:54:49.477Z",
+          "url": "https://grafana.jmdurbanismo.com.br/",
+          "finalUrl": "https://grafana.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 60,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T15:55:24.491Z",
+          "url": "https://grafana.jmdurbanismo.com.br/",
+          "finalUrl": "https://grafana.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 71,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T16:55:24.912Z",
+          "url": "https://grafana.jmdurbanismo.com.br/",
+          "finalUrl": "https://grafana.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 172,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T17:55:25.485Z",
+          "url": "https://grafana.jmdurbanismo.com.br/",
+          "finalUrl": "https://grafana.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 105,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T18:55:25.964Z",
+          "url": "https://grafana.jmdurbanismo.com.br/",
+          "finalUrl": "https://grafana.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 47,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T19:55:26.426Z",
+          "url": "https://grafana.jmdurbanismo.com.br/",
+          "finalUrl": "https://grafana.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 85,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T20:55:26.849Z",
+          "url": "https://grafana.jmdurbanismo.com.br/",
+          "finalUrl": "https://grafana.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 36,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T21:55:27.320Z",
+          "url": "https://grafana.jmdurbanismo.com.br/",
+          "finalUrl": "https://grafana.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 93,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-26T13:21:38.421Z",
+          "url": "https://grafana.jmdurbanismo.com.br/",
+          "finalUrl": "https://grafana.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 9000,
+          "contentType": "",
+          "server": "",
+          "error": "This operation was aborted"
+        }
+      ],
+      "reports": [],
+      "errors": [],
+      "emailRecipients": [],
+      "weeklyEmailEnabled": true,
+      "emailDeliveries": [],
+      "discoverySources": [
+        "dns-wordlist"
+      ],
+      "dnsAddresses": [
+        "104.26.0.250",
+        "104.26.1.250",
+        "172.67.71.75"
+      ],
+      "runningStatus": true,
+      "runningScan": false
+    },
+    {
+      "id": "d0d710fc-53cc-411e-a323-c5cfe8eae500",
+      "label": "mail.jmdurbanismo.com.br",
+      "target": "https://mail.jmdurbanismo.com.br",
+      "rootDomain": "jmdurbanismo.com.br",
+      "familyId": "6b15c44d-008c-49d8-a752-405db8ab1c03",
+      "parentId": "06e6f854-94b7-4bfa-8f96-7ef11ffbfd6e",
+      "kind": "subdomain",
+      "createdAt": "2026-08-25T14:49:49.031Z",
+      "updatedAt": "2026-08-25T14:49:49.031Z",
+      "enabled": true,
+      "includeSubdomains": false,
+      "followPaths": false,
+      "activeWafProbe": false,
+      "maxPages": 100,
+      "timeoutMs": 9000,
+      "nextStatusAt": "2026-08-26T14:21:47.426Z",
+      "nextScanAt": "2026-09-01T14:49:49.031Z",
+      "lastStatus": {
+        "checkedAt": "2026-08-26T13:21:38.422Z",
+        "url": "https://mail.jmdurbanismo.com.br/",
+        "finalUrl": "https://mail.jmdurbanismo.com.br/",
+        "status": null,
+        "ok": false,
+        "responseTimeMs": 9004,
+        "contentType": "",
+        "server": "",
+        "error": "This operation was aborted"
+      },
+      "lastScanSummary": null,
+      "history": [
+        {
+          "checkedAt": "2026-08-25T14:49:49.031Z",
+          "url": "https://mail.jmdurbanismo.com.br/",
+          "finalUrl": "https://mail.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": null,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T14:54:49.789Z",
+          "url": "https://mail.jmdurbanismo.com.br/",
+          "finalUrl": "https://mail.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 22,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T15:55:24.492Z",
+          "url": "https://mail.jmdurbanismo.com.br/",
+          "finalUrl": "https://mail.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 92,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T16:55:24.913Z",
+          "url": "https://mail.jmdurbanismo.com.br/",
+          "finalUrl": "https://mail.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 191,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T17:55:25.486Z",
+          "url": "https://mail.jmdurbanismo.com.br/",
+          "finalUrl": "https://mail.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 105,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T18:55:25.965Z",
+          "url": "https://mail.jmdurbanismo.com.br/",
+          "finalUrl": "https://mail.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 64,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T19:55:26.427Z",
+          "url": "https://mail.jmdurbanismo.com.br/",
+          "finalUrl": "https://mail.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 114,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T20:55:26.850Z",
+          "url": "https://mail.jmdurbanismo.com.br/",
+          "finalUrl": "https://mail.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 53,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T21:55:27.321Z",
+          "url": "https://mail.jmdurbanismo.com.br/",
+          "finalUrl": "https://mail.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 111,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-26T13:21:38.422Z",
+          "url": "https://mail.jmdurbanismo.com.br/",
+          "finalUrl": "https://mail.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 9004,
+          "contentType": "",
+          "server": "",
+          "error": "This operation was aborted"
+        }
+      ],
+      "reports": [],
+      "errors": [],
+      "emailRecipients": [],
+      "weeklyEmailEnabled": true,
+      "emailDeliveries": [],
+      "discoverySources": [
+        "dns-wordlist"
+      ],
+      "dnsAddresses": [
+        "104.26.0.250",
+        "172.67.71.75",
+        "104.26.1.250"
+      ],
+      "runningStatus": true,
+      "runningScan": false
+    },
+    {
+      "id": "0c592787-0391-4459-b54d-780ccd93f5b4",
+      "label": "mysql.jmdurbanismo.com.br",
+      "target": "https://mysql.jmdurbanismo.com.br",
+      "rootDomain": "jmdurbanismo.com.br",
+      "familyId": "6b15c44d-008c-49d8-a752-405db8ab1c03",
+      "parentId": "06e6f854-94b7-4bfa-8f96-7ef11ffbfd6e",
+      "kind": "subdomain",
+      "createdAt": "2026-08-25T14:49:49.031Z",
+      "updatedAt": "2026-08-25T14:49:49.031Z",
+      "enabled": true,
+      "includeSubdomains": false,
+      "followPaths": false,
+      "activeWafProbe": false,
+      "maxPages": 100,
+      "timeoutMs": 9000,
+      "nextStatusAt": "2026-08-26T14:21:47.427Z",
+      "nextScanAt": "2026-09-01T14:49:49.031Z",
+      "lastStatus": {
+        "checkedAt": "2026-08-26T13:21:38.422Z",
+        "url": "https://mysql.jmdurbanismo.com.br/",
+        "finalUrl": "https://mysql.jmdurbanismo.com.br/",
+        "status": null,
+        "ok": false,
+        "responseTimeMs": 9005,
+        "contentType": "",
+        "server": "",
+        "error": "This operation was aborted"
+      },
+      "lastScanSummary": null,
+      "history": [
+        {
+          "checkedAt": "2026-08-25T14:49:49.032Z",
+          "url": "https://mysql.jmdurbanismo.com.br/",
+          "finalUrl": "https://mysql.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": null,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T14:54:50.640Z",
+          "url": "https://mysql.jmdurbanismo.com.br/",
+          "finalUrl": "https://mysql.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 19,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T15:55:24.492Z",
+          "url": "https://mysql.jmdurbanismo.com.br/",
+          "finalUrl": "https://mysql.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 112,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T16:55:24.913Z",
+          "url": "https://mysql.jmdurbanismo.com.br/",
+          "finalUrl": "https://mysql.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 216,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T17:55:25.486Z",
+          "url": "https://mysql.jmdurbanismo.com.br/",
+          "finalUrl": "https://mysql.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 124,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T18:55:25.966Z",
+          "url": "https://mysql.jmdurbanismo.com.br/",
+          "finalUrl": "https://mysql.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 66,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T19:55:26.428Z",
+          "url": "https://mysql.jmdurbanismo.com.br/",
+          "finalUrl": "https://mysql.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 134,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T20:55:26.852Z",
+          "url": "https://mysql.jmdurbanismo.com.br/",
+          "finalUrl": "https://mysql.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 50,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T21:55:27.332Z",
+          "url": "https://mysql.jmdurbanismo.com.br/",
+          "finalUrl": "https://mysql.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 99,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-26T13:21:38.422Z",
+          "url": "https://mysql.jmdurbanismo.com.br/",
+          "finalUrl": "https://mysql.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 9005,
+          "contentType": "",
+          "server": "",
+          "error": "This operation was aborted"
+        }
+      ],
+      "reports": [],
+      "errors": [],
+      "emailRecipients": [],
+      "weeklyEmailEnabled": true,
+      "emailDeliveries": [],
+      "discoverySources": [
+        "dns-wordlist"
+      ],
+      "dnsAddresses": [
+        "104.26.1.250",
+        "172.67.71.75",
+        "104.26.0.250"
+      ],
+      "runningStatus": true,
+      "runningScan": false
+    },
+    {
+      "id": "c815d5cf-83d1-4a8a-a74e-0b6992b8007a",
+      "label": "smtp.jmdurbanismo.com.br",
+      "target": "https://smtp.jmdurbanismo.com.br",
+      "rootDomain": "jmdurbanismo.com.br",
+      "familyId": "6b15c44d-008c-49d8-a752-405db8ab1c03",
+      "parentId": "06e6f854-94b7-4bfa-8f96-7ef11ffbfd6e",
+      "kind": "subdomain",
+      "createdAt": "2026-08-25T14:49:49.031Z",
+      "updatedAt": "2026-08-25T14:49:49.031Z",
+      "enabled": true,
+      "includeSubdomains": false,
+      "followPaths": false,
+      "activeWafProbe": false,
+      "maxPages": 100,
+      "timeoutMs": 9000,
+      "nextStatusAt": "2026-08-26T14:21:47.427Z",
+      "nextScanAt": "2026-09-01T14:49:49.032Z",
+      "lastStatus": {
+        "checkedAt": "2026-08-26T13:21:38.423Z",
+        "url": "https://smtp.jmdurbanismo.com.br/",
+        "finalUrl": "https://smtp.jmdurbanismo.com.br/",
+        "status": null,
+        "ok": false,
+        "responseTimeMs": 9004,
+        "contentType": "",
+        "server": "",
+        "error": "This operation was aborted"
+      },
+      "lastScanSummary": null,
+      "history": [
+        {
+          "checkedAt": "2026-08-25T14:49:49.032Z",
+          "url": "https://smtp.jmdurbanismo.com.br/",
+          "finalUrl": "https://smtp.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": null,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T14:54:50.903Z",
+          "url": "https://smtp.jmdurbanismo.com.br/",
+          "finalUrl": "https://smtp.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 22,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T15:55:24.492Z",
+          "url": "https://smtp.jmdurbanismo.com.br/",
+          "finalUrl": "https://smtp.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 124,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T16:55:24.914Z",
+          "url": "https://smtp.jmdurbanismo.com.br/",
+          "finalUrl": "https://smtp.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 239,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T17:55:25.487Z",
+          "url": "https://smtp.jmdurbanismo.com.br/",
+          "finalUrl": "https://smtp.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 124,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T18:55:25.966Z",
+          "url": "https://smtp.jmdurbanismo.com.br/",
+          "finalUrl": "https://smtp.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 92,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T19:55:26.428Z",
+          "url": "https://smtp.jmdurbanismo.com.br/",
+          "finalUrl": "https://smtp.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 152,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T20:55:26.852Z",
+          "url": "https://smtp.jmdurbanismo.com.br/",
+          "finalUrl": "https://smtp.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 69,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T21:55:27.335Z",
+          "url": "https://smtp.jmdurbanismo.com.br/",
+          "finalUrl": "https://smtp.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 556,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-26T13:21:38.423Z",
+          "url": "https://smtp.jmdurbanismo.com.br/",
+          "finalUrl": "https://smtp.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 9004,
+          "contentType": "",
+          "server": "",
+          "error": "This operation was aborted"
+        }
+      ],
+      "reports": [],
+      "errors": [],
+      "emailRecipients": [],
+      "weeklyEmailEnabled": true,
+      "emailDeliveries": [],
+      "discoverySources": [
+        "dns-wordlist"
+      ],
+      "dnsAddresses": [
+        "104.26.0.250",
+        "104.26.1.250",
+        "172.67.71.75"
+      ],
+      "runningStatus": true,
+      "runningScan": false
+    },
+    {
+      "id": "e18e1efe-a95e-4dd3-8359-bc7508949458",
+      "label": "staging.jmdurbanismo.com.br",
+      "target": "https://staging.jmdurbanismo.com.br",
+      "rootDomain": "jmdurbanismo.com.br",
+      "familyId": "6b15c44d-008c-49d8-a752-405db8ab1c03",
+      "parentId": "06e6f854-94b7-4bfa-8f96-7ef11ffbfd6e",
+      "kind": "subdomain",
+      "createdAt": "2026-08-25T14:49:49.031Z",
+      "updatedAt": "2026-08-25T14:49:49.031Z",
+      "enabled": true,
+      "includeSubdomains": false,
+      "followPaths": false,
+      "activeWafProbe": false,
+      "maxPages": 100,
+      "timeoutMs": 9000,
+      "nextStatusAt": "2026-08-26T14:21:47.427Z",
+      "nextScanAt": "2026-09-01T14:49:49.032Z",
+      "lastStatus": {
+        "checkedAt": "2026-08-26T13:21:38.424Z",
+        "url": "https://staging.jmdurbanismo.com.br/",
+        "finalUrl": "https://staging.jmdurbanismo.com.br/",
+        "status": null,
+        "ok": false,
+        "responseTimeMs": 9003,
+        "contentType": "",
+        "server": "",
+        "error": "This operation was aborted"
+      },
+      "lastScanSummary": null,
+      "history": [
+        {
+          "checkedAt": "2026-08-25T14:49:49.032Z",
+          "url": "https://staging.jmdurbanismo.com.br/",
+          "finalUrl": "https://staging.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": null,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T14:54:51.225Z",
+          "url": "https://staging.jmdurbanismo.com.br/",
+          "finalUrl": "https://staging.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 28,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T15:55:24.493Z",
+          "url": "https://staging.jmdurbanismo.com.br/",
+          "finalUrl": "https://staging.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 143,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T16:55:24.914Z",
+          "url": "https://staging.jmdurbanismo.com.br/",
+          "finalUrl": "https://staging.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 249,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T17:55:25.487Z",
+          "url": "https://staging.jmdurbanismo.com.br/",
+          "finalUrl": "https://staging.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 147,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T18:55:25.967Z",
+          "url": "https://staging.jmdurbanismo.com.br/",
+          "finalUrl": "https://staging.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 86,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T19:55:26.429Z",
+          "url": "https://staging.jmdurbanismo.com.br/",
+          "finalUrl": "https://staging.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 168,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T20:55:26.854Z",
+          "url": "https://staging.jmdurbanismo.com.br/",
+          "finalUrl": "https://staging.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 67,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T21:55:27.336Z",
+          "url": "https://staging.jmdurbanismo.com.br/",
+          "finalUrl": "https://staging.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 114,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-26T13:21:38.424Z",
+          "url": "https://staging.jmdurbanismo.com.br/",
+          "finalUrl": "https://staging.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 9003,
+          "contentType": "",
+          "server": "",
+          "error": "This operation was aborted"
+        }
+      ],
+      "reports": [],
+      "errors": [],
+      "emailRecipients": [],
+      "weeklyEmailEnabled": true,
+      "emailDeliveries": [],
+      "discoverySources": [
+        "dns-wordlist"
+      ],
+      "dnsAddresses": [
+        "104.26.1.250",
+        "104.26.0.250",
+        "172.67.71.75"
+      ],
+      "runningStatus": true,
+      "runningScan": false
+    },
+    {
+      "id": "556f157c-b423-4a22-aa2a-5da54eb2eb78",
+      "label": "vpn.jmdurbanismo.com.br",
+      "target": "https://vpn.jmdurbanismo.com.br",
+      "rootDomain": "jmdurbanismo.com.br",
+      "familyId": "6b15c44d-008c-49d8-a752-405db8ab1c03",
+      "parentId": "06e6f854-94b7-4bfa-8f96-7ef11ffbfd6e",
+      "kind": "subdomain",
+      "createdAt": "2026-08-25T14:49:49.031Z",
+      "updatedAt": "2026-08-25T14:49:49.031Z",
+      "enabled": true,
+      "includeSubdomains": false,
+      "followPaths": false,
+      "activeWafProbe": false,
+      "maxPages": 100,
+      "timeoutMs": 9000,
+      "nextStatusAt": "2026-08-26T14:21:47.427Z",
+      "nextScanAt": "2026-09-01T14:49:49.032Z",
+      "lastStatus": {
+        "checkedAt": "2026-08-26T13:21:38.425Z",
+        "url": "https://vpn.jmdurbanismo.com.br/",
+        "finalUrl": "https://vpn.jmdurbanismo.com.br/",
+        "status": null,
+        "ok": false,
+        "responseTimeMs": 9002,
+        "contentType": "",
+        "server": "",
+        "error": "This operation was aborted"
+      },
+      "lastScanSummary": null,
+      "history": [
+        {
+          "checkedAt": "2026-08-25T14:49:49.032Z",
+          "url": "https://vpn.jmdurbanismo.com.br/",
+          "finalUrl": "https://vpn.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": null,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T14:54:52.300Z",
+          "url": "https://vpn.jmdurbanismo.com.br/",
+          "finalUrl": "https://vpn.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 46,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T15:55:24.493Z",
+          "url": "https://vpn.jmdurbanismo.com.br/",
+          "finalUrl": "https://vpn.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 166,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T16:55:24.914Z",
+          "url": "https://vpn.jmdurbanismo.com.br/",
+          "finalUrl": "https://vpn.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 269,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T17:55:25.488Z",
+          "url": "https://vpn.jmdurbanismo.com.br/",
+          "finalUrl": "https://vpn.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 139,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T18:55:25.967Z",
+          "url": "https://vpn.jmdurbanismo.com.br/",
+          "finalUrl": "https://vpn.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 105,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T19:55:26.430Z",
+          "url": "https://vpn.jmdurbanismo.com.br/",
+          "finalUrl": "https://vpn.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 188,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T20:55:26.854Z",
+          "url": "https://vpn.jmdurbanismo.com.br/",
+          "finalUrl": "https://vpn.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 84,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T21:55:27.337Z",
+          "url": "https://vpn.jmdurbanismo.com.br/",
+          "finalUrl": "https://vpn.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 136,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-26T13:21:38.425Z",
+          "url": "https://vpn.jmdurbanismo.com.br/",
+          "finalUrl": "https://vpn.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 9002,
+          "contentType": "",
+          "server": "",
+          "error": "This operation was aborted"
+        }
+      ],
+      "reports": [],
+      "errors": [],
+      "emailRecipients": [],
+      "weeklyEmailEnabled": true,
+      "emailDeliveries": [],
+      "discoverySources": [
+        "dns-wordlist"
+      ],
+      "dnsAddresses": [
+        "177.155.209.182"
+      ],
+      "runningStatus": true,
+      "runningScan": false
+    },
+    {
+      "id": "a6cd68ee-93bc-428f-bc52-913890d491b8",
+      "label": "www.jmdurbanismo.com.br",
+      "target": "https://www.jmdurbanismo.com.br",
+      "rootDomain": "jmdurbanismo.com.br",
+      "familyId": "6b15c44d-008c-49d8-a752-405db8ab1c03",
+      "parentId": "06e6f854-94b7-4bfa-8f96-7ef11ffbfd6e",
+      "kind": "subdomain",
+      "createdAt": "2026-08-25T14:49:49.031Z",
+      "updatedAt": "2026-08-25T14:49:49.031Z",
+      "enabled": true,
+      "includeSubdomains": false,
+      "followPaths": false,
+      "activeWafProbe": false,
+      "maxPages": 100,
+      "timeoutMs": 9000,
+      "nextStatusAt": "2026-08-26T14:21:47.427Z",
+      "nextScanAt": "2026-09-01T14:49:49.032Z",
+      "lastStatus": {
+        "checkedAt": "2026-08-26T13:21:38.426Z",
+        "url": "https://www.jmdurbanismo.com.br/",
+        "finalUrl": "https://www.jmdurbanismo.com.br/",
+        "status": null,
+        "ok": false,
+        "responseTimeMs": 9001,
+        "contentType": "",
+        "server": "",
+        "error": "This operation was aborted"
+      },
+      "lastScanSummary": null,
+      "history": [
+        {
+          "checkedAt": "2026-08-25T14:49:49.032Z",
+          "url": "https://www.jmdurbanismo.com.br/",
+          "finalUrl": "https://www.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": null,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T14:54:52.557Z",
+          "url": "https://www.jmdurbanismo.com.br/",
+          "finalUrl": "https://www.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 25,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T15:55:24.494Z",
+          "url": "https://www.jmdurbanismo.com.br/",
+          "finalUrl": "https://www.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 222,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T16:55:24.915Z",
+          "url": "https://www.jmdurbanismo.com.br/",
+          "finalUrl": "https://www.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 270,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T17:55:25.488Z",
+          "url": "https://www.jmdurbanismo.com.br/",
+          "finalUrl": "https://www.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 160,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T18:55:25.968Z",
+          "url": "https://www.jmdurbanismo.com.br/",
+          "finalUrl": "https://www.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 111,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T19:55:26.430Z",
+          "url": "https://www.jmdurbanismo.com.br/",
+          "finalUrl": "https://www.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 209,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T20:55:26.855Z",
+          "url": "https://www.jmdurbanismo.com.br/",
+          "finalUrl": "https://www.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 141,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-25T21:55:27.340Z",
+          "url": "https://www.jmdurbanismo.com.br/",
+          "finalUrl": "https://www.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 148,
+          "contentType": "",
+          "server": "",
+          "error": "fetch failed"
+        },
+        {
+          "checkedAt": "2026-08-26T13:21:38.426Z",
+          "url": "https://www.jmdurbanismo.com.br/",
+          "finalUrl": "https://www.jmdurbanismo.com.br/",
+          "status": null,
+          "ok": false,
+          "responseTimeMs": 9001,
+          "contentType": "",
+          "server": "",
+          "error": "This operation was aborted"
+        }
+      ],
+      "reports": [],
+      "errors": [],
+      "emailRecipients": [],
+      "weeklyEmailEnabled": true,
+      "emailDeliveries": [],
+      "discoverySources": [
+        "dns-wordlist"
+      ],
+      "dnsAddresses": [
+        "104.26.1.250",
+        "172.67.71.75",
+        "104.26.0.250"
+      ],
+      "runningStatus": true,
+      "runningScan": false
+    }
+  ]
+}
