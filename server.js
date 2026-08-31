@@ -216,6 +216,10 @@ const server = http.createServer(async (req, res) => {
         await removeDomain(domainId);
         return sendJson(res, 200, publicStore());
       }
+      if (req.method === "PATCH" && !action) {
+        const domain = await updateDomain(domainId, await readJson(req));
+        return sendJson(res, 200, { domain, store: publicStore() });
+      }
       if (req.method === "POST" && action === "check") {
         const domain = getDomain(domainId);
         await runDomainStatusCheck(domain, { manual: true });
@@ -1083,6 +1087,21 @@ async function removeDomain(domainId) {
     store.domains = store.domains.filter((item) => item.id !== domain.id);
   }
   await saveStore();
+}
+
+async function updateDomain(domainId, payload) {
+  const domain = getDomain(domainId);
+  domain.updatedAt = new Date().toISOString();
+  domain.emailRecipients = parseEmailRecipients(payload.emailRecipients);
+  domain.weeklyEmailEnabled = payload.weeklyEmailEnabled !== false;
+  domain.maxPages = clamp(Number(payload.maxPages || domain.maxPages || 100), 1, 500);
+  domain.timeoutMs = clamp(Number(payload.timeoutMs || domain.timeoutMs || 9000), 2500, 20000);
+  domain.activeWafProbe = Boolean(payload.activeWafProbe);
+  if (domain.kind === "root") {
+    domain.includeSubdomains = payload.includeSubdomains !== false;
+  }
+  await saveStore();
+  return domain;
 }
 
 function getDomain(domainId) {

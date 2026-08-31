@@ -1,5 +1,6 @@
 const form = document.querySelector("#scanForm");
 const domainForm = document.querySelector("#domainForm");
+const domainEditId = document.querySelector("#domainEditId");
 const scanButton = document.querySelector("#scanButton");
 const cancelScanButton = document.querySelector("#cancelScanButton");
 const addDomainButton = document.querySelector("#addDomainButton");
@@ -22,6 +23,7 @@ const openDomainPanel = document.querySelector("#openDomainPanel");
 const closeDomainPanel = document.querySelector("#closeDomainPanel");
 const domainPanel = document.querySelector("#domainPanel");
 const domainOverlay = document.querySelector("#domainOverlay");
+const drawerTitle = document.querySelector("#drawer-title");
 const navItems = document.querySelectorAll(".nav-item");
 const views = document.querySelectorAll(".view");
 const tabs = document.querySelectorAll(".tab");
@@ -117,7 +119,7 @@ logoutButton?.addEventListener("click", async () => {
   window.location.href = "/login";
 });
 
-openDomainPanel.addEventListener("click", () => setDomainPanel(true));
+openDomainPanel.addEventListener("click", () => openCreateDomainPanel());
 closeDomainPanel.addEventListener("click", () => setDomainPanel(false));
 domainOverlay.addEventListener("click", () => setDomainPanel(false));
 document.addEventListener("keydown", (event) => {
@@ -136,29 +138,32 @@ domainForm.addEventListener("submit", async (event) => {
     activeWafProbe: document.querySelector("#domainActiveWafProbe").checked,
     followPaths: false
   };
+  const editId = domainEditId.value;
 
   addDomainButton.disabled = true;
-  addDomainButton.textContent = "Cadastrando...";
-  monitorLabel.textContent = "Cadastrando domínio e iniciando o primeiro scan em segundo plano...";
+  addDomainButton.textContent = editId ? "Salvando..." : "Cadastrando...";
+  monitorLabel.textContent = editId
+    ? "Atualizando configurações do monitoramento..."
+    : "Cadastrando domínio e iniciando o primeiro scan em segundo plano...";
   try {
-    const response = await apiFetch("/api/domains", {
-      method: "POST",
+    const response = await apiFetch(editId ? `/api/domains/${encodeURIComponent(editId)}` : "/api/domains", {
+      method: editId ? "PATCH" : "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(payload)
     });
     const data = await response.json();
-    if (!response.ok) throw new Error(data.error || "Falha ao cadastrar.");
-    domainForm.reset();
-    document.querySelector("#domainIncludeSubdomains").checked = true;
-    document.querySelector("#domainWeeklyEmailEnabled").checked = true;
+    if (!response.ok) throw new Error(data.error || (editId ? "Falha ao atualizar." : "Falha ao cadastrar."));
+    resetDomainForm();
     renderStore(data.store);
     setDomainPanel(false);
-    monitorLabel.textContent = "Domínio cadastrado. O primeiro scan está rodando em segundo plano.";
+    monitorLabel.textContent = editId
+      ? "Monitoramento atualizado."
+      : "Domínio cadastrado. O primeiro scan está rodando em segundo plano.";
   } catch (error) {
-    monitorLabel.textContent = error.message || "Falha ao cadastrar domínio.";
+    monitorLabel.textContent = error.message || (editId ? "Falha ao atualizar monitoramento." : "Falha ao cadastrar domínio.");
   } finally {
     addDomainButton.disabled = false;
-    addDomainButton.textContent = "Cadastrar monitoramento";
+    addDomainButton.textContent = domainEditId.value ? "Salvar alterações" : "Cadastrar monitoramento";
   }
 });
 
@@ -168,13 +173,18 @@ domainList.addEventListener("click", async (event) => {
   const button = event.target.closest("button[data-action]");
   if (!button) return;
   const { action, id } = button.dataset;
+  if (action === "edit") {
+    const domain = currentStore?.domains?.find((item) => item.id === id);
+    if (domain) openEditDomainPanel(domain);
+    return;
+  }
   button.disabled = true;
   try {
     const method = action === "delete" ? "DELETE" : "POST";
     const path = action === "delete" ? `/api/domains/${id}` : `/api/domains/${id}/${action}`;
     const response = await apiFetch(path, { method });
     const data = await response.json();
-    if (!response.ok) throw new Error(data.error || "Operacao falhou.");
+    if (!response.ok) throw new Error(data.error || "Operação falhou.");
     renderStore(data.store || { domains: data.domain ? [data.domain] : [] });
     if (action === "scan" && data.domain?.reports?.length) {
       const latest = data.domain.reports[data.domain.reports.length - 1].report;
@@ -200,6 +210,39 @@ function setDomainPanel(open) {
   domainOverlay.classList.toggle("hidden", !open);
   domainPanel.setAttribute("aria-hidden", String(!open));
   if (open) document.querySelector("#domainTarget").focus();
+}
+
+function openCreateDomainPanel() {
+  resetDomainForm();
+  setDomainPanel(true);
+}
+
+function openEditDomainPanel(domain) {
+  resetDomainForm();
+  domainEditId.value = domain.id;
+  drawerTitle.textContent = "Editar domínio";
+  addDomainButton.textContent = "Salvar alterações";
+  document.querySelector("#domainTarget").value = domain.target || "";
+  document.querySelector("#domainTarget").disabled = true;
+  document.querySelector("#domainMaxPages").value = domain.maxPages || 100;
+  document.querySelector("#domainTimeoutMs").value = String(domain.timeoutMs || 9000);
+  document.querySelector("#domainEmailRecipients").value = (domain.emailRecipients || []).join(", ");
+  document.querySelector("#domainIncludeSubdomains").checked = domain.includeSubdomains !== false;
+  document.querySelector("#domainIncludeSubdomains").disabled = domain.kind !== "root";
+  document.querySelector("#domainWeeklyEmailEnabled").checked = domain.weeklyEmailEnabled !== false;
+  document.querySelector("#domainActiveWafProbe").checked = Boolean(domain.activeWafProbe);
+  setDomainPanel(true);
+}
+
+function resetDomainForm() {
+  domainForm.reset();
+  domainEditId.value = "";
+  drawerTitle.textContent = "Cadastrar domínio";
+  addDomainButton.textContent = "Cadastrar monitoramento";
+  document.querySelector("#domainTarget").disabled = false;
+  document.querySelector("#domainIncludeSubdomains").disabled = false;
+  document.querySelector("#domainIncludeSubdomains").checked = true;
+  document.querySelector("#domainWeeklyEmailEnabled").checked = true;
 }
 
 form.addEventListener("submit", async (event) => {
@@ -567,6 +610,7 @@ function renderDomainCard(domain, children = []) {
         <dt>Relatório semanal</dt><dd>${escapeHtml(formatEmailConfig(domain, recipients, emailDelivery))}</dd>
       </dl>
       <div class="domain-actions">
+        <button type="button" data-action="edit" data-id="${escapeHtml(domain.id)}">Editar e-mails</button>
         <button type="button" data-action="check" data-id="${escapeHtml(domain.id)}" ${domain.runningStatus ? "disabled" : ""}>Checar agora</button>
         <button type="button" data-action="scan" data-id="${escapeHtml(domain.id)}" ${domain.runningScan ? "disabled" : ""}>Scan e abrir relatório</button>
         <button type="button" class="danger" data-action="delete" data-id="${escapeHtml(domain.id)}">Remover</button>
@@ -594,6 +638,7 @@ function renderSubdomainRow(domain) {
         <span>${escapeHtml(scanText)}</span>
       </div>
       <span class="status-dot ${statusClass}">${escapeHtml(statusText)}</span>
+      <button type="button" data-action="edit" data-id="${escapeHtml(domain.id)}">Editar</button>
       <button type="button" data-action="check" data-id="${escapeHtml(domain.id)}" ${domain.runningStatus ? "disabled" : ""}>Checar</button>
       <button type="button" data-action="scan" data-id="${escapeHtml(domain.id)}" ${domain.runningScan ? "disabled" : ""}>Scan</button>
     </div>
